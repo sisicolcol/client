@@ -9,12 +9,12 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 
-export default function DefaultModal({
+const DefaultModal = ({
   showModal,
   setShowModal,
   maskClosable, //외부 클릭해서 닫는 속성이 있을 경우
   children, // 컴포넌트를 자식으로 넘겨받는다.
-}) {
+}) => {
   return (
     <Modal
       transparent={true}
@@ -53,7 +53,7 @@ export default function DefaultModal({
     //     </View>
     //   </Modal>
   );
-}
+};
 
 Modal.propTypes = {
   showModal: PropTypes.bool,
@@ -82,3 +82,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+export default DefaultModal;

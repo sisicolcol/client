@@ -6,7 +6,7 @@ import { colors } from "../../theme";
 
 //const data = {id : number(>= 1), name:String}
 
-export default function RadioButton({ data, checked, onSelect }) {
+const RadioButton = ({ data, checked, onSelect }) => {
   const onSelectHandler = () => {
     onSelect(data.id);
   };
@@ -41,7 +41,7 @@ export default function RadioButton({ data, checked, onSelect }) {
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -57,3 +57,5 @@ const styles = StyleSheet.create({
     marginLeft: 10.5,
   },
 });
+
+export default RadioButton;

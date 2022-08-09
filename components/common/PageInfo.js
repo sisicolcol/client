@@ -2,13 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { colors, fontSizes } from "../../theme";
 
-export default function PageInfo({
-  title,
-  desc,
-  colorTitle,
-  isBold,
-  marginBottom,
-}) {
+const PageInfo = ({ title, desc, colorTitle, isBold, marginBottom }) => {
   return (
     <View style={styles(isBold, marginBottom).pageInfoView}>
       <Text style={styles(isBold, marginBottom).pageTitle}>
@@ -22,7 +16,7 @@ export default function PageInfo({
       )}
     </View>
   );
-}
+};
 
 PageInfo.defaultProps = {
   title: "",
@@ -41,10 +35,11 @@ const styles = (isBold, marginBottom) =>
       fontSize: fontSizes.bigInfo,
       marginBottom: marginBottom,
       fontWeight: isBold ? "600" : "normal",
-      lineHeight: 33.4,
     },
     pageDesc: {
       fontSize: fontSizes.smallInfo,
       color: colors.pageTextGray1,
     },
   });
+
+export default PageInfo;

@@ -9,7 +9,7 @@ import React, { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../theme";
 
-export default function Input({ label, placeholder, clearInput, sendValue }) {
+const Input = ({ label, placeholder, clearInput, sendValue }) => {
   const [text, setText] = useState("");
   const [focus, setfocus] = useState(false);
 
@@ -55,7 +55,7 @@ export default function Input({ label, placeholder, clearInput, sendValue }) {
       </View>
     </View>
   );
-}
+};
 
 Input.defalutProps = {
   label: "",
@@ -98,3 +98,5 @@ const styles = StyleSheet.create({
     right: 32,
   },
 });
+
+export default Input;
