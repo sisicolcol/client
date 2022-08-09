@@ -2,15 +2,13 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { colors, fontSizes } from "../../theme";
 
-const MainButton = ({ isBlue, isBold, isBig, width, onPress }) => {
+const MainButton = ({ isBlue, isBold, isBig, width, text, onPress }) => {
   return (
     <TouchableOpacity
       style={styles(isBlue, isBold, isBig, width).button}
       onPress={onPress}
     >
-      <Text style={styles(isBlue, isBold, isBig, width).text}>
-        활동지원서비스 신청하기
-      </Text>
+      <Text style={styles(isBlue, isBold, isBig, width).text}>{text}</Text>
     </TouchableOpacity>
   );
 };
