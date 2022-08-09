@@ -4,9 +4,29 @@ export const colors = {
   pageTextGray1: "#727272",
   smallTextGray2: "#AEAEAE",
   buttonGray3: "#CFCFCF",
+  clearInputGray4: "#ECECEC",
 };
 
 export const fontSizes = {
   bigButton: 20,
   smallButton: 18,
+  bigInfo: 24,
+  smallInfo: 16,
+};
+
+export const shadowView = {
+  width: "90%",
+  borderRadius: 10,
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "white",
+  shadowColor: colors.buttonGray3,
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 1,
+  shadowRadius: 4,
+  elevation: 5,
+  marginBottom: 10,
 };
