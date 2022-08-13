@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Selection } from "../screens/auth";
+import { Selection, Login } from "../screens/auth";
 
 const Stack = createStackNavigator();
 
@@ -9,6 +9,11 @@ const AuthStack = () => {
       <Stack.Screen
         name="Selection"
         component={Selection}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

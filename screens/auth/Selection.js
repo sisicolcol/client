@@ -9,9 +9,11 @@ import {
 import PageInfo from "../../components/common/PageInfo";
 import { colors, fontSizes } from "../../theme";
 
-const Selection = () => {
+const Selection = ({ navigation }) => {
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: "center" }}>
+    <SafeAreaView
+      style={{ flex: 1, alignItems: "center", backgroundColor: "white" }}
+    >
       <View
         style={{
           width: "90%",
@@ -27,7 +29,10 @@ const Selection = () => {
         />
       </View>
       <View style={{ flexDirection: "row", flex: 2 }}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Login")}
+        >
           <Text style={styles.text}>시각장애인</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
