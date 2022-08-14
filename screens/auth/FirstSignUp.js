@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView, View, Text, StyleSheet } from "react-native";
 import Input from "../../components/common/Input";
 import PageInfo from "../../components/common/PageInfo";
 import BottomButton from "../../components/common/BottomButton";
@@ -117,7 +111,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     letterSpacing: 0.03,
     lineHeight: 26,
-    // paddingLeft: 30,
     marginBottom: 24,
   },
 });
