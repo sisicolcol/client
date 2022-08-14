@@ -31,25 +31,25 @@ const LoginButton = ({ text, onPress }) => {
   );
 };
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
     >
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, justifyContent: "center" }}>
         <Image
           source={require("../../images/logo.png")}
           resizeMode="contain"
-          style={{ width: 200, marginTop: 20 }}
+          style={{ width: 200, marginTop: 30 }}
         />
       </View>
       <View
         style={{
-          flex: 1,
+          flex: 2,
           width: "90%",
-          marginTop: -20,
+          marginTop: 0,
         }}
       >
         <Input placeholder={"아이디"} sendValue={(text) => console.log(text)} />
@@ -74,7 +74,7 @@ const Login = () => {
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
-          marginTop: 60,
+          marginBottom: 20,
         }}
       >
         <View
@@ -88,7 +88,7 @@ const Login = () => {
           <LoginButton text="네이버" onPress={() => console.log("로그인")} />
           <LoginButton text="구글" onPress={() => console.log("로그인")} />
         </View>
-        <TouchableOpacity onPress={() => console.log("회원가입")}>
+        <TouchableOpacity onPress={() => navigation.navigate("FirstSignUp")}>
           <Text
             style={{ fontSize: 20, fontWeight: "500", color: colors.mainBlue }}
           >
