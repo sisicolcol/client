@@ -39,7 +39,7 @@ const styles = (isBlue, isBold, isBig, width, marginBottom) =>
     text: {
       color: isBlue ? "white" : "black",
       fontSize: isBig ? fontSizes.bigButton : fontSizes.smallButton,
-      fontWeight: isBold ? "bold" : "400",
+      fontWeight: isBold ? "bold" : "500",
     },
   });
 export default MainButton;

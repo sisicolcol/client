@@ -5,7 +5,13 @@ import { colors, fontSizes } from "../../theme";
 const BottomButton = ({ text, onPress }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={{ color: "white", fontSize: fontSizes.smallButton }}>
+      <Text
+        style={{
+          color: "white",
+          fontSize: fontSizes.smallButton,
+          fontWeight: "500",
+        }}
+      >
         {text}
       </Text>
     </TouchableOpacity>
