@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Home, Apply, Chat, Check } from "../screens/blind/";
+import { Home, Apply, Chat, HelperList } from "../screens/blind/";
 
 const Stack = createStackNavigator();
 
@@ -15,9 +15,9 @@ const BlindStack = () => {
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
-          name="Check"
+          name="HelperList"
           options={{ title: "지원한 활동지원사 확인하기" }}
-          component={Check}
+          component={HelperList}
         />
       </Stack.Group>
     </Stack.Navigator>

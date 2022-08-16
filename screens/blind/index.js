@@ -1,6 +1,6 @@
 import Home from "./Home";
 import Apply from "./Apply";
 import Chat from "./Chat";
-import Check from "./Check";
+import HelperList from "./HelperList";
 
-export { Home, Apply, Chat, Check };
+export { Home, Apply, Chat, HelperList };

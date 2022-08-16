@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CheckHelper from "../../components/CheckHelper";
 import BottomButton from "../../components/common/BottomButton";
 
-const Check = ({ navigation }) => {
+const HelperList = ({ navigation }) => {
   const [helperArr, setHelperArr] = useState(data.apply);
   return (
     <View
@@ -37,7 +37,7 @@ const Check = ({ navigation }) => {
   );
 };
 
-export default Check;
+export default HelperList;
 
 const data = {
   apply: [
