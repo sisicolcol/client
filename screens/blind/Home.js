@@ -11,6 +11,10 @@ const Home = ({ navigation }) => {
         title="활동지원사 확인하기"
         onPress={() => navigation.navigate("Check")}
       />
+      <Button
+        title="활동지원사 확인하기"
+        onPress={() => navigation.navigate("ApplyList")}
+      />
     </View>
   );
 };
