@@ -18,18 +18,22 @@ const ApplyList = ({ navigation }) => {
           backgroundColor: "white",
         }}
       >
-        {sendData.endProcess === "end" ? (
-          <PageInfo
-            title={"시시콜콜 활동지원서비스가\n만족스러우셨나요?"}
-            desc={"활동지원사의 임금이\n등록하신 계좌에서 자동 결제되었습니다."}
-            isBold={false}
-          />
-        ) : (
-          <PageInfo
-            title={"다시 찾으실 때까지\n기다리겠습니다."}
-            isBold={false}
-          />
-        )}
+        <View style={{ width: "80%", paddingTop: 80, paddingLeft: 16 }}>
+          {sendData.endProcess === "end" ? (
+            <PageInfo
+              title={"시시콜콜 활동지원서비스가\n만족스러우셨나요?"}
+              desc={
+                "활동지원사의 임금이\n등록하신 계좌에서 자동 결제되었습니다."
+              }
+              isBold={false}
+            />
+          ) : (
+            <PageInfo
+              title={"다시 찾으실 때까지\n기다리겠습니다."}
+              isBold={false}
+            />
+          )}
+        </View>
 
         <BottomButton
           text="나의 지원목록 보기"
