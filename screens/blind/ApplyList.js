@@ -1,46 +1,19 @@
 import { View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CheckApply from "../../components/CheckApply";
 import BottomButton from "../../components/common/BottomButton";
-import PageInfo from "../../components/common/PageInfo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const ApplyList = ({ navigation }) => {
   const [applyArr, setApplyArr] = useState(data.apply);
   const [sendData, setSendData] = useState({ endProcess: "" });
-  console.log(sendData);
 
-  if (sendData.endProcess !== "")
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: "white",
-        }}
-      >
-        <View style={{ width: "80%", paddingTop: 80, paddingLeft: 16 }}>
-          {sendData.endProcess === "end" ? (
-            <PageInfo
-              title={"시시콜콜 활동지원서비스가\n만족스러우셨나요?"}
-              desc={
-                "활동지원사의 임금이\n등록하신 계좌에서 자동 결제되었습니다."
-              }
-              isBold={false}
-            />
-          ) : (
-            <PageInfo
-              title={"다시 찾으실 때까지\n기다리겠습니다."}
-              isBold={false}
-            />
-          )}
-        </View>
+  useEffect(() => {
+    if (sendData.endProcess !== "") {
+      navigation.navigate("Result", { endData: sendData });
+    }
+  }, [sendData, navigation]);
 
-        <BottomButton
-          text="나의 지원목록 보기"
-          onPress={() => setSendData({ endProcess: "" })}
-        />
-      </View>
-    );
   return (
     <View
       style={{

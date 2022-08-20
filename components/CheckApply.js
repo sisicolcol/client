@@ -1,14 +1,21 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import MainButton from "./common/MainButton";
 import { shadowView, colors } from "../theme";
 import DefaultModal from "./common/DefaultModal";
 import RadioButton from "./common/RadioButton";
-import { TouchableOpacity } from "react-native-gesture-handler";
+
 import MultiLineinput from "./common/MultiLineInput";
 
 const CheckApply = ({ apply, sendData }) => {
   const [toggle, setToggle] = useState(false);
+  const [modalMode, setModalMode] = useState("");
   const [openModal, setOpenModal] = useState(false); //모달창
   const [checkReason, setCheckReason] = useState(0); //파투 사유
   const [text, setText] = useState(""); //사용자 입력(파투 사유, 초과 시간, 메모 등)
@@ -21,6 +28,7 @@ const CheckApply = ({ apply, sendData }) => {
       text: text,
       checkReason: checkReason,
     };
+    setOpenModal(false);
     sendData(data);
   };
 
@@ -29,7 +37,7 @@ const CheckApply = ({ apply, sendData }) => {
     switch (modalState) {
       case "memo":
         content = (
-          <View>
+          <View style={{ width: "100%" }}>
             <Text style={styles.modalButtonText}>메모</Text>
             <MultiLineinput setText={setText} accessibility="메모 입력하기" />
           </View>
@@ -37,19 +45,19 @@ const CheckApply = ({ apply, sendData }) => {
         break;
       case "complete":
         content = (
-          <View>
+          <View style={{ width: "100%" }}>
             <Text style={styles.modalButtonText}>
               예상 소요시간을 초과했나요?
             </Text>
             <Text style={styles.modalButtonTextDetail}>
               예상 소요시간이 초과된 경우,
-              <br /> 10분 단위로 추가 임금이 계산됩니다.
+              {"\n"}10분 단위로 추가 임금이 계산됩니다.
             </Text>
             <View style={styles.buttonWrap}>
               <MainButton
                 isBlue={true}
                 isBig={false}
-                width="100%"
+                width={"100%"}
                 text={"아니요"}
                 onPress={() => {
                   setOpenModal(false);
@@ -61,9 +69,9 @@ const CheckApply = ({ apply, sendData }) => {
               <MainButton
                 isBlue={true}
                 isBig={false}
-                width="100%"
+                width={"100%"}
                 text={"예"}
-                onPress={() => setOpenModal("overtime")}
+                onPress={() => setModalMode("overtime")}
               />
             </View>
           </View>
@@ -71,7 +79,7 @@ const CheckApply = ({ apply, sendData }) => {
         break;
       case "overtime":
         content = (
-          <View>
+          <View style={{ width: "100%" }}>
             <Text style={styles.modalButtonText}>
               초과시간을 입력해 주세요.
             </Text>
@@ -98,7 +106,7 @@ const CheckApply = ({ apply, sendData }) => {
               <MainButton
                 isBlue={true}
                 isBig={false}
-                width="100%"
+                width={"100%"}
                 text={"확인"}
                 onPress={() => {
                   setOpenModal(false);
@@ -111,13 +119,13 @@ const CheckApply = ({ apply, sendData }) => {
         break;
       case "cancel":
         content = (
-          <View>
+          <View style={{ width: "100%" }}>
             <Text
               style={{
                 textAlign: "center",
                 fontSize: 18,
                 fontWeight: "500",
-                letterSpacing: "-0.03em",
+                letterSpacing: -0.03,
                 paddingBottom: 32,
               }}
             >
@@ -139,9 +147,10 @@ const CheckApply = ({ apply, sendData }) => {
             ))}
             {/*사유 직접 입력하면 라디오 선택 초기화하고 다른 모달로 넘어감*/}
             <TouchableOpacity
+              style={{ paddingVertical: 5 }}
               onPress={() => {
-                setCheckReason(0);
-                setOpenModal("reason");
+                // setCheckReason(0);
+                setModalMode("reason");
               }}
             >
               <Text>클릭해서 사유를 직접 입력해 보세요.</Text>
@@ -150,7 +159,7 @@ const CheckApply = ({ apply, sendData }) => {
               <MainButton
                 isBlue={true}
                 isBig={false}
-                width="100%"
+                width={"100%"}
                 text={"확인"}
                 onPress={() => {
                   setOpenModal(false);
@@ -163,7 +172,7 @@ const CheckApply = ({ apply, sendData }) => {
         break;
       case "reason":
         content = (
-          <View>
+          <View style={{ width: "100%" }}>
             <Text style={styles.modalButtonText}>사유 직접 입력</Text>
             <MultiLineinput
               setText={setText}
@@ -173,7 +182,7 @@ const CheckApply = ({ apply, sendData }) => {
               <MainButton
                 isBlue={true}
                 isBig={false}
-                width="100%"
+                width={"100%"}
                 text={"확인"}
                 onPress={() => {
                   setOpenModal(false);
@@ -225,14 +234,42 @@ const CheckApply = ({ apply, sendData }) => {
         </Text>
       </View>
 
-      {/* 서비스가 끝나지 않았을 때 버튼 */}
-      {!apply.isComplete && (
+      {/* 서비스 완료 여부에 따른 버튼 세트*/}
+      {apply.isComplete ? (
         <>
           <View style={styles.buttonWrap}>
             <MainButton
               isBlue={true}
               isBig={false}
-              width="100%"
+              width={"100%"}
+              text={"활동지원서비스 완료"}
+              onPress={() => {
+                setModalMode("complete");
+                setOpenModal(true);
+              }}
+            />
+          </View>
+
+          <View style={styles.buttonWrap}>
+            <MainButton
+              isBlue={true}
+              isBig={false}
+              width={"100%"}
+              text={"활동지원서비스 파투"}
+              onPress={() => {
+                setModalMode("cancel");
+                setOpenModal(true);
+              }}
+            />
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={styles.buttonWrap}>
+            <MainButton
+              isBlue={true}
+              isBig={false}
+              width={"100%"}
               text={"자세한 신청 내용 보기"}
               onPress={() => setToggle(true)}
             />
@@ -242,43 +279,24 @@ const CheckApply = ({ apply, sendData }) => {
             <MainButton
               isBlue={true}
               isBig={false}
-              width="100%"
+              width={"100%"}
               text={"매칭 활동지원사 확인하기"}
-              onPress={() => console.log("check")}
+              onPress={() => {
+                // console.log("check");
+                // 여기에서 활동지원사 확인 페이지로 넘어가기
+              }}
             />
           </View>
           <View style={styles.buttonWrap}>
             <MainButton
               isBlue={true}
               isBig={false}
-              width="100%"
+              width={"100%"}
               text={"메모"}
-              onPress={() => setOpenModal("memo")}
-            />
-          </View>
-        </>
-      )}
-
-      {/* 서비스가 완료됐을 때 버튼 */}
-      {apply.isComplete && (
-        <>
-          <View style={styles.buttonWrap}>
-            <MainButton
-              isBlue={true}
-              isBig={false}
-              width="100%"
-              text={"활동지원서비스 완료"}
-              onPress={() => setOpenModal("complete")}
-            />
-          </View>
-
-          <View style={styles.buttonWrap}>
-            <MainButton
-              isBlue={true}
-              isBig={false}
-              width="100%"
-              text={"활동지원서비스 파투"}
-              onPress={() => setOpenModal("cancel")}
+              onPress={() => {
+                setModalMode("memo");
+                setOpenModal(true);
+              }}
             />
           </View>
         </>
@@ -286,7 +304,7 @@ const CheckApply = ({ apply, sendData }) => {
 
       {openModal && (
         <DefaultModal showModal={openModal} setShowModal={setOpenModal}>
-          {getModalContent(openModal)}
+          {getModalContent(modalMode)}
         </DefaultModal>
       )}
     </View>
@@ -312,19 +330,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "500",
-    letterSpacing: "-0.03em",
+    letterSpacing: -0.03,
   },
   modalButtonTextDetail: {
     textAlign: "center",
     paddingBottom: 16,
     fontSize: 12,
     color: colors.mainBlue,
-    letterSpacing: "-0.03em",
+    letterSpacing: -0.03,
   },
   inputStyle: {
     fontSize: 18,
     fontWeight: "500",
-    letterSpacing: "-0.03em",
+    letterSpacing: -0.03,
   },
   input: {
     width: "100%",
@@ -333,7 +351,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingBottom: 20,
     borderBottomWidth: 2,
-    outlineStyle: "none",
   },
 });
 

@@ -36,12 +36,11 @@ const CheckHelper = ({ helper, navigate }) => {
           {helper.isMatching ? "매칭 확정" : "매칭 안 됨"}
         </Text>
       </View>
-      {toggle && (
+      {toggle ? (
         <View>
           <Text>이것저것정보</Text>
         </View>
-      )}
-      {!toggle && (
+      ) : (
         <View style={styles.buttonWrap}>
           <MainButton
             isBlue={true}
@@ -52,6 +51,7 @@ const CheckHelper = ({ helper, navigate }) => {
           />
         </View>
       )}
+
       <View style={styles.buttonWrap}>
         <MainButton
           isBlue={true}
@@ -72,8 +72,8 @@ const CheckHelper = ({ helper, navigate }) => {
           />
         </View>
       )}
-      {openModal && (
-        <DefaultModal showModal={openModal} setShowModal={setOpenModal}>
+      {openModal !== false && (
+        <DefaultModal showModal={true} setShowModal={setOpenModal}>
           {openModal === "accept" ? (
             <View>
               <AntDesign
@@ -93,7 +93,10 @@ const CheckHelper = ({ helper, navigate }) => {
                   isBig={false}
                   width="100%"
                   text={"활동지원사와 채팅하기"}
-                  onPress={() => setOpenModal(true)}
+                  onPress={() => {
+                    setOpenModal(false);
+                    // navigate("Home"); 채팅방으로 이동하기
+                  }}
                 />
               </View>
               <View style={styles.buttonWrap}>
@@ -159,6 +162,6 @@ const styles = StyleSheet.create({
   modalButtonText: {
     fontSize: 18,
     fontWeight: "500",
-    letterSpacing: "-0.03em",
+    letterSpacing: -0.03,
   },
 });
