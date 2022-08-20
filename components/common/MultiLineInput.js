@@ -29,7 +29,7 @@ const MultiLineinput = ({ setText, accessibility }) => {
           setValue(text);
         }}
         value={value}
-        style={{ padding: 10, width: "65vw" }}
+        style={{ padding: 10, width: "65%" }}
       />
     </View>
   );
