@@ -1,8 +1,9 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import React, { useState, useEffect } from "react";
 import CheckApply from "../../components/CheckApply";
 import BottomButton from "../../components/common/BottomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { colors } from "../../theme";
 
 const ApplyList = ({ navigation }) => {
   const [applyArr, setApplyArr] = useState(data.apply);
@@ -21,22 +22,45 @@ const ApplyList = ({ navigation }) => {
         backgroundColor: "white",
       }}
     >
-      <KeyboardAwareScrollView
-        contentContainerStyle={{
-          width: "100%",
-          alignItems: "center",
-          paddingBottom: 120,
-          paddingTop: 24,
-        }}
-      >
-        {applyArr.map((applyArr) => (
-          <CheckApply
-            key={applyArr.helper_name}
-            apply={applyArr}
-            sendData={setSendData}
-          />
-        ))}
-      </KeyboardAwareScrollView>
+      {applyArr.length === 0 ? (
+        <View
+          style={{
+            height: "100%",
+            marginTop: -84,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: colors.pageTextGray1,
+              letterSpacing: -0.01,
+              fontSize: 16,
+              textAlign: "center",
+            }}
+          >
+            아직 활동지원사 매칭이{"\n"}이루어지지 않았어요!
+          </Text>
+        </View>
+      ) : (
+        <KeyboardAwareScrollView
+          contentContainerStyle={{
+            width: "100%",
+            alignItems: "center",
+            paddingBottom: 120,
+            paddingTop: 24,
+          }}
+        >
+          {applyArr.map((applyArr) => (
+            <CheckApply
+              key={applyArr.helper_name}
+              apply={applyArr}
+              sendData={setSendData}
+            />
+          ))}
+        </KeyboardAwareScrollView>
+      )}
+
       <BottomButton
         text="홈 화면으로 돌아가기"
         onPress={() => navigation.navigate("Home")}
