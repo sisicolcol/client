@@ -1,5 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Home, Apply, Chat, HelperList, ApplyList } from "../screens/blind/";
+import {
+  Home,
+  Apply,
+  Chat,
+  HelperList,
+  ApplyList,
+  Result,
+} from "../screens/blind/";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +32,11 @@ const BlindStack = () => {
           name="ApplyList"
           options={{ title: "신청 활동지원서비스" }}
           component={ApplyList}
+        />
+        <Stack.Screen
+          name="Result"
+          options={{ title: "", headerLeft: () => null }}
+          component={Result}
         />
       </Stack.Group>
     </Stack.Navigator>

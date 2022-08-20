@@ -8,12 +8,12 @@ const Home = ({ navigation }) => {
       <Button title="눌러" onPress={() => navigation.navigate("Apply")} />
       <Button title="눌러" onPress={() => navigation.navigate("Chat")} />
       <Button
-        title="활동지원사 확인하기"
-        onPress={() => navigation.navigate("Check")}
+        title="신청목록"
+        onPress={() => navigation.navigate("ApplyList")}
       />
       <Button
-        title="활동지원사 확인하기"
-        onPress={() => navigation.navigate("ApplyList")}
+        title="지원한 활동지원사 확인하기"
+        onPress={() => navigation.navigate("HelperList")}
       />
     </View>
   );
