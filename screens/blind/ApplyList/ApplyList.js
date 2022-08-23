@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 import React, { useState, useEffect } from "react";
-import CheckApply from "../../components/CheckApply";
-import BottomButton from "../../components/common/BottomButton";
+import CheckApply from "../../../components/CheckApply";
+import BottomButton from "../../../components/common/BottomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { colors } from "../../theme";
+import { colors, fontSizes } from "../../../theme";
 
 const ApplyList = ({ navigation }) => {
   const [applyArr, setApplyArr] = useState(data.apply);
@@ -35,7 +35,7 @@ const ApplyList = ({ navigation }) => {
             style={{
               color: colors.pageTextGray1,
               letterSpacing: -0.01,
-              fontSize: 16,
+              fontSize: fontSizes.smallInfo,
               textAlign: "center",
             }}
           >
@@ -56,6 +56,9 @@ const ApplyList = ({ navigation }) => {
               key={applyArr.helper_name}
               apply={applyArr}
               sendData={setSendData}
+              navigate={(n) => {
+                navigation.navigate(n.route, { detailData: n.detailData });
+              }}
             />
           ))}
         </KeyboardAwareScrollView>
@@ -90,10 +93,10 @@ const data = {
       id: 2,
       helper_name: "이지원",
       date_time: "3월 9일 (수)",
-      start_location: "자택",
+      start_location: "집",
       dest_location: "건국대학교 병원 정문",
       wish: "여성분 선호합니다",
-      content: "자택에서 출발해서 건국대학교 병원.....",
+      content: "자택에서 출발해서 건국대학교 병원ㄱㄱ.....d왔다갔다입력입력",
       taken_time: 5,
       isRound: false,
       isMatching: true,

@@ -5,7 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MainButton from "./common/MainButton";
 import { shadowView, colors } from "../theme";
 import DefaultModal from "./common/DefaultModal";
@@ -13,8 +13,7 @@ import RadioButton from "./common/RadioButton";
 
 import MultiLineinput from "./common/MultiLineInput";
 
-const CheckApply = ({ apply, sendData }) => {
-  const [toggle, setToggle] = useState(false);
+const CheckApply = ({ navigate, apply, sendData }) => {
   const [modalMode, setModalMode] = useState("");
   const [openModal, setOpenModal] = useState(false); //모달창
   const [checkReason, setCheckReason] = useState(0); //파투 사유
@@ -271,7 +270,9 @@ const CheckApply = ({ apply, sendData }) => {
               isBig={false}
               width={"100%"}
               text={"자세한 신청 내용 보기"}
-              onPress={() => setToggle(true)}
+              onPress={() =>
+                navigate({ route: "ApplyDetail", detailData: apply })
+              }
             />
           </View>
 
@@ -281,10 +282,9 @@ const CheckApply = ({ apply, sendData }) => {
               isBig={false}
               width={"100%"}
               text={"매칭 활동지원사 확인하기"}
-              onPress={() => {
-                // console.log("check");
-                // 여기에서 활동지원사 확인 페이지로 넘어가기
-              }}
+              onPress={() =>
+                navigate({ route: "ApplyHelper", detailData: apply })
+              }
             />
           </View>
           <View style={styles.buttonWrap}>

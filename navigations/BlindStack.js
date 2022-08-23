@@ -5,6 +5,8 @@ import {
   Chat,
   HelperList,
   ApplyList,
+  ApplyDetail,
+  ApplyHelper,
   Result,
 } from "../screens/blind/";
 
@@ -32,6 +34,16 @@ const BlindStack = () => {
           name="ApplyList"
           options={{ title: "신청 활동지원서비스" }}
           component={ApplyList}
+        />
+        <Stack.Screen
+          name="ApplyDetail"
+          options={{ title: "신청 활동지원서비스" }}
+          component={ApplyDetail}
+        />
+        <Stack.Screen
+          name="ApplyHelper"
+          options={{ title: "신청 활동지원서비스" }}
+          component={ApplyHelper}
         />
         <Stack.Screen
           name="Result"
