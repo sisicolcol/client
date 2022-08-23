@@ -12,6 +12,8 @@ export const fontSizes = {
   smallButton: 18,
   bigInfo: 24,
   smallInfo: 16,
+  bigText: 22,
+  smallText: 18,
 };
 
 export const shadowView = {
@@ -29,4 +31,10 @@ export const shadowView = {
   shadowRadius: 4,
   elevation: 5,
   marginBottom: 10,
+};
+
+export const defaultScreen = {
+  flex: 1,
+  backgroundColor: "white",
+  alignItems: "center",
 };

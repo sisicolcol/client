@@ -75,7 +75,7 @@ const CheckHelper = ({ helper, navigate }) => {
       {openModal !== false && (
         <DefaultModal showModal={true} setShowModal={setOpenModal}>
           {openModal === "accept" ? (
-            <View>
+            <View style={{ width: "100%", alignItems: "center" }}>
               <AntDesign
                 name="checkcircleo"
                 size={25}
@@ -95,7 +95,7 @@ const CheckHelper = ({ helper, navigate }) => {
                   text={"활동지원사와 채팅하기"}
                   onPress={() => {
                     setOpenModal(false);
-                    // navigate("Home"); 채팅방으로 이동하기
+                    navigate("Chat"); //수정 필요
                   }}
                 />
               </View>
@@ -113,7 +113,7 @@ const CheckHelper = ({ helper, navigate }) => {
               </View>
             </View>
           ) : (
-            <View>
+            <View style={{ width: "100%", alignItems: "center" }}>
               <Text style={styles.modalButtonText}>정말 거절하시겠습니까?</Text>
               <View style={styles.buttonWrap}>
                 <MainButton
