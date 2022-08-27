@@ -29,7 +29,7 @@ PageInfo.defaultProps = {
 const styles = (isBold, marginBottom) =>
   StyleSheet.create({
     pageInfoView: {
-      width: "100%",
+      width: "90%",
     },
     pageTitle: {
       fontSize: fontSizes.bigInfo,

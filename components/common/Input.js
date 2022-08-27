@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     fontSize: 18,
     fontWeight: "500",
-    letterSpacing: 0.03,
+    letterSpacing: -0.03,
   },
   inputLabel: {
     lineHeight: 26,
@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingBottom: 20,
     borderBottomWidth: 2,
-    outlineStyle: "none",
   },
   closeButtonParent: {
     position: "absolute",
