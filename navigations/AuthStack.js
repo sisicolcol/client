@@ -5,6 +5,8 @@ import {
   FirstSignUp,
   SecondSignUp,
   HelperLogin,
+  HelperFirstSignUp,
+  HelperSecondSignUp,
 } from "../screens/auth";
 import { Feather } from "@expo/vector-icons";
 
@@ -45,6 +47,11 @@ const AuthStack = () => {
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen name="HelperLogin" component={HelperLogin} />
+        <Stack.Screen name="HelperFirstSignUp" component={HelperFirstSignUp} />
+        <Stack.Screen
+          name="HelperSecondSignUp"
+          component={HelperSecondSignUp}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

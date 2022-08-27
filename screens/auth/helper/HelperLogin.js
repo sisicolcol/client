@@ -54,6 +54,7 @@ const HelperLogin = ({ navigation }) => {
         <Input
           placeholder={"비밀번호"}
           sendValue={(text) => console.log(text)}
+          secureTextEntry={true}
         />
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center", marginTop: 24 }}
@@ -95,7 +96,9 @@ const HelperLogin = ({ navigation }) => {
             onPress={() => console.log("로그인")}
           />
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("FirstSignUp")}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("HelperFirstSignUp")}
+        >
           <Text
             style={{ fontSize: 20, fontWeight: "500", color: colors.mainBlue }}
           >

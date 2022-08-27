@@ -6,9 +6,9 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import Input from "../../components/common/Input";
+import Input from "../../../components/common/Input";
 import { AntDesign } from "@expo/vector-icons";
-import { colors } from "../../theme";
+import { colors } from "../../../theme";
 
 const LoginButton = ({ text, onPress }) => {
   return (
@@ -40,7 +40,7 @@ const Login = ({ navigation }) => {
     >
       <View style={{ flex: 1, justifyContent: "center" }}>
         <Image
-          source={require("../../images/logo.png")}
+          source={require("../../../images/logo.png")}
           resizeMode="contain"
           style={{ width: 200, marginTop: 30 }}
         />
@@ -56,6 +56,7 @@ const Login = ({ navigation }) => {
         <Input
           placeholder={"비밀번호"}
           sendValue={(text) => console.log(text)}
+          secureTextEntry={true}
         />
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center", marginTop: 24 }}

@@ -4,7 +4,7 @@ import PageInfo from "../../../components/common/PageInfo";
 import Input from "../../../components/common/Input";
 import BottomButton from "../../../components/common/BottomButton";
 
-const SecondSignUp = () => {
+const HelperSecondSignUp = () => {
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -31,12 +31,10 @@ const SecondSignUp = () => {
           label={"비밀번호"}
           placeholder={"영문, 숫자, 특수문자 조합 8자리 이상"}
           sendValue={(text) => console.log(text)}
-          secureTextEntry={true}
         />
         <Input
           placeholder={"비밀번호 확인"}
           sendValue={(text) => console.log(text)}
-          secureTextEntry={true}
         />
       </View>
       <BottomButton text={"가입하기"} />
@@ -58,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SecondSignUp;
+export default HelperSecondSignUp;
