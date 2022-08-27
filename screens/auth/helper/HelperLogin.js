@@ -6,9 +6,9 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import Input from "../../components/common/Input";
+import Input from "../../../components/common/Input";
 import { AntDesign } from "@expo/vector-icons";
-import { colors } from "../../theme";
+import { colors } from "../../../theme";
 
 const LoginButton = ({ imageSource, onPress }) => {
   return (
@@ -38,7 +38,7 @@ const HelperLogin = ({ navigation }) => {
     >
       <View style={{ flex: 1, justifyContent: "center" }}>
         <Image
-          source={require("../../images/logo.png")}
+          source={require("../../../images/logo.png")}
           resizeMode="contain"
           style={{ width: 200, marginTop: 30 }}
         />
@@ -83,15 +83,15 @@ const HelperLogin = ({ navigation }) => {
           }}
         >
           <LoginButton
-            imageSource={require("../../images/kakao.png")}
+            imageSource={require("../../../images/kakao.png")}
             onPress={() => console.log("로그인")}
           />
           <LoginButton
-            imageSource={require("../../images/naver.png")}
+            imageSource={require("../../../images/naver.png")}
             onPress={() => console.log("로그인")}
           />
           <LoginButton
-            imageSource={require("../../images/google.png")}
+            imageSource={require("../../../images/google.png")}
             onPress={() => console.log("로그인")}
           />
         </View>

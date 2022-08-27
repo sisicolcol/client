@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet } from "react-native";
-import Input from "../../components/common/Input";
-import PageInfo from "../../components/common/PageInfo";
-import BottomButton from "../../components/common/BottomButton";
-import SignUpButton from "../../components/SignUpButton";
+import Input from "../../../components/common/Input";
+import PageInfo from "../../../components/common/PageInfo";
+import BottomButton from "../../../components/common/BottomButton";
+import SignUpButton from "../../../components/SignUpButton";
 
 const FirstSignUp = ({ navigation }) => {
   const [isMale, setIsMale] = useState(false);

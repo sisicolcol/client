@@ -1,7 +1,7 @@
 import Selection from "./Selection";
-import Login from "./Login";
-import FirstSignUp from "./FirstSignUp";
-import SecondSignUp from "./SecondSignUp";
-import HelperLogin from "./HelperLogin";
+import Login from "./blind/Login";
+import FirstSignUp from "./blind/FirstSignUp";
+import SecondSignUp from "./blind/SecondSignUp";
+import HelperLogin from "./helper/HelperLogin";
 
 export { Selection, Login, FirstSignUp, SecondSignUp, HelperLogin };
