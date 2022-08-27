@@ -1,5 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Selection, Login, FirstSignUp, SecondSignUp } from "../screens/auth";
+import {
+  Selection,
+  Login,
+  FirstSignUp,
+  SecondSignUp,
+  HelperLogin,
+} from "../screens/auth";
 import { Feather } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
@@ -32,9 +38,14 @@ const AuthStack = () => {
         component={Selection}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="FirstSignUp" component={FirstSignUp} />
-      <Stack.Screen name="SecondSignUp" component={SecondSignUp} />
+      <Stack.Group>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="FirstSignUp" component={FirstSignUp} />
+        <Stack.Screen name="SecondSignUp" component={SecondSignUp} />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen name="HelperLogin" component={HelperLogin} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };
