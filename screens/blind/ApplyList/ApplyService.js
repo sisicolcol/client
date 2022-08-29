@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import MainButton from "./common/MainButton";
-import { shadowView, colors } from "../theme";
-import DefaultModal from "./common/DefaultModal";
-import RadioButton from "./common/RadioButton";
+import MainButton from "../../../components/common/MainButton";
+import { shadowView, colors, modalButtonText } from "../../../theme";
+import DefaultModal from "../../../components/common/DefaultModal";
+import RadioButton from "../../../components/common/RadioButton";
 
-import MultiLineinput from "./common/MultiLineInput";
+import MultiLineinput from "../../../components/common/MultiLineInput";
 
-const CheckApply = ({ navigate, apply, sendData }) => {
+const ApplyService = ({ navigate, apply, sendData }) => {
   const [modalMode, setModalMode] = useState("");
   const [openModal, setOpenModal] = useState(false); //모달창
   const [checkReason, setCheckReason] = useState(0); //파투 사유
@@ -22,7 +22,7 @@ const CheckApply = ({ navigate, apply, sendData }) => {
 
   const endProcessFunc = (endProcess) => {
     const data = {
-      id: apply.id,
+      id: apply.apply_id,
       endProcess: endProcess,
       text: text,
       checkReason: checkReason,
@@ -37,7 +37,7 @@ const CheckApply = ({ navigate, apply, sendData }) => {
       case "memo":
         content = (
           <View style={{ width: "100%" }}>
-            <Text style={styles.modalButtonText}>메모</Text>
+            <Text style={modalButtonText}>메모</Text>
             <MultiLineinput setText={setText} accessibility="메모 입력하기" />
           </View>
         );
@@ -45,43 +45,38 @@ const CheckApply = ({ navigate, apply, sendData }) => {
       case "complete":
         content = (
           <View style={{ width: "100%" }}>
-            <Text style={styles.modalButtonText}>
-              예상 소요시간을 초과했나요?
-            </Text>
+            <Text style={modalButtonText}>예상 소요시간을 초과했나요?</Text>
             <Text style={styles.modalButtonTextDetail}>
               예상 소요시간이 초과된 경우,
               {"\n"}10분 단위로 추가 임금이 계산됩니다.
             </Text>
-            <View style={styles.buttonWrap}>
-              <MainButton
-                isBlue={true}
-                isBig={false}
-                width={"100%"}
-                text={"아니요"}
-                onPress={() => {
-                  setOpenModal(false);
-                  endProcessFunc("end");
-                }}
-              />
-            </View>
-            <View style={styles.buttonWrap}>
-              <MainButton
-                isBlue={true}
-                isBig={false}
-                width={"100%"}
-                text={"예"}
-                onPress={() => setModalMode("overtime")}
-              />
-            </View>
+            <View style={{ height: 16 }} />
+            <MainButton
+              isBlue={true}
+              isBig={false}
+              width={"100%"}
+              text={"아니요"}
+              onPress={() => {
+                setOpenModal(false);
+                endProcessFunc("end");
+              }}
+            />
+
+            <View style={{ height: 16 }} />
+            <MainButton
+              isBlue={true}
+              isBig={false}
+              width={"100%"}
+              text={"예"}
+              onPress={() => setModalMode("overtime")}
+            />
           </View>
         );
         break;
       case "overtime":
         content = (
           <View style={{ width: "100%" }}>
-            <Text style={styles.modalButtonText}>
-              초과시간을 입력해 주세요.
-            </Text>
+            <Text style={modalButtonText}>초과시간을 입력해 주세요.</Text>
             <Text style={styles.modalButtonTextDetail}>
               10분 단위로 추가 임금이 계산됩니다.
             </Text>
@@ -101,18 +96,17 @@ const CheckApply = ({ navigate, apply, sendData }) => {
               onBlur={() => setfocus(false)}
               onFocus={() => setfocus(true)}
             />
-            <View style={styles.buttonWrap}>
-              <MainButton
-                isBlue={true}
-                isBig={false}
-                width={"100%"}
-                text={"확인"}
-                onPress={() => {
-                  setOpenModal(false);
-                  endProcessFunc("end");
-                }}
-              />
-            </View>
+            <View style={{ height: 16 }} />
+            <MainButton
+              isBlue={true}
+              isBig={false}
+              width={"100%"}
+              text={"확인"}
+              onPress={() => {
+                setOpenModal(false);
+                endProcessFunc("end");
+              }}
+            />
           </View>
         );
         break;
@@ -154,41 +148,39 @@ const CheckApply = ({ navigate, apply, sendData }) => {
             >
               <Text>클릭해서 사유를 직접 입력해 보세요.</Text>
             </TouchableOpacity>
-            <View style={styles.buttonWrap}>
-              <MainButton
-                isBlue={true}
-                isBig={false}
-                width={"100%"}
-                text={"확인"}
-                onPress={() => {
-                  setOpenModal(false);
-                  endProcessFunc("cancel");
-                }}
-              />
-            </View>
+            <View style={{ height: 16 }} />
+            <MainButton
+              isBlue={true}
+              isBig={false}
+              width={"100%"}
+              text={"확인"}
+              onPress={() => {
+                setOpenModal(false);
+                endProcessFunc("cancel");
+              }}
+            />
           </View>
         );
         break;
       case "reason":
         content = (
           <View style={{ width: "100%" }}>
-            <Text style={styles.modalButtonText}>사유 직접 입력</Text>
+            <Text style={modalButtonText}>사유 직접 입력</Text>
             <MultiLineinput
               setText={setText}
               accessibility="파투 사유 직접 입력하기"
             />
-            <View style={styles.buttonWrap}>
-              <MainButton
-                isBlue={true}
-                isBig={false}
-                width={"100%"}
-                text={"확인"}
-                onPress={() => {
-                  setOpenModal(false);
-                  endProcessFunc("cancel");
-                }}
-              />
-            </View>
+            <View style={{ height: 16 }} />
+            <MainButton
+              isBlue={true}
+              isBig={false}
+              width={"100%"}
+              text={"확인"}
+              onPress={() => {
+                setOpenModal(false);
+                endProcessFunc("cancel");
+              }}
+            />
           </View>
         );
         break;
@@ -210,15 +202,18 @@ const CheckApply = ({ navigate, apply, sendData }) => {
       {/*간단한 정보(공통) */}
       <View style={styles.applyDetail}>
         <Text style={styles.detailLabel}>신청일시:</Text>
-        <Text style={styles.detailContent}>{apply.date_time}</Text>
+        <Text style={styles.detailContent}>
+          {apply.service_day}
+          {apply.service_time}
+        </Text>
       </View>
       <View style={styles.applyDetail}>
         <Text style={styles.detailLabel}>출발지:</Text>
-        <Text style={styles.detailContent}>{apply.start_location}</Text>
+        <Text style={styles.detailContent}>{apply.start_point}</Text>
       </View>
       <View style={styles.applyDetail}>
         <Text style={styles.detailLabel}>도착지:</Text>
-        <Text style={styles.detailContent}>{apply.dest_location}</Text>
+        <Text style={styles.detailContent}>{apply.end_point}</Text>
       </View>
       <View style={styles.applyDetail}>
         <Text style={styles.detailLabel}>매칭여부:</Text>
@@ -234,71 +229,66 @@ const CheckApply = ({ navigate, apply, sendData }) => {
       </View>
 
       {/* 서비스 완료 여부에 따른 버튼 세트*/}
+      <View style={{ height: 16 }} />
       {apply.isComplete ? (
         <>
-          <View style={styles.buttonWrap}>
-            <MainButton
-              isBlue={true}
-              isBig={false}
-              width={"100%"}
-              text={"활동지원서비스 완료"}
-              onPress={() => {
-                setModalMode("complete");
-                setOpenModal(true);
-              }}
-            />
-          </View>
+          <MainButton
+            isBlue={true}
+            isBig={false}
+            width={"100%"}
+            text={"활동지원서비스 완료"}
+            onPress={() => {
+              setModalMode("complete");
+              setOpenModal(true);
+            }}
+          />
 
-          <View style={styles.buttonWrap}>
-            <MainButton
-              isBlue={true}
-              isBig={false}
-              width={"100%"}
-              text={"활동지원서비스 파투"}
-              onPress={() => {
-                setModalMode("cancel");
-                setOpenModal(true);
-              }}
-            />
-          </View>
+          <View style={{ height: 16 }} />
+          <MainButton
+            isBlue={true}
+            isBig={false}
+            width={"100%"}
+            text={"활동지원서비스 파투"}
+            onPress={() => {
+              setModalMode("cancel");
+              setOpenModal(true);
+            }}
+          />
         </>
       ) : (
         <>
-          <View style={styles.buttonWrap}>
-            <MainButton
-              isBlue={true}
-              isBig={false}
-              width={"100%"}
-              text={"자세한 신청 내용 보기"}
-              onPress={() =>
-                navigate({ route: "ApplyDetail", detailData: apply })
-              }
-            />
-          </View>
+          <MainButton
+            isBlue={true}
+            isBig={false}
+            width={"100%"}
+            text={"자세한 신청 내용 보기"}
+            onPress={() =>
+              navigate({ route: "ApplyDetail", detailData: apply })
+            }
+          />
 
-          <View style={styles.buttonWrap}>
-            <MainButton
-              isBlue={true}
-              isBig={false}
-              width={"100%"}
-              text={"매칭 활동지원사 확인하기"}
-              onPress={() =>
-                navigate({ route: "ApplyHelper", detailData: apply })
-              }
-            />
-          </View>
-          <View style={styles.buttonWrap}>
-            <MainButton
-              isBlue={true}
-              isBig={false}
-              width={"100%"}
-              text={"메모"}
-              onPress={() => {
-                setModalMode("memo");
-                setOpenModal(true);
-              }}
-            />
-          </View>
+          <View style={{ height: 16 }} />
+          <MainButton
+            isBlue={true}
+            isBig={false}
+            width={"100%"}
+            text={"매칭 활동지원사 확인하기"}
+            onPress={() =>
+              navigate({ route: "ApplyHelper", detailData: apply })
+            }
+          />
+
+          <View style={{ height: 16 }} />
+          <MainButton
+            isBlue={true}
+            isBig={false}
+            width={"100%"}
+            text={"메모"}
+            onPress={() => {
+              setModalMode("memo");
+              setOpenModal(true);
+            }}
+          />
         </>
       )}
 
@@ -311,7 +301,7 @@ const CheckApply = ({ navigate, apply, sendData }) => {
   );
 };
 
-export default CheckApply;
+export default ApplyService;
 
 const styles = StyleSheet.create({
   applyDetail: {
@@ -320,17 +310,6 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     width: 100,
-  },
-  buttonWrap: {
-    paddingTop: 16,
-    width: "100%",
-  },
-  modalButtonText: {
-    paddingBottom: 8,
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "500",
-    letterSpacing: -0.03,
   },
   modalButtonTextDetail: {
     textAlign: "center",
