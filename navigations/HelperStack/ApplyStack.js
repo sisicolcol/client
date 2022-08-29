@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { Home, QuickApply, ReservationApply } from "../../screens/helper/index";
 import { Feather } from "@expo/vector-icons";
+import { Image } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -27,7 +28,19 @@ const ApplyStack = () => {
         },
       }}
     >
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require("../../images/logo.png")}
+              resizeMode="contain"
+              style={{ width: 72 }}
+            />
+          ),
+        }}
+      />
       <Stack.Group>
         <Stack.Screen name="QuickApply" component={QuickApply} />
       </Stack.Group>

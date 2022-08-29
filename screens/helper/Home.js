@@ -17,65 +17,45 @@ const Home = ({ navigation }) => {
         isBlue={true}
         isBold={true}
         width={"90%"}
-        text={"활동지원서비스 신청하기"}
+        text={"퀵 활동지원서비스 신청하기"}
         marginBottom={25}
-        onPress={() => navigation.navigate("Apply")}
+        onPress={() => navigation.navigate("QuickApply")}
       />
       <MainButton
         isBig={true}
         isBlue={true}
         isBold={true}
         width={"90%"}
-        text={"활동지원사와 채팅하기"}
+        text={"사전 예약 활동지원서비스 신청하기"}
         marginBottom={25}
+        onPress={() => navigation.navigate("ReservationApply")}
       />
       <MainButton
         isBig={true}
         isBlue={true}
         isBold={true}
         width={"90%"}
-        text={"신청목록"}
+        text={"시각장애인과 채팅하기"}
         marginBottom={25}
+        onPress={() => navigation.navigate("Chat")}
       />
       <MainButton
         isBig={true}
         isBlue={true}
         isBold={true}
         width={"90%"}
-        text={"지원한 활동지원사 확인하기"}
+        text={"나의 지원 목록"}
         marginBottom={25}
+        onPress={() => navigation.navigate("ApplyList")}
       />
-      <MainButton isBig={true} width={"90%"} text={"알림"} marginBottom={25} />
       <MainButton
         isBig={true}
         width={"90%"}
         text={"내 정보"}
         marginBottom={25}
+        onPress={() => navigation.navigate("MyPageStack")}
       />
     </SafeAreaView>
-    // <View style={{ flex: 1, backgroundColor: "white" }}>
-    //   <Text>메인화면</Text>
-    //   <Button
-    //     title="퀵 활동"
-    //     onPress={() => navigation.navigate("QuickApply")}
-    //   />
-    //   <Button
-    //     title="사전 예약"
-    //     onPress={() => navigation.navigate("ReservationApply")}
-    //   />
-    //   <Button
-    //     title="시각장애인과 채팅하기"
-    //     onPress={() => navigation.navigate("Chat")}
-    //   />
-    //   <Button
-    //     title="지원목록"
-    //     onPress={() => navigation.navigate("ApplyList")}
-    //   />
-    //   <Button
-    //     title="내 정보"
-    //     onPress={() => navigation.navigate("MyPageStack")}
-    //   />
-    // </View>
   );
 };
 

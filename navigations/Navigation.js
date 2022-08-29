@@ -7,7 +7,7 @@ import AuthStack from "./AuthStack";
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <BlindStack />
+      <HelperTab />
     </NavigationContainer>
   );
 };
