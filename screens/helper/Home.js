@@ -3,7 +3,7 @@ import { View, Text, Button } from "react-native";
 
 const Home = ({ navigation }) => {
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <Text>메인화면</Text>
       <Button
         title="퀵 활동"
