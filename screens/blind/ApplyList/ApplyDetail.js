@@ -21,33 +21,33 @@ const ApplyDetail = ({ navigation, route }) => {
         {/*간단한 정보(공통) */}
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>신청일시:</Text>
-          <Text style={styles.detailContent}>{apply.date_time}</Text>
+          <Text style={styles.detailContent}>{apply.service_day}</Text>
         </View>
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>출발지:</Text>
-          <Text style={styles.detailContent}>{apply.start_location}</Text>
+          <Text style={styles.detailContent}>{apply.start_point}</Text>
         </View>
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>도착지:</Text>
-          <Text style={styles.detailContent}>{apply.dest_location}</Text>
+          <Text style={styles.detailContent}>{apply.end_point}</Text>
         </View>
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>왕복/편도:</Text>
           <Text style={styles.detailContent}>
-            {apply.isRound ? "왕복" : "편도"}
+            {apply.way ? "왕복" : "편도"}
           </Text>
         </View>
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>소요시간:</Text>
-          <Text style={styles.detailContent}>{apply.taken_time}시간</Text>
+          <Text style={styles.detailContent}>{apply.duration}시간</Text>
         </View>
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>바라는 사항:</Text>
-          <Text style={styles.detailContent}>{apply.wish}</Text>
+          <Text style={styles.detailContent}>{apply.contents}</Text>
         </View>
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>신청 내용:</Text>
-          <Text style={styles.detailContent}>{apply.content}</Text>
+          <Text style={styles.detailContent}>{apply.details}</Text>
         </View>
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>매칭여부:</Text>

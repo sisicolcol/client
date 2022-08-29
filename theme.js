@@ -38,3 +38,11 @@ export const defaultScreen = {
   backgroundColor: "white",
   alignItems: "center",
 };
+
+export const modalButtonText = {
+  fontSize: fontSizes.smallText,
+  fontWeight: "500",
+  letterSpacing: -0.03,
+  paddingBottom: 16,
+  textAlign: "center",
+};
