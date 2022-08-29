@@ -1,10 +1,16 @@
-import React from "react";
+import { React, useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet } from "react-native";
 import PageInfo from "../../../components/common/PageInfo";
-import Input from "../../../components/common/Input";
 import BottomButton from "../../../components/common/BottomButton";
+import RadioButton from "../../../components/common/RadioButton";
 
 const HelperSecondSignUp = () => {
+  const selectList = [
+    { id: 1, name: "문자 메시지 수신에 동의합니다." },
+    { id: 2, name: "이메일 수신에 동의합니다." },
+  ];
+  const [selectedData, setSelectedData] = useState(0);
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -17,25 +23,29 @@ const HelperSecondSignUp = () => {
           marginBottom: 30,
         }}
       >
-        <PageInfo isBold={false} title="회원가입" />
+        <PageInfo isBold={false} title="약관동의" />
       </View>
-      <View style={styles.inputView}>
-        <Input
-          label={"아이디"}
-          placeholder={"아이디"}
-          sendValue={(text) => console.log(text)}
-        />
+      <View style={styles.viewStyle}>
+        <Text
+          style={{
+            fontSize: 17,
+            fontWeight: "bold",
+          }}
+        >
+          마케팅 정보 수신 및 활용 동의
+        </Text>
       </View>
-      <View style={styles.inputView}>
-        <Input
-          label={"비밀번호"}
-          placeholder={"영문, 숫자, 특수문자 조합 8자리 이상"}
-          sendValue={(text) => console.log(text)}
-        />
-        <Input
-          placeholder={"비밀번호 확인"}
-          sendValue={(text) => console.log(text)}
-        />
+      <View style={styles.viewStyle}>
+        {selectList.map((data) => (
+          <RadioButton
+            key={data.id}
+            data={data}
+            checked={selectedData === data.id ? true : false}
+            onSelect={(value) => {
+              setSelectedData(value);
+            }}
+          />
+        ))}
       </View>
       <BottomButton text={"가입하기"} />
     </SafeAreaView>
@@ -43,9 +53,9 @@ const HelperSecondSignUp = () => {
 };
 
 const styles = StyleSheet.create({
-  inputView: {
-    width: "90%",
-    marginBottom: 50,
+  viewStyle: {
+    width: "80%",
+    marginBottom: 20,
   },
   label: {
     fontSize: 18,
@@ -53,6 +63,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.03,
     lineHeight: 26,
     marginBottom: 24,
+  },
+  textStyle: {
+    fontSize: 17,
   },
 });
 
