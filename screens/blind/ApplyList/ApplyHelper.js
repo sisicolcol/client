@@ -1,8 +1,9 @@
-import { Text, View } from "react-native";
+import { Text, View, Image } from "react-native";
 import React from "react";
 import MainButton from "../../../components/common/MainButton";
 import BottomButton from "../../../components/common/BottomButton";
 import { colors, fontSizes, defaultScreen, shadowView } from "../../../theme";
+import NoHelper from "../../../assets/img/NoHelper.png";
 
 const ApplyHelper = ({ navigation, route }) => {
   const apply = route.params.detailData;
@@ -25,10 +26,17 @@ const ApplyHelper = ({ navigation, route }) => {
               letterSpacing: -0.01,
               fontSize: fontSizes.smallInfo,
               textAlign: "center",
+              marginBottom: 16,
             }}
           >
             아직 활동 지원사 매칭이{"\n"}이루어지지 않았어요!
           </Text>
+          <Image
+            source={NoHelper}
+            style={{ width: 94, height: 84 }}
+            accessible={false}
+            accessibilityRole="image"
+          />
         </View>
       ) : (
         <View
