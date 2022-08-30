@@ -1,5 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Home, QuickApply, ReservationApply } from "../../screens/helper/index";
+import {
+  Home,
+  QuickApply,
+  ReservationApply,
+  ApplyDetail,
+  IntroSelection,
+} from "../../screens/helper/index";
 import { Feather } from "@expo/vector-icons";
 import { Image } from "react-native";
 
@@ -47,6 +53,16 @@ const ApplyStack = () => {
       <Stack.Group>
         <Stack.Screen name="ReservationApply" component={ReservationApply} />
       </Stack.Group>
+      <Stack.Screen
+        name="ApplyDetail"
+        component={ApplyDetail}
+        options={{ title: "상세 내역 확인하기" }}
+      />
+      <Stack.Screen
+        name="IntroSelection"
+        component={IntroSelection}
+        options={{ title: "지원하기" }}
+      />
     </Stack.Navigator>
   );
 };

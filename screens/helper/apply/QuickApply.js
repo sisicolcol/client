@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import PageInfo from "../../components/common/PageInfo";
+import PageInfo from "../../../components/common/PageInfo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Ionicons } from "@expo/vector-icons";
-import HelperService from "../../components/HelperService";
+import HelperService from "../../../components/HelperService";
 
 const QuickApply = ({ navigation }) => {
   return (
@@ -49,6 +49,12 @@ const QuickApply = ({ navigation }) => {
             time={3}
             start={"이름"}
             dest={"이름"}
+            checkOnPress={() => {
+              navigation.navigate("ApplyDetail");
+            }}
+            applyOnPress={() => {
+              navigation.navigate("IntroSelection");
+            }}
           />
         </View>
       </KeyboardAwareScrollView>

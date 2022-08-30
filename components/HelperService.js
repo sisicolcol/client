@@ -26,7 +26,14 @@ const LocationText = ({ title, location }) => {
   );
 };
 
-const HelperService = ({ name, time, start, dest }) => {
+const HelperService = ({
+  name,
+  time,
+  start,
+  dest,
+  checkOnPress,
+  applyOnPress,
+}) => {
   return (
     <View style={[shadowView, { paddingVertical: 20 }]}>
       <View
@@ -54,10 +61,18 @@ const HelperService = ({ name, time, start, dest }) => {
           justifyContent: "space-between",
         }}
       >
-        <TouchableOpacity style={[styles.grayButton, { width: "63%" }]}>
+        <TouchableOpacity
+          style={[styles.grayButton, { width: "63%" }]}
+          onPress={checkOnPress}
+        >
           <Text style={styles.text}>상세 내역 확인하기</Text>
         </TouchableOpacity>
-        <MainButton text={"지원하기"} isBlue={true} width={"33%"} />
+        <MainButton
+          text={"지원하기"}
+          isBlue={true}
+          width={"33%"}
+          onPress={applyOnPress}
+        />
       </View>
     </View>
   );
