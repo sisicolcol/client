@@ -5,6 +5,7 @@ export const colors = {
   smallTextGray2: "#AEAEAE",
   buttonGray3: "#CFCFCF",
   clearInputGray4: "#ECECEC",
+  checkButtonGray5: "#E0E0E0",
 };
 
 export const fontSizes = {
