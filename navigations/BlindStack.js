@@ -5,6 +5,9 @@ import {
   Chat,
   HelperList,
   ApplyList,
+  ApplyDetail,
+  ApplyHelper,
+  CheckResume,
   Result,
 } from "../screens/blind/";
 import { Feather } from "@expo/vector-icons";
@@ -47,12 +50,32 @@ const BlindStack = () => {
           options={{ title: "지원한 활동지원사 확인하기" }}
           component={HelperList}
         />
+        <Stack.Screen
+          name="HelperCheckResume"
+          options={{ title: "지원한 활동지원사 확인하기" }}
+          component={CheckResume}
+        />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
           name="ApplyList"
           options={{ title: "신청 활동지원서비스" }}
           component={ApplyList}
+        />
+        <Stack.Screen
+          name="ApplyDetail"
+          options={{ title: "신청 활동지원서비스" }}
+          component={ApplyDetail}
+        />
+        <Stack.Screen
+          name="ApplyHelper"
+          options={{ title: "신청 활동지원서비스" }}
+          component={ApplyHelper}
+        />
+        <Stack.Screen
+          name="ApplyCheckResume"
+          options={{ title: "신청 활동지원서비스" }}
+          component={CheckResume}
         />
         <Stack.Screen
           name="Result"
