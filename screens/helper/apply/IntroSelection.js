@@ -8,24 +8,30 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RadioButton from "../../../components/common/RadioButton";
+import BottomButton from "../../../components/common/BottomButton";
 import { colors, shadowView } from "../../../theme";
 
-const ExistingIntro = ({ title, date }) => {
+const SelfIntro = ({ title, date, isDateVisible, onPress }) => {
   return (
     <TouchableOpacity
-      style={[shadowView, { width: "100%", padding: 20, marginBottom: 20 }]}
+      style={[shadowView, { width: "100%", padding: 10, marginBottom: 20 }]}
+      onPress={onPress}
     >
-      <Text style={{ fontSize: 16, marginBottom: 10 }}>{title}</Text>
+      <Text style={{ fontSize: 16, marginBottom: isDateVisible ? 10 : 0 }}>
+        {title}
+      </Text>
       <View style={{ width: "90%" }}>
-        <Text
-          style={{
-            fontSize: 13,
-            color: colors.smallTextGray2,
-            textAlign: "right",
-          }}
-        >
-          {date} 에 작성
-        </Text>
+        {isDateVisible ?? (
+          <Text
+            style={{
+              fontSize: 13,
+              color: colors.smallTextGray2,
+              textAlign: "right",
+            }}
+          >
+            {date} 에 작성
+          </Text>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -58,9 +64,7 @@ const IntroSelection = ({ navigation }) => {
             }}
           />
           <View style={{ marginBottom: 30 }}>
-            <ExistingIntro title={"제목"} date={"2022-01-01"} />
-            <ExistingIntro title={"제목"} date={"2022-01-01"} />
-            <ExistingIntro title={"제목"} date={"2022-01-01"} />
+            <SelfIntro title={"제목"} date={"2022-01-01"} />
           </View>
           <RadioButton
             key={selectList[1].id}
@@ -70,15 +74,13 @@ const IntroSelection = ({ navigation }) => {
               setSelectedData(value);
             }}
           />
-          <TouchableOpacity
-            style={[shadowView, { width: "100%", padding: 10 }]}
-          >
-            <Text style={{ fontSize: 16 }}>
-              클릭하면 작성창으로 이동합니다.
-            </Text>
-          </TouchableOpacity>
+          <SelfIntro
+            title={"클릭하면 작성창으로 이동합니다."}
+            isDateVisible={false}
+          />
         </View>
       </KeyboardAwareScrollView>
+      <BottomButton text={"지원하기"} onPress={() => navigation.goBack()} />
     </View>
   );
 };
