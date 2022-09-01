@@ -81,6 +81,7 @@ const IntroSelection = ({ navigation }) => {
           <SelfIntro
             title={"클릭하면 작성창으로 이동합니다."}
             isDateVisible={false}
+            onPress={() => navigation.navigate("NewIntroDetail")}
           />
         </View>
       </KeyboardAwareScrollView>

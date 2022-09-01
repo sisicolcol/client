@@ -5,10 +5,11 @@ import {
   ReservationApply,
   ApplyDetail,
   IntroSelection,
+  ExistingIntroDetail,
+  NewIntroDetail,
 } from "../../screens/helper/index";
 import { Feather } from "@expo/vector-icons";
 import { Image } from "react-native";
-import ExistingIntroDetail from "../../screens/helper/apply/ExistingIntroDetail";
 
 const Stack = createStackNavigator();
 
@@ -68,6 +69,7 @@ const ApplyStack = () => {
         name="ExistingIntroDetail"
         component={ExistingIntroDetail}
       />
+      <Stack.Screen name="NewIntroDetail" component={NewIntroDetail} />
     </Stack.Navigator>
   );
 };

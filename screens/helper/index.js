@@ -6,6 +6,8 @@ import HelperApplyList from "./HelperApplyList";
 import MyPage from "./MyPage";
 import ApplyDetail from "./apply/ApplyDetail";
 import IntroSelection from "./apply/IntroSelection";
+import ExistingIntroDetail from "./apply/ExistingIntroDetail";
+import NewIntroDetail from "./apply/NewIntroDetail";
 
 export {
   Home,
@@ -16,4 +18,6 @@ export {
   MyPage,
   ApplyDetail,
   IntroSelection,
+  ExistingIntroDetail,
+  NewIntroDetail,
 };

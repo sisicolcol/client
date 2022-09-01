@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React from "react";
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import BottomButton from "../../../components/common/BottomButton";
 import PageInfo from "../../../components/common/PageInfo";
