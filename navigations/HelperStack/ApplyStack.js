@@ -8,6 +8,7 @@ import {
 } from "../../screens/helper/index";
 import { Feather } from "@expo/vector-icons";
 import { Image } from "react-native";
+import ExistingIntroDetail from "../../screens/helper/apply/ExistingIntroDetail";
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,10 @@ const ApplyStack = () => {
         name="IntroSelection"
         component={IntroSelection}
         options={{ title: "지원하기" }}
+      />
+      <Stack.Screen
+        name="ExistingIntroDetail"
+        component={ExistingIntroDetail}
       />
     </Stack.Navigator>
   );

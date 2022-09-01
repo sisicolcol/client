@@ -64,7 +64,11 @@ const IntroSelection = ({ navigation }) => {
             }}
           />
           <View style={{ marginBottom: 30 }}>
-            <SelfIntro title={"제목"} date={"2022-01-01"} />
+            <SelfIntro
+              title={"제목"}
+              date={"2022-01-01"}
+              onPress={() => navigation.navigate("ExistingIntroDetail")}
+            />
           </View>
           <RadioButton
             key={selectList[1].id}
