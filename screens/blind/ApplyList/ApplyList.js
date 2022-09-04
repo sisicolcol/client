@@ -4,10 +4,24 @@ import ApplyService from "./ApplyService";
 import BottomButton from "../../../components/common/BottomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { colors, fontSizes } from "../../../theme";
+import getApplyListB from "../../../api/main";
+
+const fetchApplyList = async () => {
+  const response = await getApplyListB();
+  console.log(response);
+  return response;
+};
 
 const ApplyList = ({ navigation }) => {
-  const [applyArr, setApplyArr] = useState(data.apply);
+  const [loading, setLoading] = useState(true);
+  const [applyArr, setApplyArr] = useState([]);
   const [sendData, setSendData] = useState({ endProcess: "" });
+
+  useEffect(async () => {
+    const request = await fetchApplyList();
+    setApplyArr(request);
+    setLoading(false);
+  }, [navigation]);
 
   useEffect(() => {
     if (sendData.endProcess !== "") {
@@ -39,7 +53,7 @@ const ApplyList = ({ navigation }) => {
               textAlign: "center",
             }}
           >
-            아직 활동 지원을{"\n"}신청하지 않았어요!
+            {loading ? "로딩 중..." : `아직 활동 지원을\n신청하지 않았어요!`}
           </Text>
         </View>
       ) : (
