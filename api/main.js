@@ -1,5 +1,7 @@
 import request from "./core";
 
-const getApplyListB = () => {
-  return request({ url: `/user/apply` });
+export const getApplyListB = async () => {
+  return await request({ url: `/user/apply` }).catch((error) =>
+    console.error(error)
+  );
 };

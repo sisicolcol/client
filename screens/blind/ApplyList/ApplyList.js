@@ -4,23 +4,15 @@ import ApplyService from "./ApplyService";
 import BottomButton from "../../../components/common/BottomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { colors, fontSizes } from "../../../theme";
-import getApplyListB from "../../../api/main";
-
-const fetchApplyList = async () => {
-  const response = await getApplyListB();
-  console.log(response);
-  return response;
-};
+import { getApplyListB } from "../../../api/main";
 
 const ApplyList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [applyArr, setApplyArr] = useState([]);
   const [sendData, setSendData] = useState({ endProcess: "" });
 
-  useEffect(async () => {
-    const request = await fetchApplyList();
-    setApplyArr(request);
-    setLoading(false);
+  useEffect(() => {
+    getData();
   }, [navigation]);
 
   useEffect(() => {
@@ -28,6 +20,17 @@ const ApplyList = ({ navigation }) => {
       navigation.navigate("Result", { endData: sendData });
     }
   }, [sendData, navigation]);
+
+  const getData = () => {
+    getApplyListB().then((data) => {
+      if (data.isSuccess) {
+        setApplyArr(data.result);
+      } else {
+        setApplyArr("error");
+      }
+      setLoading(false);
+    });
+  };
 
   return (
     <View
@@ -67,7 +70,7 @@ const ApplyList = ({ navigation }) => {
         >
           {applyArr.map((applyArr) => (
             <ApplyService
-              key={applyArr.hp_name}
+              key={applyArr.apply_id}
               apply={applyArr}
               sendData={setSendData}
               navigate={(n) => {

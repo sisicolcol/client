@@ -203,7 +203,7 @@ const ApplyService = ({ navigate, apply, sendData }) => {
       <View style={styles.applyDetail}>
         <Text style={styles.detailLabel}>신청일시:</Text>
         <Text style={styles.detailContent}>
-          {apply.service_day}
+          {apply.service_date}
           {apply.service_time}
         </Text>
       </View>

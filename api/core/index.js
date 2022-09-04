@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: `http://${process.env.REACT_NATIVE_BASE_URL}:/api`,
+  baseURL: `http://kb-dev.p-e.kr/api`,
 });
 
 request.defaults.timeout = 2500;
