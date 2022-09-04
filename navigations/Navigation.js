@@ -1,5 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
+import BlindStack from "./BlindStack";
+import AuthStack from "./AuthStack";
 import HelperTab from "./HelperTab";
 import BlindStack from "./BlindStack";
 import AuthStack from "./AuthStack";
@@ -7,7 +9,7 @@ import AuthStack from "./AuthStack";
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <HelperTab />
+      <AuthStack />
     </NavigationContainer>
   );
 };

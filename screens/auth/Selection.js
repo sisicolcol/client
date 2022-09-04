@@ -35,7 +35,10 @@ const Selection = ({ navigation }) => {
         >
           <Text style={styles.text}>시각장애인</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("HelperLogin")}
+        >
           <Text style={styles.text}>활동지원사</Text>
         </TouchableOpacity>
       </View>

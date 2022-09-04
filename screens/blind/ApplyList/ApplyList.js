@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 import React, { useState, useEffect } from "react";
-import CheckApply from "../../components/CheckApply";
-import BottomButton from "../../components/common/BottomButton";
+import ApplyService from "./ApplyService";
+import BottomButton from "../../../components/common/BottomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { colors } from "../../theme";
+import { colors, fontSizes } from "../../../theme";
 
 const ApplyList = ({ navigation }) => {
   const [applyArr, setApplyArr] = useState(data.apply);
@@ -35,11 +35,11 @@ const ApplyList = ({ navigation }) => {
             style={{
               color: colors.pageTextGray1,
               letterSpacing: -0.01,
-              fontSize: 16,
+              fontSize: fontSizes.smallInfo,
               textAlign: "center",
             }}
           >
-            아직 활동지원사 매칭이{"\n"}이루어지지 않았어요!
+            아직 활동 지원을{"\n"}신청하지 않았어요!
           </Text>
         </View>
       ) : (
@@ -52,10 +52,13 @@ const ApplyList = ({ navigation }) => {
           }}
         >
           {applyArr.map((applyArr) => (
-            <CheckApply
-              key={applyArr.helper_name}
+            <ApplyService
+              key={applyArr.hp_name}
               apply={applyArr}
               sendData={setSendData}
+              navigate={(n) => {
+                navigation.navigate(n.route, { detailData: n.detailData });
+              }}
             />
           ))}
         </KeyboardAwareScrollView>
@@ -74,41 +77,47 @@ export default ApplyList;
 const data = {
   apply: [
     {
-      id: 1,
-      helper_name: "김도움",
-      date_time: "3월 9일 (수)",
-      start_location: "자택",
-      dest_location: "건국대학교 병원",
-      wish: "여성분 선호합니다",
-      content: "자택에서 출발해서 건국대학교 병원.....",
-      taken_time: 4,
-      isRound: true,
+      apply_id: 1,
+      hp_id: 11,
+      hp_name: "김도움",
+      service_day: "3월 9일 (수)",
+      service_time: "14시 00분",
+      start_point: "자택",
+      end_point: "건국대학교 병원",
+      contents: "여성분 선호합니다",
+      details: "자택에서 출발해서 건국대학교 병원.....",
+      duration: 4,
+      way: true,
       isMatching: true,
       isComplete: true,
     },
     {
-      id: 2,
-      helper_name: "이지원",
-      date_time: "3월 9일 (수)",
-      start_location: "자택",
-      dest_location: "건국대학교 병원 정문",
-      wish: "여성분 선호합니다",
-      content: "자택에서 출발해서 건국대학교 병원.....",
-      taken_time: 5,
-      isRound: false,
+      apply_id: 2,
+      hp_id: 12,
+      hp_name: "이지원",
+      service_day: "3월 9일 (수)",
+      service_time: "16시 00분",
+      start_point: "집",
+      end_point: "건국대학교 병원 정문",
+      contents: "여성분 선호합니다",
+      details: "자택에서 출발해서 건국대학교 병원ㄱㄱ.....d왔다갔다입력입력",
+      duration: 5,
+      way: false,
       isMatching: true,
       isComplete: false,
     },
     {
-      id: 3,
-      helper_name: null,
-      date_time: "3월 9일 (수)",
-      start_location: "자택",
-      dest_location: "건국대학교 병원 정문",
-      wish: "여성분 선호합니다",
-      content: "자택에서 출발해서 건국대학교 병원.....",
-      taken_time: 6,
-      isRound: true,
+      apply_id: 3,
+      hp_name: null,
+      hp_id: null,
+      service_day: "3월 9일 (수)",
+      service_time: "11시 20분",
+      start_point: "자택",
+      end_point: "건국대학교 병원 정문",
+      contents: "여성분 선호합니다",
+      details: "자택에서 출발해서 건국대학교 병원.....",
+      duration: 6,
+      way: true,
       isMatching: false,
       isComplete: false,
     },

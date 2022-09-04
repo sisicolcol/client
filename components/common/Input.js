@@ -9,7 +9,13 @@ import React, { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../theme";
 
-const Input = ({ label, placeholder, clearInput, sendValue }) => {
+const Input = ({
+  label,
+  placeholder,
+  clearInput,
+  sendValue,
+  secureTextEntry,
+}) => {
   const [text, setText] = useState("");
   const [focus, setfocus] = useState(false);
 
@@ -36,6 +42,7 @@ const Input = ({ label, placeholder, clearInput, sendValue }) => {
           placeholderTextColor={colors.pageTextGray1}
           onBlur={() => setfocus(false)}
           onFocus={() => setfocus(true)}
+          secureTextEntry={secureTextEntry}
         />
         {clearInput && (
           <TouchableOpacity
