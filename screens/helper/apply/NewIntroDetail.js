@@ -1,30 +1,30 @@
 import { React, useState } from "react";
 import { View, Text, SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import BottomButton from "../../../components/common/BottomButton";
 import PageInfo from "../../../components/common/PageInfo";
-import { colors, shadowView } from "../../../theme";
+import DefaultModal from "../../../components/common/DefaultModal";
+import { colors, shadowView, fontSizes } from "../../../theme";
+import MainButton from "../../../components/common/MainButton";
 
 const NewIntroDetail = ({ navigation }) => {
   const [currentTextLength, setCurrentTextLength] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const maxCharacterLength = 600;
 
   const checkTextLength = () => {
     if (currentTextLength < 200) {
-      // 부족
-      console.log("부족");
+      setIsModalOpen(true);
     } else if (currentTextLength > 600) {
-      console.log("초과");
-      // 초과
+      setIsModalOpen(true);
     } else {
-      // ㅇㅋ
+      // 저장 후 다음 화면으로
       navigation.goBack();
     }
   };
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
-    >
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <View
         style={{
           width: "100%",
@@ -41,39 +41,61 @@ const NewIntroDetail = ({ navigation }) => {
           }
         />
       </View>
-      <View
-        style={[
-          shadowView,
-          {
-            width: "90%",
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            marginBottom: 20,
-          },
-        ]}
+      <KeyboardAwareScrollView
+        contentContainerStyle={{
+          paddingBottom: 120,
+          backgroundColor: "transparent",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        <View style={{ width: "100%", alignItems: "flex-start" }}>
-          <TextInput
-            style={styles.titleText}
-            placeholder="제목을 입력해주세요."
-          />
-          <TextInput
-            style={styles.descriptionText}
-            placeholder="내용을 입력해주세요."
-            multiline={true}
-            onChangeText={(text) => {
-              setCurrentTextLength(text.length);
-            }}
-          />
+        <View
+          style={[
+            shadowView,
+            {
+              width: "90%",
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+              marginBottom: 20,
+            },
+          ]}
+        >
+          <View style={{ width: "100%", alignItems: "flex-start" }}>
+            <TextInput
+              style={styles.titleText}
+              placeholder="제목을 입력해주세요."
+            />
+            <TextInput
+              style={styles.descriptionText}
+              placeholder="내용을 입력해주세요."
+              multiline={true}
+              onChangeText={(text) => {
+                setCurrentTextLength(text.length);
+              }}
+            />
+          </View>
+          <View style={{ width: "100%", alignItems: "flex-end" }}>
+            <Text
+              style={styles.characterCountText}
+            >{`${currentTextLength}/${maxCharacterLength}`}</Text>
+          </View>
         </View>
-        <View style={{ width: "100%", alignItems: "flex-end" }}>
-          <Text
-            style={styles.characterCountText}
-          >{`${currentTextLength}/${maxCharacterLength}`}</Text>
-        </View>
-      </View>
+      </KeyboardAwareScrollView>
       <BottomButton text={"저장"} onPress={checkTextLength} />
-    </SafeAreaView>
+      <DefaultModal showModal={isModalOpen}>
+        <Text style={styles.modalText}>
+          {currentTextLength < 200
+            ? "내용이 부족해요.\n더 자세히 작성해주세요!"
+            : `자기소개서 분량(${maxCharacterLength}자)이\n초과하였습니다.`}
+        </Text>
+        <MainButton
+          text={"네"}
+          width={"100%"}
+          isBlue={true}
+          onPress={() => setIsModalOpen(false)}
+        />
+      </DefaultModal>
+    </View>
   );
 };
 
@@ -91,6 +113,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.smallTextGray2,
     marginBottom: 10,
+  },
+  modalText: {
+    fontSize: fontSizes.smallButton,
+    marginBottom: 40,
+    lineHeight: 30,
+    textAlign: "center",
   },
 });
 
