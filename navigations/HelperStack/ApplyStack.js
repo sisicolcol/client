@@ -7,6 +7,7 @@ import {
   IntroSelection,
   ExistingIntroDetail,
   NewIntroDetail,
+  ApplyComplete,
 } from "../../screens/helper/index";
 import { Feather } from "@expo/vector-icons";
 import { Image } from "react-native";
@@ -70,6 +71,9 @@ const ApplyStack = () => {
         component={ExistingIntroDetail}
       />
       <Stack.Screen name="NewIntroDetail" component={NewIntroDetail} />
+      <Stack.Group>
+        <Stack.Screen name="ApplyComplete" component={ApplyComplete} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

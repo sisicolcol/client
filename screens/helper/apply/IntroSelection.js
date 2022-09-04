@@ -85,7 +85,10 @@ const IntroSelection = ({ navigation }) => {
           />
         </View>
       </KeyboardAwareScrollView>
-      <BottomButton text={"지원하기"} onPress={() => navigation.goBack()} />
+      <BottomButton
+        text={"지원하기"}
+        onPress={() => navigation.navigate("ApplyComplete")}
+      />
     </View>
   );
 };
