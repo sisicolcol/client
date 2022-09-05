@@ -1,22 +1,11 @@
-import React, { useState } from "react";
-import {
-  SafeAreaView,
-  View,
-  Text,
-  Button,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
-import Input from "../../components/common/Input";
-import BottomButton from "../../components/common/BottomButton";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { colors, fontSizes } from "../../theme";
-import DefaultModal from "../../components/common/DefaultModal";
-import MainButton from "../../components/common/MainButton";
+import BottomButton from "../../../components/common/BottomButton";
+import Input from "../../../components/common/Input";
+import { colors } from "../../../theme";
 
-const Apply = ({ navigation }) => {
-  const [isModalOpened, setIsModalOpened] = useState(false);
-
+const ApplyDetail = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAwareScrollView
@@ -68,18 +57,6 @@ const Apply = ({ navigation }) => {
             placeholder={"예상 소요 시간"}
             sendValue={(text) => console.log(text)}
           />
-          <Text
-            style={{
-              fontSize: 12,
-              color: colors.mainBlue,
-              width: "95%",
-              marginTop: 5,
-            }}
-          >
-            {
-              "예상 소요 시간보다 실제 소요 시간이 적게 걸려도\n입력한 예상 소요시간에 대한 임금은 결제되니 신중히 입력해 주세요."
-            }
-          </Text>
         </View>
         <View style={styles.inputView}>
           <Input
@@ -96,33 +73,7 @@ const Apply = ({ navigation }) => {
           />
         </View>
       </KeyboardAwareScrollView>
-      <BottomButton text={"신청하기"} onPress={() => setIsModalOpened(true)} />
-      <DefaultModal showModal={isModalOpened}>
-        <Text
-          style={{
-            fontSize: fontSizes.smallButton,
-            marginTop: 20,
-            marginBottom: 40,
-          }}
-        >
-          신청이 완료되었습니다.
-        </Text>
-        <MainButton
-          isBlue={true}
-          text={"신청한 목록 보기"}
-          width={200}
-          marginBottom={15}
-        />
-        <MainButton
-          isBlue={true}
-          text={"홈 화면으로 돌아가기"}
-          width={200}
-          onPress={() => {
-            setIsModalOpened(false);
-            navigation.popToTop();
-          }}
-        />
-      </DefaultModal>
+      <BottomButton text={"확인"} onPress={() => navigation.goBack()} />
     </View>
   );
 };
@@ -142,4 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Apply;
+export default ApplyDetail;
