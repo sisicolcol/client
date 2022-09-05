@@ -25,6 +25,7 @@ const Navigation = () => {
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => {
+      //  ~~ 여기서 서버로 토큰 보내주기. ~~
       // fetch(PUSH_ENDPOINT, {
       // 	method: 'POST',
       // 	headers: {
@@ -66,46 +67,11 @@ const Navigation = () => {
   }, []);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "space-around",
-      }}
-    >
-      <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Text>
-          Title: {notification && notification.request.content.title}{" "}
-        </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>
-          Data:{" "}
-          {notification && JSON.stringify(notification.request.content.data)}
-        </Text>
-      </View>
-      <Button
-        title="Press to schedule a notification"
-        onPress={async () => {
-          await schedulePushNotification();
-        }}
-      />
-    </View>
+    <NavigationContainer>
+      <BlindStack />
+    </NavigationContainer>
   );
 };
-
-async function schedulePushNotification() {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      sound: "default",
-      title: "You've got mail! 📬",
-      body: "Here is the notification body",
-      data: { data: "goes here" },
-    },
-    trigger: null,
-    // trigger:{seconds:5}
-  });
-}
 
 async function registerForPushNotificationsAsync() {
   let token;
@@ -122,7 +88,7 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
+    console.log("token : ", token);
   } else {
     alert("Must use physical device for Push Notifications");
   }
@@ -138,13 +104,5 @@ async function registerForPushNotificationsAsync() {
 
   return token;
 }
-
-// const Navigation = () => {
-//   return (
-//     // <NavigationContainer>
-//     //   <BlindStack />
-//     // </NavigationContainer>
-//   );
-// };
 
 export default Navigation;
