@@ -4,7 +4,7 @@ import ApplyService from "./ApplyService";
 import BottomButton from "../../../components/common/BottomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { colors, fontSizes } from "../../../theme";
-import { getApplyListB } from "../../../api/main";
+import { getApplyList } from "../../../api/api.member";
 
 const ApplyList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ const ApplyList = ({ navigation }) => {
   }, [sendData, navigation]);
 
   const getData = () => {
-    getApplyListB().then((data) => {
+    getApplyList().then((data) => {
       if (data.isSuccess) {
         setApplyArr(data.result);
       } else {
