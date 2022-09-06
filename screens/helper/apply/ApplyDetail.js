@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import BottomButton from "../../../components/common/BottomButton";
 import Input from "../../../components/common/Input";
+import ApplyDetailText from "../../../components/ApplyDetailText";
 import { colors } from "../../../theme";
 
 const ApplyDetail = ({ navigation }) => {
@@ -17,58 +18,48 @@ const ApplyDetail = ({ navigation }) => {
         }}
       >
         <View style={styles.inputView}>
-          <Input
+          <ApplyDetailText
             label={"서비스 제공 날짜"}
-            placeholder={"서비스 제공 날짜"}
-            sendValue={(text) => console.log(text)}
+            text={"서비스 제공 날짜"}
           />
         </View>
         <View style={styles.inputView}>
-          <Input
+          <ApplyDetailText
             label={"서비스 제공 시간"}
-            placeholder={"서비스 제공 시간"}
-            sendValue={(text) => console.log(text)}
+            text={"서비스 제공 시간"}
           />
         </View>
         <View style={styles.inputView}>
-          <Input
-            label={"출발지"}
-            placeholder={"출발지"}
-            sendValue={(text) => console.log(text)}
-          />
+          <ApplyDetailText label={"출발지"} text={"출발지"} />
         </View>
         <View style={styles.inputView}>
-          <Input
-            label={"목적지"}
-            placeholder={"목적지"}
-            sendValue={(text) => console.log(text)}
-          />
+          <ApplyDetailText label={"목적지"} text={"목적지"} />
         </View>
         <View style={styles.inputView}>
-          <Input
+          <ApplyDetailText
             label={"왕복/편도 여부"}
-            placeholder={"왕복/편도 여부"}
+            text={"왕복/편도 여부"}
             sendValue={(text) => console.log(text)}
           />
         </View>
         <View style={styles.inputView}>
-          <Input
+          <ApplyDetailText
             label={"예상 소요 시간"}
-            placeholder={"예상 소요 시간"}
+            text={"예상 소요 시간"}
             sendValue={(text) => console.log(text)}
           />
         </View>
         <View style={styles.inputView}>
-          <Input
+          <ApplyDetailText
             label={"활동지원사에게 바라는 사항"}
-            placeholder={"활동지원사에게 바라는 사항"}
+            text={"활동지원사에게 바라는 사항"}
             sendValue={(text) => console.log(text)}
           />
         </View>
         <View style={styles.inputView}>
-          <Input
+          <ApplyDetailText
             label={"자세한 신청 내용"}
-            placeholder={"자세한 신청 내용"}
+            text={"자세한 신청 내용"}
             sendValue={(text) => console.log(text)}
           />
         </View>
