@@ -28,6 +28,7 @@ const Home = ({ navigation }) => {
         width={"90%"}
         text={"활동지원사와 채팅하기"}
         marginBottom={25}
+        onPress={() => navigation.navigate("ChatList")}
       />
       <MainButton
         isBig={true}

@@ -7,7 +7,7 @@ import HelperTab from "./HelperTab";
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <AuthStack />
+      <BlindStack />
     </NavigationContainer>
   );
 };

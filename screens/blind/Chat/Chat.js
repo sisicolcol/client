@@ -4,7 +4,7 @@ import { View, Text, Button } from "react-native";
 const Chat = ({ navigation }) => {
   return (
     <View>
-      <Text>메인화면</Text>
+      <Text>채팅방</Text>
       <Button title="눌러" onPress={() => navigation.navigate("Home")} />
     </View>
   );

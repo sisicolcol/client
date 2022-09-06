@@ -1,6 +1,7 @@
 import Home from "./Home";
 import Apply from "./Apply";
-import Chat from "./Chat";
+import Chat from "./Chat/Chat";
+import ChatList from "./Chat/ChatList";
 import HelperList from "./HelperList/HelperList";
 import ApplyList from "./ApplyList/ApplyList";
 import ApplyDetail from "./ApplyList/ApplyDetail";
@@ -12,6 +13,7 @@ export {
   Home,
   Apply,
   Chat,
+  ChatList,
   HelperList,
   ApplyList,
   ApplyDetail,
