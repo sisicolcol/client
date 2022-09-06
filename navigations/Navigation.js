@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import { NavigationContainer } from "@react-navigation/native";
 import BlindStack from "./BlindStack";
 import AuthStack from "./AuthStack";
 import HelperTab from "./HelperTab";
 
-import { Button, Platform, Text, View } from "react-native";
-import { useEffect, useRef, useState } from "react";
+import { Platform } from "react-native";
+
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
+import * as TaskManager from "expo-task-manager";
+
+const BACKGROUND_NOTIFICATION_TASK = "BACKGROUND-NOTIFICATION-TASK";
+
+TaskManager.defineTask(
+  BACKGROUND_NOTIFICATION_TASK,
+  ({ data, error, executionInfo }) => {
+    console.log("Received a notification in the background!");
+    // Do something with the notification data
+  }
+);
+
+Notifications.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK);
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -26,20 +40,16 @@ const Navigation = () => {
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => {
       //  ~~ 여기서 서버로 토큰 보내주기. ~~
-      // fetch(PUSH_ENDPOINT, {
-      // 	method: 'POST',
-      // 	headers: {
-      // 		Accept: 'application/json',
-      // 		'Content-Type': 'application/json',
-      // 	},
-      // 	body: JSON.stringify({
-      // 		token: {
-      // 			value: token,
-      // 		}
-      // 	}),
-      // })
-      // 	.then(() => console.log('send!'))
-      // 	.catch((err) => console.log(err));
+      axios
+        .post("http://127.0.0.1:3000/api/alert", {
+          method: "POST",
+          body: {
+            mem_id: mem_id,
+            token: token,
+          },
+        })
+        .then(() => console.log("send!"))
+        .catch((err) => console.log(err));
       setExpoPushToken(token);
     });
 
@@ -47,8 +57,7 @@ const Navigation = () => {
       Notifications.addNotificationReceivedListener((notification) => {
         setNotification(notification);
       });
-
-    responseListener.current =
+    Notifications.responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
         console.log(response);
       });
@@ -69,6 +78,12 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <BlindStack />
+      <Button
+        title="Press to Send Notification"
+        onPress={async () => {
+          console.log("pressed!");
+        }}
+      />
     </NavigationContainer>
   );
 };
