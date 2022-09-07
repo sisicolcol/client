@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { NavigationContainer } from "@react-navigation/native";
@@ -5,23 +6,9 @@ import BlindStack from "./BlindStack";
 import AuthStack from "./AuthStack";
 import HelperTab from "./HelperTab";
 
-import { Platform } from "react-native";
-
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import * as TaskManager from "expo-task-manager";
-
-const BACKGROUND_NOTIFICATION_TASK = "BACKGROUND-NOTIFICATION-TASK";
-
-TaskManager.defineTask(
-  BACKGROUND_NOTIFICATION_TASK,
-  ({ data, error, executionInfo }) => {
-    console.log("Received a notification in the background!");
-    // Do something with the notification data
-  }
-);
-
-Notifications.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK);
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -32,40 +19,49 @@ Notifications.setNotificationHandler({
 });
 
 const Navigation = () => {
-  const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
+  const [isSend, setIsSend] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => {
-      //  ~~ 여기서 서버로 토큰 보내주기. ~~
-      axios
-        .post("http://127.0.0.1:3000/api/alert", {
-          method: "POST",
-          body: {
-            mem_id: mem_id,
-            token: token,
-          },
-        })
-        .then(() => console.log("send!"))
-        .catch((err) => console.log(err));
-      setExpoPushToken(token);
-    });
+    let deviceToken = AsyncStorage.getItem("DEVICE_TOKEN");
+    if (deviceToken === null) {
+      registerForPushNotificationsAsync().then((token) => {
+        //  ~~ 여기서 서버로 토큰 보내주기. ~~
+        if (!isSend) {
+          axios({
+            method: "POST",
+            url: "http://172.30.1.1:3000/api/alert",
+            data: {
+              mem_token: token.toString(),
+              mem_id: "hp2",
+            },
+          })
+            .then(() => setIsSend(true))
+            .catch((err) => console.log(err));
+        }
+        AsyncStorage.setItem("DEVICE_TOKEN", true);
+        deviceToken = true;
+      });
+    }
 
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
-    Notifications.responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
+    if (deviceToken) {
+      notificationListener.current =
+        Notifications.addNotificationReceivedListener((notification) => {
+          setNotification(notification);
+        });
+      responseListener.current =
+        Notifications.addNotificationResponseReceivedListener((response) => {
+          console.log(response);
+        });
+    }
 
     return () => {
       if (
         typeof notificationListener.current !== "undefined" &&
-        typeof responseListener.current !== "undefined"
+        typeof responseListener.current !== "undefined" &&
+        deviceToken
       ) {
         Notifications.removeNotificationSubscription(
           notificationListener.current
@@ -78,12 +74,6 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <BlindStack />
-      <Button
-        title="Press to Send Notification"
-        onPress={async () => {
-          console.log("pressed!");
-        }}
-      />
     </NavigationContainer>
   );
 };
