@@ -9,6 +9,8 @@ import {
 import Input from "../../../components/common/Input";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../../theme";
+import { login } from "../../../api/api.main";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginButton = ({ text, onPress }) => {
   return (
@@ -33,6 +35,16 @@ const LoginButton = ({ text, onPress }) => {
 
 const Login = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginFunc = () => {
+    login(id, password).then((data) => {
+      console.log(data);
+      AsyncStorage.setItem("USER", "member");
+      AsyncStorage.setItem("USER_ID", id);
+    });
+  };
 
   return (
     <SafeAreaView
@@ -52,10 +64,10 @@ const Login = ({ navigation }) => {
           marginTop: 0,
         }}
       >
-        <Input placeholder={"아이디"} sendValue={(text) => console.log(text)} />
+        <Input placeholder={"아이디"} sendValue={(text) => setId(text)} />
         <Input
           placeholder={"비밀번호"}
-          sendValue={(text) => console.log(text)}
+          sendValue={(text) => setPassword(text)}
           secureTextEntry={true}
         />
         <TouchableOpacity
@@ -70,6 +82,9 @@ const Login = ({ navigation }) => {
           <Text style={{ fontSize: 16, marginLeft: 8 }}>자동 로그인</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity onPress={loginFunc}>
+        <Text>로그인하기</Text>
+      </TouchableOpacity>
       <View
         style={{
           flex: 1,

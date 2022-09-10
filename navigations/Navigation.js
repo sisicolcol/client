@@ -1,10 +1,10 @@
 import { Platform } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import { NavigationContainer } from "@react-navigation/native";
 import BlindStack from "./BlindStack";
 import AuthStack from "./AuthStack";
 import HelperTab from "./HelperTab";
+import { postPushToken } from "../api/api.main";
 
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
@@ -20,30 +20,30 @@ Notifications.setNotificationHandler({
 
 const Navigation = () => {
   const [notification, setNotification] = useState(false);
-  const [isSend, setIsSend] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  let user = null;
+  AsyncStorage.getItem("USER").then((data) => {
+    user = data;
+  });
 
   useEffect(() => {
-    let deviceToken = AsyncStorage.getItem("DEVICE_TOKEN");
-    if (deviceToken === null) {
+    let deviceToken;
+    AsyncStorage.getItem("DEVICE_TOKEN").then((data) => (deviceToken = data));
+    if (
+      user === "member" &&
+      (deviceToken === null || deviceToken === undefined)
+    ) {
       registerForPushNotificationsAsync().then((token) => {
-        //  ~~ 여기서 서버로 토큰 보내주기. ~~
-        if (!isSend) {
-          axios({
-            method: "POST",
-            url: "http://172.30.1.1:3000/api/alert",
-            data: {
-              mem_token: token.toString(),
-              mem_id: "hp2",
-            },
-          })
-            .then(() => setIsSend(true))
-            .catch((err) => console.log(err));
-        }
-        AsyncStorage.setItem("DEVICE_TOKEN", true);
+        // 서버로 토큰 보내주기
+        // postPushToken(token, AsyncStorage.getItem("USER_ID"));
+
+        AsyncStorage.setItem("DEVICE_TOKEN", "true");
         deviceToken = true;
       });
+    } else {
+      AsyncStorage.setItem("DEVICE_TOKEN", "false");
+      deviceToken = false;
     }
 
     if (deviceToken) {
@@ -71,11 +71,13 @@ const Navigation = () => {
     };
   }, []);
 
-  return (
-    <NavigationContainer>
-      <BlindStack />
-    </NavigationContainer>
-  );
+  const returnStack = () => {
+    if (user === "member") return <BlindStack />;
+    else if (user === "helper") return <HelperTab />;
+    else return <AuthStack />;
+  };
+
+  return <NavigationContainer>{returnStack()}</NavigationContainer>;
 };
 
 async function registerForPushNotificationsAsync() {

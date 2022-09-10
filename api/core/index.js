@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: `http://kb-dev.p-e.kr/api`,
+  baseURL: `http://api.sscallcall.co.kr:3000/api`,
 });
 
 request.defaults.timeout = 2500;
