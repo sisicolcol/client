@@ -5,10 +5,19 @@ import Input from "../../../components/common/Input";
 import PageInfo from "../../../components/common/PageInfo";
 import BottomButton from "../../../components/common/BottomButton";
 import SignUpButton from "../../../components/SignUpButton";
+import { signup } from "../../../api/api.main";
 
 const HelperFirstSignUp = ({ navigation }) => {
   const [isMale, setIsMale] = useState(false);
   const [isFemale, setIsFemale] = useState(false);
+  const [name, setName] = useState("");
+  const [birth, setBirth] = useState("");
+  const [phone, setPhone] = useState("");
+  const [cert, setCert] = useState("");
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState(false);
+
   const setSexButtonState = (target) => {
     if (target === 0) {
       setIsMale(!isMale);
@@ -47,7 +56,7 @@ const HelperFirstSignUp = ({ navigation }) => {
           <Input
             label={"이름"}
             placeholder={"이름"}
-            sendValue={(text) => console.log(text)}
+            sendValue={(text) => setName(text)}
           />
         </View>
         <View style={styles.inputView}>
@@ -55,7 +64,7 @@ const HelperFirstSignUp = ({ navigation }) => {
             <Input
               label={"생년월일"}
               placeholder={"생년월일"}
-              sendValue={(text) => console.log(text)}
+              sendValue={(text) => setBirth(text)}
             />
           </View>
           <View style={{ flex: 1, marginLeft: 10 }}>
@@ -80,7 +89,7 @@ const HelperFirstSignUp = ({ navigation }) => {
             <Input
               label={"연락처"}
               placeholder={"연락처"}
-              sendValue={(text) => console.log(text)}
+              sendValue={(text) => setPhone(text)}
             />
           </View>
           <View style={{ justifyContent: "flex-end", marginBottom: 10 }}>
@@ -92,7 +101,7 @@ const HelperFirstSignUp = ({ navigation }) => {
             <Input
               label={"활동지원 자격증명서"}
               placeholder={"활동지원 자격증명서"}
-              sendValue={(text) => console.log(text)}
+              sendValue={(text) => setCert(text)}
             />
           </View>
           <View style={{ justifyContent: "flex-end", marginBottom: 10 }}>
@@ -103,26 +112,44 @@ const HelperFirstSignUp = ({ navigation }) => {
           <Input
             label={"아이디"}
             placeholder={"아이디"}
-            sendValue={(text) => console.log(text)}
+            sendValue={(text) => setId(text)}
           />
         </View>
         <View style={styles.simpleInputView}>
           <Input
             label={"비밀번호"}
             placeholder={"영문, 숫자, 특수문자 조합 8자리 이상"}
-            sendValue={(text) => console.log(text)}
+            sendValue={(text) => setPassword(text)}
             secureTextEntry={true}
           />
           <Input
             placeholder={"비밀번호 확인"}
-            sendValue={(text) => console.log(text)}
+            sendValue={(text) => {
+              if (text === password) {
+                setCheckPassword(true);
+              } else setCheckPassword(false);
+            }}
             secureTextEntry={true}
           />
         </View>
       </KeyboardAwareScrollView>
       <BottomButton
         text={"다음"}
-        onPress={() => navigation.navigate("HelperSecondSignUp")}
+        onPress={() =>
+          navigation.navigate("HelperSecondSignUp", {
+            firstData: {
+              name: name,
+              birth: birth,
+              phone: phone,
+              gender: isMale ? "M" : "F",
+              cert: cert,
+            },
+            signupData: {
+              id: id,
+              password: password,
+            },
+          })
+        }
       />
     </View>
   );

@@ -39,11 +39,14 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const loginFunc = () => {
-    login(id, password).then((data) => {
-      console.log(data);
-      AsyncStorage.setItem("USER", "member");
-      AsyncStorage.setItem("USER_ID", id);
-    });
+    console.log("here");
+    AsyncStorage.setItem("USER", "member");
+    AsyncStorage.setItem("USER_ID", "mem3");
+    // login(id, password).then((data) => {
+    //   console.log(data);
+    //   AsyncStorage.setItem("USER", "member");
+    //   AsyncStorage.setItem("USER_ID", id);
+    // });
   };
 
   return (

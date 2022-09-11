@@ -9,6 +9,7 @@ import {
 import Input from "../../../components/common/Input";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../../theme";
+import { login } from "../../../api/api.main";
 
 const LoginButton = ({ imageSource, onPress }) => {
   return (
@@ -31,6 +32,16 @@ const LoginButton = ({ imageSource, onPress }) => {
 
 const HelperLogin = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginFunc = () => {
+    login(id, password).then((data) => {
+      console.log(data);
+      AsyncStorage.setItem("USER", "member");
+      AsyncStorage.setItem("USER_ID", id);
+    });
+  };
 
   return (
     <SafeAreaView
@@ -68,6 +79,9 @@ const HelperLogin = ({ navigation }) => {
           <Text style={{ fontSize: 16, marginLeft: 8 }}>자동 로그인</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity onPress={loginFunc}>
+        <Text>로그인하기</Text>
+      </TouchableOpacity>
       <View
         style={{
           flex: 1,
