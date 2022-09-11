@@ -10,15 +10,29 @@ import MainButton from "../../../components/common/MainButton";
 import { shadowView, colors, modalButtonText } from "../../../theme";
 import DefaultModal from "../../../components/common/DefaultModal";
 import RadioButton from "../../../components/common/RadioButton";
-
 import MultiLineinput from "../../../components/common/MultiLineInput";
+import { postMemo } from "../../../api/api.member";
 
 const ApplyService = ({ navigate, apply, sendData }) => {
   const [modalMode, setModalMode] = useState("");
   const [openModal, setOpenModal] = useState(false); //모달창
   const [checkReason, setCheckReason] = useState(0); //파투 사유
-  const [text, setText] = useState(""); //사용자 입력(파투 사유, 초과 시간, 메모 등)
+  const [text, setText] = useState(""); //사용자 입력(파투 사유, 초과 시간 등)
+  const [memo, setMemo] = useState(apply.memo);
   const [focus, setfocus] = useState(false);
+
+  useEffect(() => {
+    if (modalMode === "memo" && !openModal && memo !== apply.memo) {
+      const postData = {
+        apply_id: apply.apply_id,
+        hp_id: apply.hp_id,
+        memo: memo,
+      };
+      postMemo(postData)
+        .then(() => setModalMode(""))
+        .catch((error) => console.error(error));
+    }
+  }, [openModal]);
 
   const endProcessFunc = (endProcess) => {
     const data = {
@@ -38,7 +52,11 @@ const ApplyService = ({ navigate, apply, sendData }) => {
         content = (
           <View style={{ width: "100%" }}>
             <Text style={modalButtonText}>메모</Text>
-            <MultiLineinput setText={setText} accessibility="메모 입력하기" />
+            <MultiLineinput
+              setText={setMemo}
+              accessibility="메모 입력하기"
+              originValue={memo}
+            />
           </View>
         );
         break;

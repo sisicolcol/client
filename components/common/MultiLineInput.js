@@ -6,8 +6,8 @@ const UselessTextInput = (props) => {
   return <TextInput {...props} editable maxLength={200} />;
 };
 
-const MultiLineinput = ({ setText, accessibility }) => {
-  const [value, setValue] = React.useState("");
+const MultiLineinput = ({ originValue, setText, accessibility }) => {
+  const [value, setValue] = React.useState(originValue);
 
   return (
     <View

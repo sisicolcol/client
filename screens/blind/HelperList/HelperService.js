@@ -20,10 +20,7 @@ const HelperService = ({ helper, navigate }) => {
       <Text style={styles.helperName}>활동지원사 {helper.hp_name}님</Text>
       <View style={styles.helperDetail}>
         <Text style={styles.detailLabel}>신청일시:</Text>
-        <Text style={styles.detailContent}>
-          {helper.service_day}
-          {helper.service_time}
-        </Text>
+        <Text style={styles.detailContent}>{helper.apply_date}</Text>
       </View>
       <View style={styles.helperDetail}>
         <Text style={styles.detailLabel}>출발지:</Text>
@@ -36,7 +33,7 @@ const HelperService = ({ helper, navigate }) => {
       <View style={styles.helperDetail}>
         <Text style={styles.detailLabel}>매칭여부:</Text>
         <Text style={styles.detailContent}>
-          {helper.isMatching ? "매칭 확정" : "매칭 안 됨"}
+          {helper.status ? "매칭 확정" : "매칭 안 됨"}
         </Text>
       </View>
 
@@ -50,10 +47,10 @@ const HelperService = ({ helper, navigate }) => {
           navigate({
             route: "HelperCheckResume",
             resume: {
+              pg_id: helper.pg_id,
               hp_id: helper.hp_id,
               hp_name: helper.hp_name,
-              resume: "adadfasdfadf",
-              isPressable: true,
+              isPressable: helper.is_success,
             },
           })
         }

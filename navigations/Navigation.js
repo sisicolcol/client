@@ -5,6 +5,7 @@ import BlindStack from "./BlindStack";
 import AuthStack from "./AuthStack";
 import HelperTab from "./HelperTab";
 import { postPushToken } from "../api/api.main";
+import { getUserType, getDeviceToken, getUserId } from "../components/Storage";
 
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
@@ -20,42 +21,51 @@ Notifications.setNotificationHandler({
 
 const Navigation = () => {
   const [notification, setNotification] = useState(false);
+  const [userType, setUserType] = useState("");
   const notificationListener = useRef();
   const responseListener = useRef();
-  let user = null;
-  AsyncStorage.getItem("USER").then((data) => {
-    user = data;
+
+  getUserType().then((data) => {
+    setUserType(data);
   });
 
   useEffect(() => {
     let deviceToken;
-    AsyncStorage.getItem("DEVICE_TOKEN").then((data) => (deviceToken = data));
-    if (
-      user === "member" &&
-      (deviceToken === null || deviceToken === undefined)
-    ) {
-      registerForPushNotificationsAsync().then((token) => {
-        // 서버로 토큰 보내주기
-        // postPushToken(token, AsyncStorage.getItem("USER_ID"));
+    let userId;
 
-        AsyncStorage.setItem("DEVICE_TOKEN", "true");
-        deviceToken = true;
-      });
-    } else {
-      AsyncStorage.setItem("DEVICE_TOKEN", "false");
-      deviceToken = false;
-    }
+    const fetchData = async () => {
+      userId = await getUserId();
+      deviceToken = await getDeviceToken();
+    };
 
-    if (deviceToken) {
-      notificationListener.current =
-        Notifications.addNotificationReceivedListener((notification) => {
-          setNotification(notification);
+    fetchData().then(() => {
+      if (
+        userType === "member" &&
+        (deviceToken === null || deviceToken === undefined)
+      ) {
+        registerForPushNotificationsAsync().then((token) => {
+          // 서버로 토큰 보내주기
+          // postPushToken(token, userId);
+
+          AsyncStorage.setItem("DEVICE_TOKEN", "true");
+          deviceToken = true;
         });
-      responseListener.current =
-        Notifications.addNotificationResponseReceivedListener((response) => {
-          console.log(response);
-        });
-    }
+      } else {
+        AsyncStorage.setItem("DEVICE_TOKEN", "false");
+        deviceToken = false;
+      }
+
+      if (deviceToken) {
+        notificationListener.current =
+          Notifications.addNotificationReceivedListener((notification) => {
+            setNotification(notification);
+          });
+        responseListener.current =
+          Notifications.addNotificationResponseReceivedListener((response) => {
+            console.log(response);
+          });
+      }
+    });
 
     return () => {
       if (
@@ -69,11 +79,17 @@ const Navigation = () => {
         Notifications.removeNotificationSubscription(responseListener.current);
       }
     };
-  }, []);
+  }, [userType]);
+
+  useEffect(() => {
+    getUserType().then((data) => {
+      setUserType(data);
+    });
+  }, [AsyncStorage]);
 
   const returnStack = () => {
-    if (user === "member") return <BlindStack />;
-    else if (user === "helper") return <HelperTab />;
+    if (userType === "member") return <BlindStack />;
+    else if (userType === "helper") return <HelperTab />;
     else return <AuthStack />;
   };
 

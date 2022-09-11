@@ -1,10 +1,18 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BottomButton from "../../../components/common/BottomButton";
 import { colors, fontSizes, defaultScreen, shadowView } from "../../../theme";
-
+import { getApplyDetail } from "../../../api/api.member";
 const ApplyDetail = ({ navigation, route }) => {
-  const apply = route.params.detailData;
+  const [apply, setApply] = useState(route.params.detailData);
+
+  useEffect(() => {
+    if (apply === undefined || apply === null) {
+      getApplyDetail(24)
+        .then((data) => setApply(data))
+        .catch((error) => console.error(error));
+    }
+  }, [route]);
 
   return (
     <View style={defaultScreen}>
@@ -39,7 +47,12 @@ const ApplyDetail = ({ navigation, route }) => {
         </View>
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>소요시간:</Text>
-          <Text style={styles.detailContent}>{apply.duration}시간</Text>
+          <Text style={styles.detailContent}>
+            {apply.duration > 60
+              ? Math.floor(apply.duration / 60) + "시간 "
+              : null}
+            {apply.duration % 60 !== 0 ? (apply.duration % 60) + "분" : null}
+          </Text>
         </View>
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>바라는 사항:</Text>

@@ -5,6 +5,7 @@ import BottomButton from "../../../components/common/BottomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { colors, fontSizes } from "../../../theme";
 import { getApplyList } from "../../../api/api.member";
+import { getUserId } from "../../../components/Storage";
 
 const ApplyList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -12,7 +13,12 @@ const ApplyList = ({ navigation }) => {
   const [sendData, setSendData] = useState({ endProcess: "" });
 
   useEffect(() => {
-    getData();
+    const fetchData = async () => {
+      const user = await getUserId();
+      await getData(user);
+    };
+
+    fetchData();
   }, [navigation]);
 
   useEffect(() => {
@@ -21,15 +27,17 @@ const ApplyList = ({ navigation }) => {
     }
   }, [sendData, navigation]);
 
-  const getData = () => {
-    getApplyList().then((data) => {
-      if (data.isSuccess) {
-        setApplyArr(data.result);
-      } else {
-        setApplyArr("error");
-      }
-      setLoading(false);
-    });
+  const getData = async (user) => {
+    await getApplyList(user)
+      .then((data) => {
+        if (data.isSuccess) {
+          setApplyArr(data.result);
+        } else {
+          setApplyArr("error");
+        }
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -90,53 +98,3 @@ const ApplyList = ({ navigation }) => {
 };
 
 export default ApplyList;
-
-const data = {
-  apply: [
-    {
-      apply_id: 1,
-      hp_id: 11,
-      hp_name: "김도움",
-      service_day: "3월 9일 (수)",
-      service_time: "14시 00분",
-      start_point: "자택",
-      end_point: "건국대학교 병원",
-      contents: "여성분 선호합니다",
-      details: "자택에서 출발해서 건국대학교 병원.....",
-      duration: 4,
-      way: true,
-      isMatching: true,
-      isComplete: true,
-    },
-    {
-      apply_id: 2,
-      hp_id: 12,
-      hp_name: "이지원",
-      service_day: "3월 9일 (수)",
-      service_time: "16시 00분",
-      start_point: "집",
-      end_point: "건국대학교 병원 정문",
-      contents: "여성분 선호합니다",
-      details: "자택에서 출발해서 건국대학교 병원ㄱㄱ.....d왔다갔다입력입력",
-      duration: 5,
-      way: false,
-      isMatching: true,
-      isComplete: false,
-    },
-    {
-      apply_id: 3,
-      hp_name: null,
-      hp_id: null,
-      service_day: "3월 9일 (수)",
-      service_time: "11시 20분",
-      start_point: "자택",
-      end_point: "건국대학교 병원 정문",
-      contents: "여성분 선호합니다",
-      details: "자택에서 출발해서 건국대학교 병원.....",
-      duration: 6,
-      way: true,
-      isMatching: false,
-      isComplete: false,
-    },
-  ],
-};

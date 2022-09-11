@@ -1,7 +1,16 @@
 import axios from "axios";
+import { getUserToken } from "../../components/Storage";
+
+let token = "";
+getUserToken().then((data) => {
+  token = data;
+});
 
 const request = axios.create({
   baseURL: `http://api.sscallcall.co.kr:3000/api`,
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
 });
 
 request.defaults.timeout = 2500;

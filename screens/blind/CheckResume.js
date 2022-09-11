@@ -10,11 +10,30 @@ import {
   shadowView,
   modalButtonText,
 } from "../../theme";
+import { getMatchingHelperResume, postAcceptApply } from "../../api/api.member";
 
 const CheckResume = ({ navigation, route }) => {
-  const data = route.params.resume;
+  const { pg_id, hp_id, hp_name, isPressable } = route.params.resume;
   const [openModal, setOpenModal] = useState(false);
-  const [helperStatus, setHelperStatus] = useState(data.isPressable);
+  const [resume, setResume] = useState("");
+  const [helperStatus, setHelperStatus] = useState(isPressable);
+
+  useEffect(() => {
+    getMatchingHelperResume(hp_id)
+      .then((data) => {
+        if (data.isSuccess) {
+          setResume(data.result[0].content);
+        } else {
+          setResume("error");
+        }
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  }, [navigation]);
+
+  const postAccept = (status) => {
+    postAcceptApply(status, pg_id).catch((error) => console.error(error));
+  };
 
   return (
     <View style={defaultScreen}>
@@ -27,19 +46,19 @@ const CheckResume = ({ navigation, route }) => {
           marginTop: 24,
         }}
       >
-        <Text style={styles.helperName}>활동지원사 {data.hp_name}님</Text>
+        <Text style={styles.helperName}>활동지원사 {hp_name}님</Text>
         <View style={styles.resumeContainer}>
-          <Text>{data.resume}</Text>
+          <Text>{resume}</Text>
         </View>
 
-        {helperStatus === false ? null : helperStatus === "accept" ? (
+        {helperStatus === false ? null : helperStatus === 1 ? (
           <MainButton
             isBlue={true}
             isBig={false}
             width="100%"
             text={"수락함"}
           />
-        ) : helperStatus === "denied" ? (
+        ) : helperStatus === -1 ? (
           <MainButton
             isBlue={true}
             isBig={false}
@@ -55,7 +74,8 @@ const CheckResume = ({ navigation, route }) => {
               text={"수락하기"}
               onPress={() => {
                 setOpenModal("accept");
-                setHelperStatus("accept");
+                setHelperStatus(1);
+                postAccept(1);
               }}
             />
             <View style={{ height: 16 }} />
@@ -127,8 +147,9 @@ const CheckResume = ({ navigation, route }) => {
                 width={"100%"}
                 text={"예"}
                 onPress={() => {
-                  setHelperStatus("denied");
+                  setHelperStatus(-1);
                   setOpenModal(false);
+                  postAccept(-1);
                 }}
               />
             </View>
