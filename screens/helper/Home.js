@@ -1,31 +1,61 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { SafeAreaView, View, Text, Button } from "react-native";
+import MainButton from "../../components/common/MainButton";
 
 const Home = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Text>메인화면</Text>
-      <Button
-        title="퀵 활동"
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <MainButton
+        isBig={true}
+        isBlue={true}
+        isBold={true}
+        width={"90%"}
+        text={"퀵 활동지원서비스 신청하기"}
+        marginBottom={25}
         onPress={() => navigation.navigate("QuickApply")}
       />
-      <Button
-        title="사전 예약"
+      <MainButton
+        isBig={true}
+        isBlue={true}
+        isBold={true}
+        width={"90%"}
+        text={"사전 예약 활동지원서비스 신청하기"}
+        marginBottom={25}
         onPress={() => navigation.navigate("ReservationApply")}
       />
-      <Button
-        title="시각장애인과 채팅하기"
+      <MainButton
+        isBig={true}
+        isBlue={true}
+        isBold={true}
+        width={"90%"}
+        text={"시각장애인과 채팅하기"}
+        marginBottom={25}
         onPress={() => navigation.navigate("Chat")}
       />
-      <Button
-        title="지원목록"
+      <MainButton
+        isBig={true}
+        isBlue={true}
+        isBold={true}
+        width={"90%"}
+        text={"나의 지원 목록"}
+        marginBottom={25}
         onPress={() => navigation.navigate("ApplyList")}
       />
-      <Button
-        title="내 정보"
+      <MainButton
+        isBig={true}
+        width={"90%"}
+        text={"내 정보"}
+        marginBottom={25}
         onPress={() => navigation.navigate("MyPageStack")}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

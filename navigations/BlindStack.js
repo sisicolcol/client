@@ -10,6 +10,7 @@ import {
   CheckResume,
   Result,
 } from "../screens/blind/";
+import { Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
@@ -37,9 +38,25 @@ const BlindStack = () => {
         },
       }}
     >
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require("../images/logo.png")}
+              resizeMode="contain"
+              style={{ width: 72 }}
+            />
+          ),
+        }}
+      />
       <Stack.Group>
-        <Stack.Screen name="Apply" component={Apply} />
+        <Stack.Screen
+          name="Apply"
+          component={Apply}
+          options={{ title: "활동지원서비스 신청하기" }}
+        />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen name="Chat" component={Chat} />

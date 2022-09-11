@@ -1,6 +1,16 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Home, QuickApply, ReservationApply } from "../../screens/helper/index";
+import {
+  Home,
+  QuickApply,
+  ReservationApply,
+  ApplyDetail,
+  IntroSelection,
+  ExistingIntroDetail,
+  NewIntroDetail,
+  ApplyComplete,
+} from "../../screens/helper/index";
 import { Feather } from "@expo/vector-icons";
+import { Image } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -27,12 +37,42 @@ const ApplyStack = () => {
         },
       }}
     >
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerTitle: () => (
+            <Image
+              source={require("../../images/logo.png")}
+              resizeMode="contain"
+              style={{ width: 72 }}
+            />
+          ),
+        }}
+      />
       <Stack.Group>
         <Stack.Screen name="QuickApply" component={QuickApply} />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen name="ReservationApply" component={ReservationApply} />
+      </Stack.Group>
+      <Stack.Screen
+        name="ApplyDetail"
+        component={ApplyDetail}
+        options={{ title: "상세 내역 확인하기" }}
+      />
+      <Stack.Screen
+        name="IntroSelection"
+        component={IntroSelection}
+        options={{ title: "지원하기" }}
+      />
+      <Stack.Screen
+        name="ExistingIntroDetail"
+        component={ExistingIntroDetail}
+      />
+      <Stack.Screen name="NewIntroDetail" component={NewIntroDetail} />
+      <Stack.Group>
+        <Stack.Screen name="ApplyComplete" component={ApplyComplete} />
       </Stack.Group>
     </Stack.Navigator>
   );

@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     fontSize: 18,
     fontWeight: "500",
-    letterSpacing: -0.03,
+    letterSpacing: 0.03,
   },
   inputLabel: {
     lineHeight: 26,
