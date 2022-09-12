@@ -2,7 +2,7 @@ import request from "./core";
 
 // *활동지원서비스 신청하기
 // 활동지원서비스 신청하기
-export const applyService = async (data) => {
+const applyService = async (data) => {
   return await request({
     method: "post",
     url: `/user/apply`,
@@ -22,35 +22,35 @@ export const applyService = async (data) => {
 
 // *신청목록
 // 신청목록) 시각장애인 신청목록 조회하기
-export const getApplyList = async (mem_id) => {
+const getApplyList = async (mem_id) => {
   return await request({ url: `/user/applylist/${mem_id}` }).catch((error) =>
     console.error(error)
   );
 };
 
 // 신청목록) 자세한 신청내용 보기
-export const getApplyDetail = async (apply_id) => {
+const getApplyDetail = async (apply_id) => {
   return await request({
     url: `/user/apply/detail/${apply_id}`,
   }).catch((error) => console.error(error));
 };
 
 // 신청목록) 매칭 활동지원사 목록 조회하기
-export const getMatchingHelperList = async (apply_id) => {
+const getMatchingHelperList = async (apply_id) => {
   return await request({
     url: `/user/match/${apply_id}`,
   }).catch((error) => console.error(error));
 };
 
 // 신청목록 - 매칭활동지원사 확인하기) 이력서 조회하기
-export const getMatchingHelperResume = async (hp_id) => {
+const getMatchingHelperResume = async (hp_id) => {
   return await request({
     url: `/user/resume/${hp_id}`,
   }).catch((error) => console.error(error));
 };
 
 // 신청목록) 메모 수정/저장
-export const postMemo = async (data) => {
+const postMemo = async (data) => {
   return await request({
     method: "post",
     url: `/memo/${data.apply_id}`,
@@ -61,7 +61,7 @@ export const postMemo = async (data) => {
 };
 
 // 신청목록) 서비스 완료
-export const serviceSuccess = async (data) => {
+const serviceSuccess = async (data) => {
   return await request({
     method: "post",
     url: `/user/success`,
@@ -73,7 +73,7 @@ export const serviceSuccess = async (data) => {
 };
 
 //신청목록-서비스 파투
-export const serviceFailed = async (data) => {
+const serviceFailed = async (data) => {
   return await request({
     method: "post",
     url: `/user/fail`,
@@ -86,14 +86,14 @@ export const serviceFailed = async (data) => {
 
 // *지원한 활동지원사 확인하기
 // 지원한 활동지원사 목록 조회하기
-export const getApplyHelperList = async (mem_id) => {
+const getApplyHelperList = async (mem_id) => {
   return await request({
     url: `/user/helperlist/${mem_id}`,
   }).catch((error) => console.error(error));
 };
 
 // 지원한 헬퍼 수락/거절하기
-export const postAcceptApply = async (is_success, pg_id) => {
+const postAcceptApply = async (is_success, pg_id) => {
   return await request({
     method: "post",
     url: `/user/helper/accept`,
@@ -104,8 +104,22 @@ export const postAcceptApply = async (is_success, pg_id) => {
   }).catch((error) => console.error(error));
 };
 
-export const getAlertList = async (mem_id) => {
+const getAlertList = async (mem_id) => {
   return await request({
     url: `/alertlist/${mem_id}`,
   }).catch((error) => console.error(error));
+};
+
+export {
+  applyService,
+  getApplyList,
+  getApplyDetail,
+  getMatchingHelperList,
+  getMatchingHelperResume,
+  postMemo,
+  serviceSuccess,
+  serviceFailed,
+  getApplyHelperList,
+  postAcceptApply,
+  getAlertList,
 };
