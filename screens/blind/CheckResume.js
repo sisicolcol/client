@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import BottomButton from "../../components/common/BottomButton";
 import MainButton from "../../components/common/MainButton";
@@ -14,6 +14,7 @@ import { getMatchingHelperResume, postAcceptApply } from "../../api/api.member";
 
 const CheckResume = ({ navigation, route }) => {
   const { pg_id, hp_id, hp_name, isPressable } = route.params.resume;
+  const [loading, setLoading] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [resume, setResume] = useState("");
   const [helperStatus, setHelperStatus] = useState(isPressable);
@@ -21,10 +22,8 @@ const CheckResume = ({ navigation, route }) => {
   useEffect(() => {
     getMatchingHelperResume(hp_id)
       .then((data) => {
-        if (data.isSuccess) {
+        if (data.isSuccess && data.result.length !== 0) {
           setResume(data.result[0].content);
-        } else {
-          setResume("error");
         }
         setLoading(false);
       })

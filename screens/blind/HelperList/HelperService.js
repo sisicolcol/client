@@ -4,6 +4,7 @@ import MainButton from "../../../components/common/MainButton";
 import { shadowView, colors, modalButtonText } from "../../../theme";
 import DefaultModal from "../../../components/common/DefaultModal";
 import { AntDesign } from "@expo/vector-icons";
+import { postAcceptApply } from "../../../api/api.member";
 
 const HelperService = ({ helper, navigate }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -33,7 +34,7 @@ const HelperService = ({ helper, navigate }) => {
       <View style={styles.helperDetail}>
         <Text style={styles.detailLabel}>매칭여부:</Text>
         <Text style={styles.detailContent}>
-          {helper.status ? "매칭 확정" : "매칭 안 됨"}
+          {helper.is_success === 1 ? "매칭 확정" : "매칭 안 됨"}
         </Text>
       </View>
 
@@ -57,13 +58,18 @@ const HelperService = ({ helper, navigate }) => {
       />
 
       <View style={{ height: 16 }} />
-      <MainButton
-        isBlue={true}
-        isBig={false}
-        width="100%"
-        text={"수락하기"}
-        onPress={() => setOpenModal("accept")}
-      />
+      {helper.is_success === 0 && (
+        <MainButton
+          isBlue={true}
+          isBig={false}
+          width="100%"
+          text={"수락하기"}
+          onPress={() => {
+            setOpenModal("accept");
+            postAcceptApply(1, helper.pg_id).then((data) => console.log(data));
+          }}
+        />
+      )}
 
       {openModal !== false && (
         <DefaultModal showModal={true} setShowModal={setOpenModal}>

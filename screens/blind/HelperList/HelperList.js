@@ -5,6 +5,7 @@ import HelperService from "./HelperService";
 import BottomButton from "../../../components/common/BottomButton";
 import { colors } from "../../../theme";
 import { getApplyHelperList } from "../../../api/api.member";
+import { getUserId } from "../../../components/Storage";
 
 const HelperList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -22,6 +23,7 @@ const HelperList = ({ navigation }) => {
   const getData = async (user) => {
     await getApplyHelperList(user)
       .then((data) => {
+        console.log(data);
         if (data.isSuccess) {
           setHelperArr(data.result);
         } else {
@@ -39,7 +41,7 @@ const HelperList = ({ navigation }) => {
         backgroundColor: "white",
       }}
     >
-      {helperArr.length === 0 ? (
+      {helperArr.filter((hp) => hp.is_success !== -1).length === 0 ? (
         <View
           style={{
             height: "100%",
@@ -68,7 +70,7 @@ const HelperList = ({ navigation }) => {
           }}
         >
           {helperArr
-            .filter((hp) => hp.status !== -1)
+            .filter((hp) => hp.is_success !== -1)
             .map((helper) => (
               <HelperService
                 key={helper.hp_id}

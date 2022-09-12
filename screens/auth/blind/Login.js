@@ -40,10 +40,11 @@ const Login = ({ navigation }) => {
 
   const loginFunc = () => {
     login(id, password).then((data) => {
-      console.log(data);
-      AsyncStorage.setItem("USER", "member");
-      AsyncStorage.setItem("USER_ID", id);
-      AsyncStorage.setItem("USER_TOKEN", data.result);
+      if (data.is_success) {
+        AsyncStorage.setItem("USER_TYPE", "member");
+        AsyncStorage.setItem("USER_ID", id);
+        AsyncStorage.setItem("USER_TOKEN", data.result);
+      }
     });
   };
 

@@ -5,13 +5,16 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import { parseISO, format, isSameDay } from "date-fns";
+import ko from "date-fns/locale/ko";
+import React, { useState, useEffect } from "react";
 import MainButton from "../../../components/common/MainButton";
 import { shadowView, colors, modalButtonText } from "../../../theme";
 import DefaultModal from "../../../components/common/DefaultModal";
 import RadioButton from "../../../components/common/RadioButton";
 import MultiLineinput from "../../../components/common/MultiLineInput";
 import { postMemo } from "../../../api/api.member";
+import isPast from "date-fns/isPast";
 
 const ApplyService = ({ navigate, apply, sendData }) => {
   const [modalMode, setModalMode] = useState("");
@@ -20,26 +23,54 @@ const ApplyService = ({ navigate, apply, sendData }) => {
   const [text, setText] = useState(""); //사용자 입력(파투 사유, 초과 시간 등)
   const [memo, setMemo] = useState(apply.memo);
   const [focus, setfocus] = useState(false);
+  console.log(apply);
 
   useEffect(() => {
     if (modalMode === "memo" && !openModal && memo !== apply.memo) {
       const postData = {
         apply_id: apply.apply_id,
-        hp_id: apply.hp_id,
+        hp_id: apply.hp_id, //여기 수정 필요
         memo: memo,
       };
+      console.log(postData);
       postMemo(postData)
         .then(() => setModalMode(""))
         .catch((error) => console.error(error));
     }
   }, [openModal]);
 
+  const checkPast = () => {
+    const serviceDate = parseISO(apply.service_date.slice(0, 10));
+    if (isPast(serviceDate)) {
+      console.log("past!");
+      return true;
+    } else if (isSameDay(new Date(), serviceDate)) {
+      if (
+        parseInt(apply.service_time.slice(0, 2)) +
+          Math.floor(apply.duration / 60) <
+        parseInt(format(new Date(), "HH"))
+      ) {
+        return true;
+      } else if (
+        parseInt(apply.service_time.slice(0, 2)) +
+          Math.floor(apply.duration / 60) ===
+          parseInt(format(new Date(), "HH")) &&
+        parseInt(apply.service_time.slice(3, 5)) + (apply.duration % 60) <
+          parseInt(format(new Date(), "mm"))
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const endProcessFunc = (endProcess) => {
     const data = {
       id: apply.apply_id,
       endProcess: endProcess,
       text: text,
-      checkReason: checkReason,
+      checkReason:
+        checkReason === 0 ? checkReason : cancelReason[checkReason - 1].name,
     };
     setOpenModal(false);
     sendData(data);
@@ -153,6 +184,7 @@ const ApplyService = ({ navigate, apply, sendData }) => {
                   } else {
                     setCheckReason(value);
                   }
+                  setText("");
                 }}
               />
             ))}
@@ -160,7 +192,7 @@ const ApplyService = ({ navigate, apply, sendData }) => {
             <TouchableOpacity
               style={{ paddingVertical: 5 }}
               onPress={() => {
-                // setCheckReason(0);
+                setCheckReason(0);
                 setModalMode("reason");
               }}
             >
@@ -221,8 +253,15 @@ const ApplyService = ({ navigate, apply, sendData }) => {
       <View style={styles.applyDetail}>
         <Text style={styles.detailLabel}>신청일시:</Text>
         <Text style={styles.detailContent}>
-          {apply.service_date}
-          {apply.service_time}
+          {format(parseISO(apply.service_date.slice(0, 10)), "M월 d일 (E) ", {
+            locale: ko,
+          })}
+          {apply.service_time.slice(0, 5) +
+            " - " +
+            (parseInt(apply.service_time.slice(0, 2)) +
+              Math.floor(apply.duration / 60)) +
+            ":" +
+            (parseInt(apply.service_time.slice(3, 5)) + (apply.duration % 60))}
         </Text>
       </View>
       <View style={styles.applyDetail}>
@@ -238,17 +277,16 @@ const ApplyService = ({ navigate, apply, sendData }) => {
         <Text
           style={{
             ...styles.detailContent,
-            color:
-              apply.isMatching && apply.isComplete ? colors.mainBlue : "black",
+            color: apply.is_success ? colors.mainBlue : "black",
           }}
         >
-          {apply.isMatching ? "매칭 확정" : "매칭 안 됨"}
+          {apply.is_success ? "매칭 확정" : "매칭 안 됨"}
         </Text>
       </View>
 
       {/* 서비스 완료 여부에 따른 버튼 세트*/}
       <View style={{ height: 16 }} />
-      {apply.isComplete ? (
+      {checkPast() && apply.is_success ? (
         <>
           <MainButton
             isBlue={true}

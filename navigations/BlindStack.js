@@ -63,18 +63,6 @@ const BlindStack = () => {
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
-          name="HelperList"
-          options={{ title: "지원한 활동지원사 확인하기" }}
-          component={HelperList}
-        />
-        <Stack.Screen
-          name="HelperCheckResume"
-          options={{ title: "지원한 활동지원사 확인하기" }}
-          component={CheckResume}
-        />
-      </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
           name="ApplyList"
           options={{ title: "신청 활동지원서비스" }}
           component={ApplyList}
@@ -98,6 +86,18 @@ const BlindStack = () => {
           name="Result"
           options={{ title: "", headerLeft: () => null }}
           component={Result}
+        />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen
+          name="HelperList"
+          options={{ title: "지원한 활동지원사 확인하기" }}
+          component={HelperList}
+        />
+        <Stack.Screen
+          name="HelperCheckResume"
+          options={{ title: "지원한 활동지원사 확인하기" }}
+          component={CheckResume}
         />
       </Stack.Group>
     </Stack.Navigator>

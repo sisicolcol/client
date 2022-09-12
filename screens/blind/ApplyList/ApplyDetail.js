@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
+import { parseISO, format } from "date-fns";
+import ko from "date-fns/locale/ko";
 import BottomButton from "../../../components/common/BottomButton";
 import { colors, fontSizes, defaultScreen, shadowView } from "../../../theme";
 import { getApplyDetail } from "../../../api/api.member";
@@ -29,7 +31,18 @@ const ApplyDetail = ({ navigation, route }) => {
         {/*간단한 정보(공통) */}
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>신청일시:</Text>
-          <Text style={styles.detailContent}>{apply.service_day}</Text>
+          <Text style={styles.detailContent}>
+            {format(parseISO(apply.service_date.slice(0, 10)), "M월 d일 (E) ", {
+              locale: ko,
+            })}
+            {apply.service_time.slice(0, 5) +
+              " - " +
+              (parseInt(apply.service_time.slice(0, 2)) +
+                Math.floor(apply.duration / 60)) +
+              ":" +
+              (parseInt(apply.service_time.slice(3, 5)) +
+                (apply.duration % 60))}
+          </Text>
         </View>
         <View style={styles.applyDetail}>
           <Text style={styles.detailLabel}>출발지:</Text>
@@ -67,13 +80,10 @@ const ApplyDetail = ({ navigation, route }) => {
           <Text
             style={{
               ...styles.detailContent,
-              color:
-                apply.isMatching && apply.isComplete
-                  ? colors.mainBlue
-                  : "black",
+              color: apply.is_success ? colors.mainBlue : "black",
             }}
           >
-            {apply.isMatching ? "매칭 확정" : "매칭 안 됨"}
+            {apply.is_success ? "매칭 확정" : "매칭 안 됨"}
           </Text>
         </View>
       </View>

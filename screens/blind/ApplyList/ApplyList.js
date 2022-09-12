@@ -4,7 +4,11 @@ import ApplyService from "./ApplyService";
 import BottomButton from "../../../components/common/BottomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { colors, fontSizes } from "../../../theme";
-import { getApplyList } from "../../../api/api.member";
+import {
+  getApplyList,
+  serviceFailed,
+  serviceSuccess,
+} from "../../../api/api.member";
 import { getUserId } from "../../../components/Storage";
 
 const ApplyList = ({ navigation }) => {
@@ -22,8 +26,21 @@ const ApplyList = ({ navigation }) => {
   }, [navigation]);
 
   useEffect(() => {
-    if (sendData.endProcess !== "") {
-      navigation.navigate("Result", { endData: sendData });
+    if (sendData.endProcess === "end") {
+      const data = { apply_id: sendData.id, overtime: sendData.text };
+      serviceSuccess(data).then((data) => {
+        console.log(data);
+        navigation.navigate("Result", { endData: sendData });
+      });
+    } else if (sendData.endProcess === "cancel") {
+      const data = {
+        apply_id: sendData.id,
+        reason: sendData.text !== "" ? sendData.text : sendData.checkReason,
+      };
+      serviceFailed(data).then((data) => {
+        console.log(data);
+        navigation.navigate("Result", { endData: sendData });
+      });
     }
   }, [sendData, navigation]);
 
