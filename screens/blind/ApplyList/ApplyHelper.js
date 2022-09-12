@@ -9,7 +9,6 @@ import { getMatchingHelperList } from "../../../api/api.member";
 const ApplyHelper = ({ navigation, route }) => {
   const apply = route.params.detailData;
   const [helper, setHelper] = useState({ hp_id: "", hp_name: "" });
-  console.log(apply);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +16,6 @@ const ApplyHelper = ({ navigation, route }) => {
         if (data.isSuccess && data.result.length !== 0) {
           setHelper(data.result[0]);
         }
-        console.log(data);
       });
     };
 

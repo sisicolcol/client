@@ -3,7 +3,6 @@ import { View, Text, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import BottomButton from "../../../components/common/BottomButton";
 import Input from "../../../components/common/Input";
-import { colors } from "../../../theme";
 
 const ApplyDetail = ({ navigation }) => {
   return (

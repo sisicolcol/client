@@ -23,16 +23,13 @@ const ApplyService = ({ navigate, apply, sendData }) => {
   const [text, setText] = useState(""); //사용자 입력(파투 사유, 초과 시간 등)
   const [memo, setMemo] = useState(apply.memo);
   const [focus, setfocus] = useState(false);
-  console.log(apply);
 
   useEffect(() => {
     if (modalMode === "memo" && !openModal && memo !== apply.memo) {
       const postData = {
         apply_id: apply.apply_id,
-        hp_id: apply.hp_id, //여기 수정 필요
         memo: memo,
       };
-      console.log(postData);
       postMemo(postData)
         .then(() => setModalMode(""))
         .catch((error) => console.error(error));
@@ -42,7 +39,6 @@ const ApplyService = ({ navigate, apply, sendData }) => {
   const checkPast = () => {
     const serviceDate = parseISO(apply.service_date.slice(0, 10));
     if (isPast(serviceDate)) {
-      console.log("past!");
       return true;
     } else if (isSameDay(new Date(), serviceDate)) {
       if (
@@ -280,13 +276,13 @@ const ApplyService = ({ navigate, apply, sendData }) => {
             color: apply.is_success ? colors.mainBlue : "black",
           }}
         >
-          {apply.is_success ? "매칭 확정" : "매칭 안 됨"}
+          {apply.is_success > 0 ? "매칭 확정" : "매칭 안 됨"}
         </Text>
       </View>
 
       {/* 서비스 완료 여부에 따른 버튼 세트*/}
       <View style={{ height: 16 }} />
-      {checkPast() && apply.is_success ? (
+      {apply.is_success > 2 ? (
         <>
           <MainButton
             isBlue={true}

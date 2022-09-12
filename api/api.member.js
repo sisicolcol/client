@@ -53,7 +53,7 @@ export const getMatchingHelperResume = async (hp_id) => {
 export const postMemo = async (data) => {
   return await request({
     method: "post",
-    url: `/memo/${data.apply_id}/${data.hp_id}`,
+    url: `/memo/${data.apply_id}`,
     data: {
       memo: data.memo,
     },

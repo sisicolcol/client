@@ -2,12 +2,9 @@ import { View, Image } from "react-native";
 import React from "react";
 import PageInfo from "../../components/common/PageInfo";
 import BottomButton from "../../components/common/BottomButton";
-import { colors } from "../../theme";
 import ServiceEnd from "../../assets/img/ServiceEnd.png";
 
 const Result = ({ navigation, route }) => {
-  console.log("here: ", route.params.endData);
-
   return (
     <View
       style={{

@@ -29,7 +29,6 @@ const ApplyList = ({ navigation }) => {
     if (sendData.endProcess === "end") {
       const data = { apply_id: sendData.id, overtime: sendData.text };
       serviceSuccess(data).then((data) => {
-        console.log(data);
         navigation.navigate("Result", { endData: sendData });
       });
     } else if (sendData.endProcess === "cancel") {
@@ -38,7 +37,6 @@ const ApplyList = ({ navigation }) => {
         reason: sendData.text !== "" ? sendData.text : sendData.checkReason,
       };
       serviceFailed(data).then((data) => {
-        console.log(data);
         navigation.navigate("Result", { endData: sendData });
       });
     }

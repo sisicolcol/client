@@ -23,7 +23,6 @@ const HelperList = ({ navigation }) => {
   const getData = async (user) => {
     await getApplyHelperList(user)
       .then((data) => {
-        console.log(data);
         if (data.isSuccess) {
           setHelperArr(data.result);
         } else {

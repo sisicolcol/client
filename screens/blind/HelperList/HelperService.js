@@ -34,7 +34,7 @@ const HelperService = ({ helper, navigate }) => {
       <View style={styles.helperDetail}>
         <Text style={styles.detailLabel}>매칭여부:</Text>
         <Text style={styles.detailContent}>
-          {helper.is_success === 1 ? "매칭 확정" : "매칭 안 됨"}
+          {helper.is_success > 0 ? "매칭 확정" : "매칭 안 됨"}
         </Text>
       </View>
 
@@ -66,7 +66,7 @@ const HelperService = ({ helper, navigate }) => {
           text={"수락하기"}
           onPress={() => {
             setOpenModal("accept");
-            postAcceptApply(1, helper.pg_id).then((data) => console.log(data));
+            postAcceptApply(1, helper.pg_id);
           }}
         />
       )}

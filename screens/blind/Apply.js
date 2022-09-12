@@ -31,7 +31,6 @@ const Apply = ({ navigation }) => {
     let tmpTime = time;
     let tmpTimeArr = tmpTime.replace(" ", "").split("시");
     let tmpHour = tmpTimeArr[0];
-    console.log(tmpHour.indexOf("시"));
 
     if (tmpHour.indexOf("오전") !== -1) {
       tmpTime = tmpHour.replace("오전", "");
@@ -62,7 +61,7 @@ const Apply = ({ navigation }) => {
   const durationModifier = (duration) => {
     let tmp = duration;
     let tmpArr = tmp.split("시간");
-    console.log(tmpArr);
+
     if (tmpArr.length === 1) {
       return tmpArr[0].replace("분", "");
     }
@@ -77,8 +76,7 @@ const Apply = ({ navigation }) => {
 
   const applyHandler = async () => {
     const userId = await getUserId();
-    console.log(dateModifier(date));
-    console.log(durationModifier(duration));
+
     const data = {
       mem_id: userId,
       service_date: dateModifier(date),
