@@ -51,7 +51,9 @@ const ReservationApply = ({ navigation }) => {
               navigation.navigate("ApplyDetail");
             }}
             applyOnPress={() => {
-              navigation.navigate("IntroSelection");
+              navigation.navigate("IntroSelection", {
+                applyType: "reservation",
+              });
             }}
           />
         </View>

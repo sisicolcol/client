@@ -37,7 +37,8 @@ const SelfIntro = ({ title, date, isDateVisible, onPress }) => {
   );
 };
 
-const IntroSelection = ({ navigation }) => {
+const IntroSelection = ({ route, navigation }) => {
+  const { applyType } = route.params; // quick || reservation
   const selectList = [
     { id: 1, name: "기존 자기소개서 선택" },
     { id: 2, name: "새로운 자기소개서 작성" },
