@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Ionicons } from "@expo/vector-icons";
 import HelperService from "../../../components/HelperService";
 
-const QuickApply = ({ navigation }) => {
+const ReservationApply = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAwareScrollView
@@ -26,11 +26,9 @@ const QuickApply = ({ navigation }) => {
         >
           <PageInfo
             isBold={false}
-            colorTitle="퀵 활동지원 서비스"
+            colorTitle="사전 예약 활동지원 서비스"
             title={"\n지원하기"}
-            desc={
-              "바로 지금 활동지원서비스가 가능한\n활동지원사분의 지원을 기다립니다."
-            }
+            desc={"미리 활동지원서비스 일정을 잡아보세요!"}
           />
         </View>
         <View
@@ -54,7 +52,7 @@ const QuickApply = ({ navigation }) => {
             }}
             applyOnPress={() => {
               navigation.navigate("IntroSelection", {
-                applyType: "quick",
+                applyType: "reservation",
               });
             }}
           />
@@ -64,4 +62,4 @@ const QuickApply = ({ navigation }) => {
   );
 };
 
-export default QuickApply;
+export default ReservationApply;

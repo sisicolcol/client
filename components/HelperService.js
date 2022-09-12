@@ -3,16 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { colors, shadowView, fontSizes } from "../theme";
 import MainButton from "./common/MainButton";
 
-const LocationText = ({ title, location }) => {
+const LocationText = ({ text }) => {
   return (
     <View style={{ width: "100%" }}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={{ fontSize: 18, color: colors.pageTextGray1 }}>
-          {title}
-        </Text>
-        <Text style={{ fontSize: 18, color: colors.pageTextGray1 }}>
-          {location}
-        </Text>
+        <Text style={{ fontSize: 18 }}>{text}</Text>
       </View>
       <View
         style={{
@@ -51,8 +46,8 @@ const HelperService = ({
         </Text>
       </View>
       <View style={{ width: "85%", alignItems: "center" }}>
-        <LocationText title={"출발지"} location={start} />
-        <LocationText title={"목적지"} location={dest} />
+        <LocationText text={start} />
+        <LocationText text={dest} />
       </View>
       <View
         style={{
