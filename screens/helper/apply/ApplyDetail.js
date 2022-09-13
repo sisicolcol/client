@@ -56,7 +56,7 @@ const ApplyDetail = ({ navigation, route }) => {
         <View style={styles.inputView}>
           <ApplyDetailText
             label={"왕복/편도 여부"}
-            xt={way ? "왕복" : "편도"}
+            text={way ? "왕복" : "편도"}
           />
         </View>
         <View style={styles.inputView}>
@@ -68,10 +68,13 @@ const ApplyDetail = ({ navigation, route }) => {
           />
         </View>
         <View style={styles.inputView}>
-          <ApplyDetailText label={"활동지원사에게 바라는 사항"} xt={contents} />
+          <ApplyDetailText
+            label={"활동지원사에게 바라는 사항"}
+            text={contents}
+          />
         </View>
         <View style={styles.inputView}>
-          <ApplyDetailText label={"자세한 신청 내용"} xt={details} />
+          <ApplyDetailText label={"자세한 신청 내용"} text={details} />
         </View>
       </KeyboardAwareScrollView>
       <BottomButton text={"확인"} onPress={() => navigation.goBack()} />
