@@ -80,7 +80,14 @@ const HelperTab = () => {
       />
       <Tab.Screen
         name="MyPageStack"
-        options={{
+        options={({ route }) => ({
+          tabBarStyle: ((route) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? "MyPage";
+            if (routeName !== "MyPage") {
+              return { display: "none" };
+            }
+            return styles.tabBarStyle;
+          })(route),
           tabBarLabel: "나",
           tabBarIcon: ({ focused }) => {
             return (
@@ -91,7 +98,7 @@ const HelperTab = () => {
               />
             );
           },
-        }}
+        })}
         component={MyPageStack}
       />
     </Tab.Navigator>
