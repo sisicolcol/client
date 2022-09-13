@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import PageInfo from "../../../components/common/PageInfo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Ionicons } from "@expo/vector-icons";
 import HelperService from "../../../components/HelperService";
+import { getQuickServiceList } from "../../../api/api.helper";
 
 const QuickApply = ({ navigation }) => {
+  const [applyArr, setApplyArr] = useState([]);
+
+  useEffect(() => {
+    getQuickServiceList().then((data) => {
+      if (data.isSuccess) {
+        setApplyArr(data.result);
+      }
+    });
+  }, [navigation]);
+
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAwareScrollView
@@ -43,20 +54,27 @@ const QuickApply = ({ navigation }) => {
             <Ionicons name="options-outline" size={24} color="black" />
           </TouchableOpacity>
         </View>
-        <View style={{ alignItems: "center", width: "100%" }}>
-          <HelperService
-            name={"가나다"}
-            time={3}
-            start={"이름"}
-            dest={"이름"}
-            checkOnPress={() => {
-              navigation.navigate("ApplyDetail");
-            }}
-            applyOnPress={() => {
-              navigation.navigate("IntroSelection");
-            }}
-          />
-        </View>
+        {applyArr.map((apply) => {
+          return (
+            <View
+              key={apply.apply_id}
+              style={{ alignItems: "center", width: "100%" }}
+            >
+              <HelperService
+                name={apply.apply_id}
+                time={apply.duration}
+                start={apply.start_point}
+                dest={apply.end_point}
+                checkOnPress={() => {
+                  navigation.navigate("ApplyDetail", { detailData: apply });
+                }}
+                applyOnPress={() => {
+                  navigation.navigate("IntroSelection", { detailData: apply });
+                }}
+              />
+            </View>
+          );
+        })}
       </KeyboardAwareScrollView>
     </View>
   );

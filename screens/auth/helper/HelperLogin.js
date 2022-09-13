@@ -10,6 +10,8 @@ import Input from "../../../components/common/Input";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../../theme";
 import { login } from "../../../api/api.main";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { reloadAsync } from "expo-updates";
 
 const LoginButton = ({ imageSource, onPress }) => {
   return (
@@ -37,9 +39,12 @@ const HelperLogin = ({ navigation }) => {
 
   const loginFunc = () => {
     login(id, password).then((data) => {
-      console.log(data);
-      AsyncStorage.setItem("USER", "member");
-      AsyncStorage.setItem("USER_ID", id);
+      if (data.isSuccess) {
+        AsyncStorage.setItem("USER_TYPE", "helper");
+        AsyncStorage.setItem("USER_ID", id);
+        AsyncStorage.setItem("USER_TOKEN", data.result);
+        reloadAsync();
+      }
     });
   };
 
@@ -61,10 +66,10 @@ const HelperLogin = ({ navigation }) => {
           marginTop: 0,
         }}
       >
-        <Input placeholder={"아이디"} sendValue={(text) => console.log(text)} />
+        <Input placeholder={"아이디"} sendValue={(text) => setId(text)} />
         <Input
           placeholder={"비밀번호"}
-          sendValue={(text) => console.log(text)}
+          sendValue={(text) => setPassword(text)}
           secureTextEntry={true}
         />
         <TouchableOpacity

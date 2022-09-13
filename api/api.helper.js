@@ -17,14 +17,14 @@ const getPreServiceList = async () => {
 };
 
 //퀵, 사전) 지원_기존 자기소개서 가져오기
-const getResume = async () => {
+const getResume = async (hp_id) => {
   return await request({ url: `/hp/apply/${hp_id}` }).catch((error) =>
     console.error(error)
   );
 };
 
 //퀵, 사전) 지원하기
-const postApply = async () => {
+const postApply = async (data) => {
   return await request({
     method: "post",
     url: `/hp/apply`,

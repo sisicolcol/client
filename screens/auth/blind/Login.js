@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -11,6 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../../theme";
 import { login } from "../../../api/api.main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { reloadAsync } from "expo-updates";
 
 const LoginButton = ({ text, onPress }) => {
   return (
@@ -40,10 +41,11 @@ const Login = ({ navigation }) => {
 
   const loginFunc = () => {
     login(id, password).then((data) => {
-      if (data.is_success) {
+      if (data.isSuccess) {
         AsyncStorage.setItem("USER_TYPE", "member");
         AsyncStorage.setItem("USER_ID", id);
         AsyncStorage.setItem("USER_TOKEN", data.result);
+        reloadAsync(); //앱 새로고침
       }
     });
   };

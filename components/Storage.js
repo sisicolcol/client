@@ -41,4 +41,17 @@ const getDeviceToken = async () => {
   return response;
 };
 
-export { getUserType, getUserId, getUserToken, getDeviceToken };
+const getNewResume = async () => {
+  const response = await AsyncStorage.getItem("NEW_IDC")
+    .then((data) => {
+      if (data === null) {
+        return "";
+      } else {
+        return data;
+      }
+    })
+    .catch((error) => console.error(error));
+  return response;
+};
+
+export { getUserType, getUserId, getUserToken, getDeviceToken, getNewResume };

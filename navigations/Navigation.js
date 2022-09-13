@@ -85,7 +85,7 @@ const Navigation = () => {
     getUserType().then((data) => {
       setUserType(data);
     });
-  }, [AsyncStorage]);
+  });
 
   const returnStack = () => {
     if (userType === "member") return <BlindStack />;
