@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { MyPage } from "../../screens/helper/index";
-import { Feather } from "@expo/vector-icons";
+import { MyPage, IntroDetail } from "../../screens/helper/index";
+import { Feather, Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -27,7 +28,21 @@ const MyPageStack = () => {
         },
       }}
     >
-      <Stack.Screen name="MyPage" component={MyPage} />
+      <Stack.Screen
+        name="MyPage"
+        component={MyPage}
+        options={{
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginRight: 15 }}
+              onPress={() => console.log("setting")}
+            >
+              <Ionicons name="settings-sharp" size={24} color="black" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen name="IntroDetail" component={IntroDetail} />
     </Stack.Navigator>
   );
 };

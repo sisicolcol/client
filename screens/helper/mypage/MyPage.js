@@ -71,7 +71,10 @@ const MyPage = ({ navigation }) => {
         </View>
         <View>
           <View>
-            <TouchableOpacity style={styles.editTouchableOpacity}>
+            <TouchableOpacity
+              style={styles.editTouchableOpacity}
+              onPress={() => navigation.navigate("IntroDetail")}
+            >
               <Text style={{ fontSize: 16, marginRight: 5 }}>자기소개서</Text>
               <MaterialCommunityIcons
                 name="pencil"
