@@ -81,7 +81,6 @@ const NewIntroDetail = ({ navigation }) => {
               placeholder="내용을 입력해주세요."
               style={{ ...styles.descriptionText, width: "100%" }}
               multiline
-              numberOfLines={6}
               onChangeText={(text) => {
                 setCurrentTextLength(text.length);
                 setNewResume(text);

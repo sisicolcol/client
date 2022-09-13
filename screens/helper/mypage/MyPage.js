@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -10,6 +10,8 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PageInfo from "../../../components/common/PageInfo";
 import { colors, shadowView } from "../../../theme";
+import { getUserId } from "../../../components/Storage";
+import { getDefaultResume, getMyInfo } from "../../../api/api.helper";
 
 const Category = ({ title, onPress }) => {
   return (
@@ -33,6 +35,26 @@ const Category = ({ title, onPress }) => {
 };
 
 const MyPage = ({ navigation }) => {
+  const [id, setId] = useState("");
+  const [info, setInfo] = useState({});
+  const [resume, setResume] = useState({ content: "", date: "" });
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultId = await getUserId().then((data) => {
+        setId(data);
+        return data;
+      });
+      await getMyInfo(resultId).then((data) => setInfo(data));
+      await getDefaultResume(resultId).then((data) => {
+        if (data.isSuccess) {
+          setResume(data.result.result[0]);
+        }
+      });
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -41,7 +63,7 @@ const MyPage = ({ navigation }) => {
         <PageInfo
           isBold={false}
           colorTitle=""
-          title={"나는 활동지원사\n입니다."}
+          title={`나는 활동지원사\n${info.mem_name}입니다.`}
         />
       </View>
       <View style={{ width: "90%" }}>
@@ -58,22 +80,29 @@ const MyPage = ({ navigation }) => {
         <View style={[shadowView, styles.userInfoView]}>
           <View>
             <Text style={styles.userInfoTitleText}>아이디</Text>
-            <Text style={styles.userInfoDataText}>id</Text>
+            <Text style={styles.userInfoDataText}>{id}</Text>
           </View>
           <View>
             <Text style={styles.userInfoTitleText}>성별</Text>
-            <Text style={styles.userInfoDataText}>성별</Text>
+            <Text style={styles.userInfoDataText}>
+              {info.mem_gender === "F" ? "여" : "남"}
+            </Text>
           </View>
           <View>
             <Text style={styles.userInfoTitleText}>생년월일</Text>
-            <Text style={styles.userInfoDataText}>010101</Text>
+            <Text style={styles.userInfoDataText}>{info.mem_birth}</Text>
           </View>
         </View>
         <View>
           <View>
             <TouchableOpacity
               style={styles.editTouchableOpacity}
-              onPress={() => navigation.navigate("IntroDetail")}
+              onPress={() =>
+                navigation.navigate("IntroDetail", {
+                  data: resume.content,
+                  id: id,
+                })
+              }
             >
               <Text style={{ fontSize: 16, marginRight: 5 }}>자기소개서</Text>
               <MaterialCommunityIcons
@@ -97,11 +126,14 @@ const MyPage = ({ navigation }) => {
         >
           <View style={{ width: "100%", alignItems: "center" }}>
             {/* <Text style={styles.titleText}>제목</Text> */}
-            <Text style={styles.descriptionText}>내용</Text>
+            <Text style={styles.descriptionText}>
+              {resume.content !== undefined && resume.content.slice(0, 40)}...
+            </Text>
           </View>
           <View style={{ width: "100%", alignItems: "flex-end" }}>
             <Text style={{ color: colors.smallTextGray2 }}>
-              2022.10.28에 작성
+              {resume.date !== undefined &&
+                resume.date.slice(0, 10) + "에 작성"}
             </Text>
           </View>
         </View>
