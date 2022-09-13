@@ -15,6 +15,7 @@ import RadioButton from "../../../components/common/RadioButton";
 import MultiLineinput from "../../../components/common/MultiLineInput";
 import { postMemo } from "../../../api/api.member";
 import isPast from "date-fns/isPast";
+import { returnServiceTime } from "../../../components/CommonFunc";
 
 const ApplyService = ({ navigate, apply, sendData }) => {
   const [modalMode, setModalMode] = useState("");
@@ -252,12 +253,7 @@ const ApplyService = ({ navigate, apply, sendData }) => {
           {format(parseISO(apply.service_date.slice(0, 10)), "M월 d일 (E) ", {
             locale: ko,
           })}
-          {apply.service_time.slice(0, 5) +
-            " - " +
-            (parseInt(apply.service_time.slice(0, 2)) +
-              Math.floor(apply.duration / 60)) +
-            ":" +
-            (parseInt(apply.service_time.slice(3, 5)) + (apply.duration % 60))}
+          {returnServiceTime(apply.service_time, apply.duration)}
         </Text>
       </View>
       <View style={styles.applyDetail}>

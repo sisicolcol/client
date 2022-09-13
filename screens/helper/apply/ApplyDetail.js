@@ -2,9 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import BottomButton from "../../../components/common/BottomButton";
-import Input from "../../../components/common/Input";
 import ApplyDetailText from "../../../components/ApplyDetailText";
-import { colors } from "../../../theme";
+import { returnServiceTime } from "../../../components/CommonFunc";
 
 const ApplyDetail = ({ navigation, route }) => {
   const {
@@ -37,14 +36,7 @@ const ApplyDetail = ({ navigation, route }) => {
         <View style={styles.inputView}>
           <ApplyDetailText
             label={"서비스 제공 시간"}
-            text={
-              service_time.slice(0, 5) +
-              " - " +
-              (parseInt(service_time.slice(0, 2)) + Math.floor(duration / 60)) +
-              ":" +
-              (parseInt(service_time.slice(3, 5)) +
-                (duration % 60 === 0 ? "0" : duration % 60))
-            }
+            text={returnServiceTime(service_time, duration)}
           />
         </View>
         <View style={styles.inputView}>

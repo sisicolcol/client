@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import PageInfo from "../../../components/common/PageInfo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Ionicons } from "@expo/vector-icons";
 import HelperService from "../../../components/HelperService";
+import { getPreServiceList } from "../../../api/api.helper";
+import { format, parseISO } from "date-fns";
+import { ko } from "date-fns/locale/ko";
+import { returnServiceTime } from "../../../components/CommonFunc";
 
 const ReservationApply = ({ navigation }) => {
+  const [applyArr, setApplyArr] = useState([]);
+
+  useEffect(() => {
+    getPreServiceList().then((data) => {
+      if (data.isSuccess) {
+        setApplyArr(data.result);
+      }
+    });
+  }, [navigation]);
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAwareScrollView
@@ -41,22 +54,39 @@ const ReservationApply = ({ navigation }) => {
             <Ionicons name="options-outline" size={24} color="black" />
           </TouchableOpacity>
         </View>
-        <View style={{ alignItems: "center", width: "100%" }}>
-          <HelperService
-            name={"가나다"}
-            time={3}
-            start={"이름"}
-            dest={"이름"}
-            checkOnPress={() => {
-              navigation.navigate("ApplyDetail");
-            }}
-            applyOnPress={() => {
-              navigation.navigate("IntroSelection", {
-                applyType: "reservation",
-              });
-            }}
-          />
-        </View>
+        {applyArr.map((apply) => {
+          let hr =
+            parseInt(apply.service_time.slice(0, 2)) +
+            Math.floor(apply.duration / 60);
+          let mn =
+            parseInt(apply.service_time.slice(3, 5)) + (apply.duration % 60);
+          return (
+            <View
+              key={apply.apply_id}
+              style={{ alignItems: "center", width: "100%" }}
+            >
+              <HelperService
+                name={apply.apply_id}
+                time={apply.duration}
+                start={`${format(
+                  parseISO(apply.service_date.slice(0, 10)),
+                  "M월 d일 (E)",
+                  { locale: ko }
+                )} ${returnServiceTime(apply.service_time, apply.duration)}`}
+                dest={apply.end_point}
+                checkOnPress={() => {
+                  navigation.navigate("ApplyDetail", { detailData: apply });
+                }}
+                applyOnPress={() => {
+                  navigation.navigate("IntroSelection", {
+                    detailData: apply,
+                    applyType: "reservation",
+                  });
+                }}
+              />
+            </View>
+          );
+        })}
       </KeyboardAwareScrollView>
     </View>
   );
