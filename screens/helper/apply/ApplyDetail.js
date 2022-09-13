@@ -3,6 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import BottomButton from "../../../components/common/BottomButton";
 import Input from "../../../components/common/Input";
+import ApplyDetailText from "../../../components/ApplyDetailText";
+import { colors } from "../../../theme";
 
 const ApplyDetail = ({ navigation, route }) => {
   const {
@@ -16,8 +18,6 @@ const ApplyDetail = ({ navigation, route }) => {
     details,
   } = route.params.detailData;
 
-  const nothingFunc = () => {};
-
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAwareScrollView
@@ -28,19 +28,16 @@ const ApplyDetail = ({ navigation, route }) => {
           justifyContent: "center",
         }}
       >
-        <View style={styles.inputView} pointerEvents={"none"}>
-          <Input
+        <View style={styles.inputView}>
+          <ApplyDetailText
             label={"서비스 제공 날짜"}
-            placeholder={"서비스 제공 날짜"}
-            value={service_date.slice(0, 10)}
-            sendValue={nothingFunc}
+            text={service_date.slice(0, 10)}
           />
         </View>
-        <View style={styles.inputView} pointerEvents={"none"}>
-          <Input
+        <View style={styles.inputView}>
+          <ApplyDetailText
             label={"서비스 제공 시간"}
-            placeholder={"서비스 제공 시간"}
-            value={
+            text={
               service_time.slice(0, 5) +
               " - " +
               (parseInt(service_time.slice(0, 2)) + Math.floor(duration / 60)) +
@@ -48,58 +45,33 @@ const ApplyDetail = ({ navigation, route }) => {
               (parseInt(service_time.slice(3, 5)) +
                 (duration % 60 === 0 ? "0" : duration % 60))
             }
-            sendValue={nothingFunc}
           />
         </View>
-        <View style={styles.inputView} pointerEvents={"none"}>
-          <Input
-            label={"출발지"}
-            placeholder={"출발지"}
-            value={start_point}
-            sendValue={nothingFunc}
-          />
+        <View style={styles.inputView}>
+          <ApplyDetailText label={"출발지"} text={start_point} />
         </View>
-        <View style={styles.inputView} pointerEvents={"none"}>
-          <Input
-            label={"목적지"}
-            placeholder={"목적지"}
-            value={end_point}
-            sendValue={nothingFunc}
-          />
+        <View style={styles.inputView}>
+          <ApplyDetailText label={"목적지"} text={end_point} />
         </View>
-        <View style={styles.inputView} pointerEvents={"none"}>
-          <Input
+        <View style={styles.inputView}>
+          <ApplyDetailText
             label={"왕복/편도 여부"}
-            placeholder={"왕복/편도 여부"}
-            value={way ? "왕복" : "편도"}
-            sendValue={nothingFunc}
+            xt={way ? "왕복" : "편도"}
           />
         </View>
-        <View style={styles.inputView} pointerEvents={"none"}>
-          <Input
+        <View style={styles.inputView}>
+          <ApplyDetailText
             label={"예상 소요 시간"}
-            placeholder={"예상 소요 시간"}
-            value={`${
+            text={`${
               duration >= 60 ? Math.floor(duration / 60) + "시간 " : ""
             } ${duration % 60 !== 0 ? (duration % 60) + "분" : ""}`}
-            sendValue={nothingFunc}
           />
         </View>
-        <View style={styles.inputView} pointerEvents={"none"}>
-          <Input
-            label={"활동지원사에게 바라는 사항"}
-            placeholder={"활동지원사에게 바라는 사항"}
-            value={contents}
-            sendValue={nothingFunc}
-          />
+        <View style={styles.inputView}>
+          <ApplyDetailText label={"활동지원사에게 바라는 사항"} xt={contents} />
         </View>
-        <View style={styles.inputView} pointerEvents={"none"}>
-          <Input
-            label={"자세한 신청 내용"}
-            placeholder={"자세한 신청 내용"}
-            value={details}
-            sendValue={nothingFunc}
-          />
+        <View style={styles.inputView}>
+          <ApplyDetailText label={"자세한 신청 내용"} xt={details} />
         </View>
       </KeyboardAwareScrollView>
       <BottomButton text={"확인"} onPress={() => navigation.goBack()} />

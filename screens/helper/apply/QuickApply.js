@@ -69,7 +69,10 @@ const QuickApply = ({ navigation }) => {
                   navigation.navigate("ApplyDetail", { detailData: apply });
                 }}
                 applyOnPress={() => {
-                  navigation.navigate("IntroSelection", { detailData: apply });
+                  navigation.navigate("IntroSelection", {
+                    detailData: apply,
+                    applyType: "quick",
+                  });
                 }}
               />
             </View>
