@@ -3,6 +3,7 @@ import {
   Home,
   Apply,
   Chat,
+  ChatList,
   HelperList,
   ApplyList,
   ApplyDetail,
@@ -59,7 +60,12 @@ const BlindStack = () => {
         />
       </Stack.Group>
       <Stack.Group>
-        <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen
+          name="ChatList"
+          component={ChatList}
+          options={{ title: "" }}
+        />
+        <Stack.Screen name="Chat" component={Chat} options={{ title: "" }} />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
