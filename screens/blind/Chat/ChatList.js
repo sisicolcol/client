@@ -40,8 +40,8 @@ const ChatList = ({ navigation }) => {
       <ScrollView style={{ paddingHorizontal: 16, marginBottom: 100 }}>
         <View style={{ marginLeft: 46 }}>
           <PageInfo
-            title={"와\n채팅하기"}
             colorTitle={"활동지원사"}
+            title={"와\n채팅하기"}
             isBold={false}
             marginBottom={32}
           />
@@ -60,7 +60,7 @@ const ChatList = ({ navigation }) => {
                 width="100%"
                 marginBottom={0}
                 onPress={() => {
-                  navigation.navigate("Chat", { room: room.chat_room_no });
+                  navigation.navigate("Chat", { room: room });
                 }}
               />
             </View>
