@@ -51,7 +51,7 @@ const HelperTab = () => {
         options={({ route }) => ({
           tabBarStyle: ((route) => {
             const routeName = getFocusedRouteNameFromRoute(route);
-            if (routeName === "HelperChat") {
+            if (routeName === "HelperChat" || routeName === "ChatLinkDetail") {
               return { display: "none" };
             }
             return styles.tabBarStyle;

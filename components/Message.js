@@ -11,6 +11,9 @@ const Message = ({ message, sender_no, my_no, send_time }) => {
         <Text style={[chatStyles.time, chatStyles.myTime]}>{send_time}</Text>
       )}
       <View
+        accessibilityLabel={
+          my_no === sender_no ? "나의 메세지" : "상대방의 메세지"
+        }
         style={[
           chatStyles.chatBox,
           my_no === sender_no ? chatStyles.myChat : chatStyles.partnerChat,

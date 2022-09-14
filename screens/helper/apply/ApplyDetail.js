@@ -10,15 +10,12 @@ const ApplyDetail = ({ navigation, route }) => {
   const [payload, setPayload] = useState(route.params.detailData);
 
   useEffect(() => {
-    console.log(route.params.apply_id);
     if (route.params.detailData === undefined) {
       getApplyDetail(route.params.apply_id)
         .then((data) => {
-          console.log("data changed");
-          console.log(data);
-          // if (data.isSuccess) {
-          //   setPayload(data.result[0]);
-          // }
+          if (data.isSuccess) {
+            setPayload(data.result[0]);
+          }
         })
         .catch((err) => console.error(err));
     }

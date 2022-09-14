@@ -2,7 +2,6 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  ScrollView,
   View,
   TouchableOpacity,
 } from "react-native";
@@ -16,14 +15,15 @@ import { getChatList } from "../../../api/api.main";
 const ChatList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [chatRoomList, setChatRoomList] = useState([]);
+  const [memNo, setMemNo] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       const user = await getUserId();
       await getChatList(user).then((data) => {
-        console.log(data);
         if (data.isSuccess) {
-          setChatRoomList(data.result);
+          setMemNo(data.result.mem_no);
+          setChatRoomList(data.result.checkList);
           setLoading(false);
         }
       });
@@ -79,7 +79,10 @@ const ChatList = ({ navigation }) => {
             return (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate("HelperChat", { room: room })
+                  navigation.navigate("HelperChat", {
+                    room: room,
+                    mem_no: memNo,
+                  })
                 }
                 key={room.chat_room_no}
                 style={{
@@ -101,7 +104,7 @@ const ChatList = ({ navigation }) => {
                   <Text
                     style={{ fontSize: fontSizes.bigText, marginBottom: 16 }}
                   >
-                    {room.parnter}님
+                    {room.partner}님
                   </Text>
                   <Text
                     style={{
@@ -139,15 +142,3 @@ const ChatList = ({ navigation }) => {
 };
 
 export default ChatList;
-
-const styles = StyleSheet.create({
-  chatRoom: {
-    alignItems: "flex-start",
-    borderWidth: 2,
-    borderColor: colors.stroke,
-    borderRadius: 12,
-    paddingHorizontal: 30,
-    paddingVertical: 20,
-    marginBottom: 8,
-  },
-});

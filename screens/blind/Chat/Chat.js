@@ -11,18 +11,18 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Message from "../../../components/Message";
 
 const Chat = ({ navigation, route }) => {
-  const { mem_no, partner_mem_no, chat_room_no, apply_id } = route.params.room;
+  const { blind_user_no, chat_room_no, apply_id, partner } = route.params.room;
+  const mem_no = route.params.mem_no;
   const [chatList, setChatList] = useState([]);
   const [payload, setPayload] = useState({});
   const [message, setMessage] = useState("");
   const scrollViewRef = useRef();
-  const me = 7;
 
   useEffect(() => {
     const fetchData = async () => {
       const data = {
         mem_no: mem_no,
-        partner_mem_no: partner_mem_no,
+        partner_mem_no: blind_user_no,
         apply_id: apply_id,
       };
       await getChat(data)
@@ -42,16 +42,14 @@ const Chat = ({ navigation, route }) => {
     let hr = parseInt(new Date().getHours());
     let mn = parseInt(new Date().getMinutes());
     let time = (hr < 10 ? "0" + hr : hr) + ":" + (mn < 10 ? "0" + mn : mn);
-    console.log("here");
-    console.log(hr, mn);
-    console.log(typeof time);
+
     const newData = {
       메시지: message,
       전송시각: time,
-      sender_no: 7, //mem_no
+      sender_no: mem_no,
     };
-    console.log(newData);
-    postChat(7, partner_mem_no, chat_room_no, message)
+
+    postChat(mem_no, blind_user_no, chat_room_no, message)
       .then((data) => {
         console.log(data);
         setChatList((chatList) => [...chatList, newData]);
@@ -59,6 +57,14 @@ const Chat = ({ navigation, route }) => {
       })
       .catch((err) => console.error(err));
   };
+
+  if (payload.info === undefined) {
+    return (
+      <SafeAreaView>
+        <Text>로딩중...</Text>
+      </SafeAreaView>
+    );
+  }
   return (
     <SafeAreaView
       style={{
@@ -69,8 +75,7 @@ const Chat = ({ navigation, route }) => {
     >
       <View style={{ marginLeft: 46 }}>
         <PageInfo
-          colorTitle={"활동지원사"}
-          title={"와\n채팅하기"}
+          title={`활동지원사\n${partner}과의 채팅방`}
           isBold={false}
           marginBottom={32}
         />
@@ -87,8 +92,8 @@ const Chat = ({ navigation, route }) => {
       >
         <View style={[chatStyles.chatBox, chatStyles.partnerChat]}>
           <Text style={{ paddingBottom: 16 }}>
-            {payload["introduce "] !== undefined &&
-              payload["introduce "].split("다. ").map((data, idx) => {
+            {payload.introduce !== undefined &&
+              payload.introduce.split("다. ").map((data, idx) => {
                 if (idx === 2) return data;
                 return data + "다.\n\n";
               })}
@@ -104,13 +109,15 @@ const Chat = ({ navigation, route }) => {
           />
         </View>
         {chatList.map((chat, idx) => {
-          <Message
-            key={chat.메시지 + idx}
-            message={chat.메시지}
-            sender_no={chat.sender_no}
-            my_no={me}
-            send_time={chat.전송시각}
-          />;
+          return (
+            <Message
+              key={chat.메시지 + idx}
+              message={chat.메시지}
+              sender_no={chat.sender_no}
+              my_no={mem_no}
+              send_time={chat.전송시각}
+            />
+          );
         })}
       </KeyboardAwareScrollView>
       <View

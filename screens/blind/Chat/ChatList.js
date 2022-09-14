@@ -11,13 +11,15 @@ import { getChatList } from "../../../api/api.main";
 const ChatList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [chatRoomList, setChatRoomList] = useState([]);
+  const [memNo, setMemNo] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       const user = await getUserId();
       await getChatList(user).then((data) => {
         if (data.isSuccess) {
-          setChatRoomList(data.result);
+          setMemNo(data.result.mem_no);
+          setChatRoomList(data.result.checkList);
           setLoading(false);
         }
       });
@@ -37,7 +39,7 @@ const ChatList = ({ navigation }) => {
       <KeyboardAwareScrollView
         style={{ paddingHorizontal: 16, marginBottom: 100 }}
       >
-        <View style={{ marginLeft: 46 }}>
+        <View style={{ marginLeft: 30 }}>
           <PageInfo
             colorTitle={"활동지원사"}
             title={"와\n채팅하기"}
@@ -70,7 +72,7 @@ const ChatList = ({ navigation }) => {
             return (
               <View key={room.chat_room_no} style={styles.chatRoom}>
                 <Text style={{ fontSize: fontSizes.bigText, marginBottom: 16 }}>
-                  활동지원사 {room.parnter}님
+                  활동지원사 {room.partner}님
                 </Text>
                 <MainButton
                   text="채팅방으로 이동하기"
@@ -80,7 +82,7 @@ const ChatList = ({ navigation }) => {
                   width="100%"
                   marginBottom={0}
                   onPress={() => {
-                    navigation.navigate("Chat", { room: room });
+                    navigation.navigate("Chat", { room: room, mem_no: memNo });
                   }}
                 />
               </View>

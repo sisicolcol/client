@@ -15,21 +15,18 @@ import Message from "../../../components/Message";
 import MainButton from "../../../components/common/MainButton";
 
 const Chat = ({ navigation, route }) => {
-  const { mem_no, partner_mem_no, chat_room_no, apply_id, parnter } =
-    route.params.room;
+  const { helper_no, chat_room_no, apply_id } = route.params.room;
+  const mem_no = route.params.mem_no;
   const [chatList, setChatList] = useState([]);
   const [payload, setPayload] = useState({});
   const [message, setMessage] = useState("");
   const scrollViewRef = useRef();
-  const me = 7;
-
-  console.log(payload);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = {
         mem_no: mem_no,
-        partner_mem_no: partner_mem_no,
+        partner_mem_no: helper_no,
         apply_id: apply_id,
       };
       await getChat(data)
@@ -48,16 +45,13 @@ const Chat = ({ navigation, route }) => {
   const sendMessage = () => {
     let hr = parseInt(new Date().getHours());
     let mn = parseInt(new Date().getMinutes());
-    console.log("here");
-    console.log(hr, mn);
     const newData = {
       메시지: message,
       전송시각: (hr < 10 ? "0" + hr : hr) + ":" + (mn < 10 ? "0" + mn : mn),
-      sender_no: 7, //mem_no
+      sender_no: mem_no,
     };
-    postChat(7, partner_mem_no, chat_room_no, message)
-      .then((data) => {
-        console.log(data);
+    postChat(mem_no, helper_no, chat_room_no, message)
+      .then(() => {
         setChatList((chatList) => [...chatList, newData]);
         setMessage("");
       })
@@ -105,14 +99,14 @@ const Chat = ({ navigation, route }) => {
           </Text>
           <Text
             style={{ fontSize: fontSizes.smallInfo, paddingVertical: 16 }}
-          >{`${parnter} 님께서 활동지원사님의\n지원서비스를 승낙하셨습니다.\n\n아래 버튼을 눌러서\n자세한 내용을 확인해보세요.`}</Text>
+          >{`${payload.partner_no} 님께서 활동지원사님의\n지원서비스를 승낙하셨습니다.\n\n아래 버튼을 눌러서\n자세한 내용을 확인해보세요.`}</Text>
           <MainButton
             text="신청 서비스 내용 확인하기"
             isBig={false}
             isBlue={true}
             isBold={false}
             onPress={() =>
-              navigation.navigate("ApplyDetail", { apply_id: apply_id })
+              navigation.navigate("ChatLinkDetail", { apply_id: apply_id })
             }
           />
         </View>
@@ -122,7 +116,7 @@ const Chat = ({ navigation, route }) => {
               key={chat.메시지 + idx}
               message={chat.메시지}
               sender_no={chat.sender_no}
-              my_no={me}
+              my_no={mem_no}
               send_time={chat.전송시각}
             />
           );
@@ -154,6 +148,7 @@ const Chat = ({ navigation, route }) => {
           style={{
             position: "absolute",
             right: 26,
+            bottom: 12,
           }}
           accessibilityRole="button"
           accessibilityLabel="메세지 전송하기"

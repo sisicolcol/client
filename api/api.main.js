@@ -59,9 +59,9 @@ const getChat = async (data) => {
   return await request({
     url: "/chat",
     params: {
-      mem_no: 7, //data.mem_no,
-      partner_mem_no: 8, //data.partner_mem_no,
-      apply_id: 24, //data.apply_id
+      mem_no: data.mem_no,
+      partner_mem_no: data.partner_mem_no,
+      apply_id: data.apply_id,
     },
   }).catch((error) => console.error(error));
 };
@@ -72,9 +72,9 @@ const postChat = async (me_mem_no, partner_mem_no, chat_room_no, message) => {
     method: "post",
     url: "/chat",
     params: {
-      me_mem_no: 7,
-      partner_mem_no: 8,
-      chat_room_no: 1,
+      me_mem_no: me_mem_no,
+      partner_mem_no: partner_mem_no,
+      chat_room_no: chat_room_no,
     },
     data: {
       content: message,
