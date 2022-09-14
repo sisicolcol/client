@@ -50,7 +50,13 @@ const Home = ({ navigation }) => {
         marginBottom={25}
         onPress={() => navigation.navigate("HelperList")}
       />
-      <MainButton isBig={true} width={"90%"} text={"알림"} marginBottom={25} />
+      <MainButton
+        isBig={true}
+        width={"90%"}
+        text={"알림"}
+        marginBottom={25}
+        onPress={() => navigation.navigate("AlertList")}
+      />
       <MainButton
         isBig={true}
         width={"90%"}

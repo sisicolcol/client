@@ -10,6 +10,7 @@ import {
   ApplyHelper,
   CheckResume,
   Result,
+  AlertList,
 } from "../screens/blind/";
 import { Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
@@ -104,6 +105,13 @@ const BlindStack = () => {
           name="HelperCheckResume"
           options={{ title: "지원한 활동지원사 확인하기" }}
           component={CheckResume}
+        />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen
+          name="AlertList"
+          options={{ title: "알림" }}
+          component={AlertList}
         />
       </Stack.Group>
     </Stack.Navigator>

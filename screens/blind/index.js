@@ -8,6 +8,7 @@ import ApplyDetail from "./ApplyList/ApplyDetail";
 import ApplyHelper from "./ApplyList/ApplyHelper";
 import CheckResume from "./CheckResume";
 import Result from "./Result";
+import AlertList from "./AlertList";
 
 export {
   Home,
@@ -20,4 +21,5 @@ export {
   ApplyHelper,
   CheckResume,
   Result,
+  AlertList,
 };
