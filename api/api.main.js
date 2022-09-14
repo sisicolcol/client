@@ -49,7 +49,7 @@ const getChatList = async (mem_id) => {
   return await request({
     url: "/chat/list",
     params: {
-      mem_id: "id3",
+      mem_id: mem_id,
     },
   }).catch((error) => console.error(error));
 };

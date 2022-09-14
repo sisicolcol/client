@@ -49,3 +49,29 @@ export const modalButtonText = {
   paddingBottom: 16,
   textAlign: "center",
 };
+
+export const chatStyles = {
+  chatBox: {
+    wordBreak: "keep-all",
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+
+    maxWidth: "80%",
+  },
+  myChat: {
+    backgroundColor: colors.chatBlue,
+    marginLeft: 8,
+  },
+  partnerChat: {
+    backgroundColor: colors.chatGray6,
+    marginRight: 8,
+  },
+  timeBox: { fontSize: 11, letterSpacing: -0.03 },
+  myTime: {
+    marginLeft: "auto",
+  },
+  partnerTime: {
+    marginRight: "auto",
+  },
+};

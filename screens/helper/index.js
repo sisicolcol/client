@@ -1,7 +1,8 @@
 import Home from "./Home";
 import QuickApply from "./apply/QuickApply";
 import ReservationApply from "./apply/ReservationApply";
-import HelperChat from "./HelperChat";
+import HelperChat from "./Chat/HelperChat";
+import HelperChatList from "./Chat/HelperChatList";
 import HelperApplyList from "./HelperApplyList";
 import ApplyDetail from "./apply/ApplyDetail";
 import IntroSelection from "./apply/IntroSelection";
@@ -16,6 +17,7 @@ export {
   QuickApply,
   ReservationApply,
   HelperChat,
+  HelperChatList,
   HelperApplyList,
   MyPage,
   ApplyDetail,

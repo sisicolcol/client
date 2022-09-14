@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { HelperChat } from "../../screens/helper/index";
+import { HelperChat, HelperChatList } from "../../screens/helper/index";
 import { Feather } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
@@ -27,6 +27,7 @@ const ChatStack = () => {
         },
       }}
     >
+      <Stack.Screen name="HelperChatList" component={HelperChatList} />
       <Stack.Screen name="HelperChat" component={HelperChat} />
     </Stack.Navigator>
   );

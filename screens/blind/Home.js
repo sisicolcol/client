@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { reloadAsync } from "expo-updates";
 import React from "react";
 import { SafeAreaView, View, Text, Button } from "react-native";
 import MainButton from "../../components/common/MainButton";
@@ -54,7 +56,10 @@ const Home = ({ navigation }) => {
         width={"90%"}
         text={"내 정보"}
         marginBottom={25}
-        onPress={() => navigation.navigate("Apply")}
+        onPress={() => {
+          AsyncStorage.clear();
+          reloadAsync();
+        }}
       />
     </SafeAreaView>
   );

@@ -1,21 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
 import PageInfo from "../../../components/common/PageInfo";
-import { colors, fontSizes } from "../../../theme";
+import { chatStyles, colors } from "../../../theme";
 import MainButton from "../../../components/common/MainButton";
 import BottomButton from "../../../components/common/BottomButton";
 import { TextInput } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { getChat, postChat } from "../../../api/api.main";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Message from "../../../components/Message";
 
 const Chat = ({ navigation, route }) => {
   const { mem_no, partner_mem_no, chat_room_no, apply_id } = route.params.room;
@@ -46,14 +39,18 @@ const Chat = ({ navigation, route }) => {
   }, []);
 
   const sendMessage = () => {
-    let hr = new Date().getHours();
-    let mn = new Date().getMinutes();
+    let hr = parseInt(new Date().getHours());
+    let mn = parseInt(new Date().getMinutes());
+    let time = (hr < 10 ? "0" + hr : hr) + ":" + (mn < 10 ? "0" + mn : mn);
     console.log("here");
+    console.log(hr, mn);
+    console.log(typeof time);
     const newData = {
       메시지: message,
-      전송시각: (hr < 10 ? "0" + hr : hr) + ":" + (mn < 10 ? "0" + mn : mn),
+      전송시각: time,
       sender_no: 7, //mem_no
     };
+    console.log(newData);
     postChat(7, partner_mem_no, chat_room_no, message)
       .then((data) => {
         console.log(data);
@@ -86,10 +83,9 @@ const Chat = ({ navigation, route }) => {
         }
         style={{
           paddingHorizontal: 16,
-          // marginBottom: 200,
         }}
       >
-        <View style={[styles.chatBox, styles.partnerChat]}>
+        <View style={[chatStyles.chatBox, chatStyles.partnerChat]}>
           <Text style={{ paddingBottom: 16 }}>
             {payload["introduce "] !== undefined &&
               payload["introduce "].split("다. ").map((data, idx) => {
@@ -108,31 +104,13 @@ const Chat = ({ navigation, route }) => {
           />
         </View>
         {chatList.map((chat, idx) => {
-          return (
-            <View
-              style={{ flexDirection: "row", alignItems: "flex-end" }}
-              key={chat.메시지 + chat.전송시각 + idx}
-            >
-              {me === chat.sender_no && (
-                <Text style={[styles.time, styles.myTime]}>
-                  {chat.전송시각}
-                </Text>
-              )}
-              <View
-                style={[
-                  styles.chatBox,
-                  me === chat.sender_no ? styles.myChat : styles.partnerChat,
-                ]}
-              >
-                <Text>{chat.메시지}</Text>
-              </View>
-              {me !== chat.sender_no && (
-                <Text style={[styles.time, styles.partnerTime]}>
-                  {chat.전송시각}
-                </Text>
-              )}
-            </View>
-          );
+          <Message
+            key={chat.메시지 + idx}
+            message={chat.메시지}
+            sender_no={chat.sender_no}
+            my_no={me}
+            send_time={chat.전송시각}
+          />;
         })}
       </KeyboardAwareScrollView>
       <View
@@ -180,44 +158,3 @@ const Chat = ({ navigation, route }) => {
 };
 
 export default Chat;
-
-const styles = StyleSheet.create({
-  chatContainer: {
-    wordBreak: "keep-all",
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginBottom: 8,
-    width: "100%",
-  },
-  chatBox: {
-    wordBreak: "keep-all",
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginBottom: 12,
-
-    maxWidth: "80%",
-  },
-  myChat: {
-    backgroundColor: colors.chatBlue,
-    marginLeft: 8,
-  },
-  partnerChat: {
-    backgroundColor: colors.chatGray6,
-    marginRight: 8,
-  },
-  myTime: {
-    marginLeft: "auto",
-    fontSize: 11,
-    letterSpacing: -0.03,
-  },
-  partnerTime: {
-    marginRight: "auto",
-    fontSize: 11,
-    letterSpacing: -0.03,
-  },
-  time: {
-    marginBottom: 12,
-  },
-});
