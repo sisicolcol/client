@@ -35,7 +35,7 @@ const NewIntroDetail = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View
         style={{
           width: "100%",
@@ -109,7 +109,7 @@ const NewIntroDetail = ({ navigation }) => {
           onPress={() => setIsModalOpen(false)}
         />
       </DefaultModal>
-    </View>
+    </SafeAreaView>
   );
 };
 

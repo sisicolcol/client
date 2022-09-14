@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import MainButton from "../../../components/common/MainButton";
 import { shadowView, colors, modalButtonText } from "../../../theme";
@@ -10,7 +10,7 @@ const HelperService = ({ helper, navigate }) => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <View
+    <SafeAreaView
       style={{
         ...shadowView,
         alignItems: "flex-start",
@@ -21,7 +21,9 @@ const HelperService = ({ helper, navigate }) => {
       <Text style={styles.helperName}>활동지원사 {helper.hp_name}님</Text>
       <View style={styles.helperDetail}>
         <Text style={styles.detailLabel}>신청일시:</Text>
-        <Text style={styles.detailContent}>{helper.apply_date}</Text>
+        <Text style={styles.detailContent}>
+          {helper.apply_date.slice(0, 10)}
+        </Text>
       </View>
       <View style={styles.helperDetail}>
         <Text style={styles.detailLabel}>출발지:</Text>
@@ -34,7 +36,7 @@ const HelperService = ({ helper, navigate }) => {
       <View style={styles.helperDetail}>
         <Text style={styles.detailLabel}>매칭여부:</Text>
         <Text style={styles.detailContent}>
-          {helper.is_success > 0 ? "매칭 확정" : "매칭 안 됨"}
+          {helper.status > 0 ? "매칭 확정" : "매칭 안 됨"}
         </Text>
       </View>
 
@@ -51,14 +53,14 @@ const HelperService = ({ helper, navigate }) => {
               pg_id: helper.pg_id,
               hp_id: helper.hp_id,
               hp_name: helper.hp_name,
-              isPressable: helper.is_success,
+              isPressable: helper.status,
             },
           })
         }
       />
 
       <View style={{ height: 16 }} />
-      {helper.is_success === 0 && (
+      {helper.status === 0 && (
         <MainButton
           isBlue={true}
           isBig={false}
@@ -111,7 +113,7 @@ const HelperService = ({ helper, navigate }) => {
           </View>
         </DefaultModal>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

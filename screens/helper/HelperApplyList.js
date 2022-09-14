@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, SafeAreaView } from "react-native";
 
 const HelperApplyList = ({ navigation }) => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>신청하기</Text>
       <Button title="눌러" onPress={() => navigation.goback()} />
-    </View>
+    </SafeAreaView>
   );
 };
 

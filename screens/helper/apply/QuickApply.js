@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
 import PageInfo from "../../../components/common/PageInfo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Ionicons } from "@expo/vector-icons";
@@ -18,7 +18,7 @@ const QuickApply = ({ navigation }) => {
   }, [navigation]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAwareScrollView
         contentContainerStyle={{
           paddingBottom: 120,
@@ -61,7 +61,7 @@ const QuickApply = ({ navigation }) => {
               style={{ alignItems: "center", width: "100%" }}
             >
               <HelperService
-                name={apply.apply_id}
+                name={apply.mem_name}
                 time={apply.duration}
                 start={apply.start_point}
                 dest={apply.end_point}
@@ -79,7 +79,7 @@ const QuickApply = ({ navigation }) => {
           );
         })}
       </KeyboardAwareScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

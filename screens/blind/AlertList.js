@@ -13,7 +13,6 @@ const AlertList = ({ navigation }) => {
     const fetchData = async () => {
       const user = await getUserId();
       await getAlertList(user).then((data) => {
-        console.log(data);
         if (data.isSuccess) {
           setAlertArr(data.result.result);
           setLoading(false);

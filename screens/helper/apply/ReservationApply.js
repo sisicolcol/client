@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
 import PageInfo from "../../../components/common/PageInfo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,7 +20,7 @@ const ReservationApply = ({ navigation }) => {
     });
   }, [navigation]);
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAwareScrollView
         contentContainerStyle={{
           paddingBottom: 120,
@@ -66,7 +66,7 @@ const ReservationApply = ({ navigation }) => {
               style={{ alignItems: "center", width: "100%" }}
             >
               <HelperService
-                name={apply.apply_id}
+                name={apply.mem_name}
                 time={apply.duration}
                 start={`${format(
                   parseISO(apply.service_date.slice(0, 10)),
@@ -88,7 +88,7 @@ const ReservationApply = ({ navigation }) => {
           );
         })}
       </KeyboardAwareScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

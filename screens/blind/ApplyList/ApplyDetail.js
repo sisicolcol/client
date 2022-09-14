@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import React, { useState, useEffect } from "react";
 import { parseISO, format } from "date-fns";
 import ko from "date-fns/locale/ko";
@@ -28,7 +28,7 @@ const ApplyDetail = ({ navigation, route }) => {
     );
 
   return (
-    <View style={defaultScreen}>
+    <SafeAreaView style={defaultScreen}>
       <View
         style={{
           ...shadowView,
@@ -102,7 +102,7 @@ const ApplyDetail = ({ navigation, route }) => {
         text="홈 화면으로 돌아가기"
         onPress={() => navigation.popToTop()}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, SafeAreaView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import BottomButton from "../../../components/common/BottomButton";
 import PageInfo from "../../../components/common/PageInfo";
@@ -41,7 +41,7 @@ const IntroDetail = ({ navigation, route }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View
         style={{
           width: "100%",
@@ -125,7 +125,7 @@ const IntroDetail = ({ navigation, route }) => {
           onPress={() => setIsSuccessModalOpen(false)}
         />
       </DefaultModal>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -12,6 +12,8 @@ import PageInfo from "../../../components/common/PageInfo";
 import { colors, shadowView } from "../../../theme";
 import { getUserId } from "../../../components/Storage";
 import { getDefaultResume, getMyInfo } from "../../../api/api.helper";
+import { reloadAsync } from "expo-updates";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Category = ({ title, onPress }) => {
   return (
@@ -35,6 +37,7 @@ const Category = ({ title, onPress }) => {
 };
 
 const MyPage = ({ navigation }) => {
+  const [loading, setLoading] = useState(true);
   const [id, setId] = useState("");
   const [info, setInfo] = useState({});
   const [resume, setResume] = useState({ content: "", date: "" });
@@ -48,6 +51,7 @@ const MyPage = ({ navigation }) => {
       await getDefaultResume(resultId).then((data) => {
         if (data.isSuccess) {
           setResume(data.result.result[0]);
+          setLoading(false);
         }
       });
     };
@@ -55,6 +59,12 @@ const MyPage = ({ navigation }) => {
     fetchData();
   }, []);
 
+  if (loading)
+    return (
+      <SafeAreaView>
+        <Text>로딩중...</Text>
+      </SafeAreaView>
+    );
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -99,7 +109,7 @@ const MyPage = ({ navigation }) => {
               style={styles.editTouchableOpacity}
               onPress={() =>
                 navigation.navigate("IntroDetail", {
-                  data: resume.content,
+                  data: resume.content || "",
                   id: id,
                 })
               }
@@ -138,7 +148,13 @@ const MyPage = ({ navigation }) => {
           </View>
         </View>
         <View style={{ width: "100%" }}>
-          <Category title="비밀번호 변경" />
+          <Category
+            title="비밀번호 변경"
+            onPress={() => {
+              AsyncStorage.clear();
+              reloadAsync();
+            }}
+          />
           <Category title="고객센터" />
         </View>
       </View>

@@ -29,7 +29,7 @@ const ApplyDetail = ({ navigation, route }) => {
     );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAwareScrollView
         contentContainerStyle={{
           paddingBottom: 120,
@@ -85,7 +85,7 @@ const ApplyDetail = ({ navigation, route }) => {
         </View>
       </KeyboardAwareScrollView>
       <BottomButton text={"확인"} onPress={() => navigation.goBack()} />
-    </View>
+    </SafeAreaView>
   );
 };
 

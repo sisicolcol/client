@@ -108,7 +108,7 @@ const IntroSelection = ({ route, navigation }) => {
       postApply(data)
         .then(() => {
           AsyncStorage.removeItem("NEW_IDC");
-          navigation.navigate("ApplyComplete");
+          navigation.replace("ApplyComplete");
         })
         .catch((err) => console.error(err));
     }

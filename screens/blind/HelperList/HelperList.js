@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import HelperService from "./HelperService";
 import BottomButton from "../../../components/common/BottomButton";
@@ -34,7 +34,7 @@ const HelperList = ({ navigation }) => {
   };
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: "white",
@@ -86,7 +86,7 @@ const HelperList = ({ navigation }) => {
         text="홈 화면으로 돌아가기"
         onPress={() => navigation.popToTop()}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

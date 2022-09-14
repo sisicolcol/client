@@ -1,4 +1,4 @@
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, SafeAreaView } from "react-native";
 import React, { useState, useEffect } from "react";
 import MainButton from "../../../components/common/MainButton";
 import BottomButton from "../../../components/common/BottomButton";
@@ -23,7 +23,7 @@ const ApplyHelper = ({ navigation, route }) => {
   }, [navigation]);
 
   return (
-    <View style={defaultScreen}>
+    <SafeAreaView style={defaultScreen}>
       {helper.hp_name === "" ? (
         <View
           style={{
@@ -99,7 +99,7 @@ const ApplyHelper = ({ navigation, route }) => {
         text="홈 화면으로 돌아가기"
         onPress={() => navigation.popToTop()}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

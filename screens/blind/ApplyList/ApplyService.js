@@ -4,6 +4,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import { parseISO, format, isSameDay } from "date-fns";
 import ko from "date-fns/locale/ko";
@@ -238,7 +239,7 @@ const ApplyService = ({ navigate, apply, sendData }) => {
   };
 
   return (
-    <View
+    <SafeAreaView
       style={{
         ...shadowView,
         alignItems: "flex-start",
@@ -345,7 +346,7 @@ const ApplyService = ({ navigate, apply, sendData }) => {
           {getModalContent(modalMode)}
         </DefaultModal>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

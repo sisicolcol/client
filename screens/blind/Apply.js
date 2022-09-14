@@ -215,7 +215,7 @@ const Apply = ({ navigation }) => {
           marginBottom={15}
           onPress={() => {
             setIsModalOpened(false);
-            navigation.navigate("ApplyList");
+            navigation.replace("ApplyList");
           }}
         />
         <MainButton
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     borderRadius: 23,
     borderWidth: 1,
     height: 46,
-    width: "70%",
+    width: "45%",
     borderColor: colors.mainBlue,
     marginHorizontal: 4,
     alignItems: "center",

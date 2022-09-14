@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import React, { useState, useEffect } from "react";
 import ApplyService from "./ApplyService";
 import BottomButton from "../../../components/common/BottomButton";
@@ -56,7 +56,7 @@ const ApplyList = ({ navigation }) => {
   };
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: "white",
@@ -108,7 +108,7 @@ const ApplyList = ({ navigation }) => {
         text="홈 화면으로 돌아가기"
         onPress={() => navigation.popToTop()}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
