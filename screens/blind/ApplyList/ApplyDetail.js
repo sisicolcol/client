@@ -9,12 +9,23 @@ const ApplyDetail = ({ navigation, route }) => {
   const [apply, setApply] = useState(route.params.detailData);
 
   useEffect(() => {
-    if (apply === undefined || apply === null) {
+    if (route.params.detailData === undefined) {
       getApplyDetail(route.params.apply_id)
-        .then((data) => setApply(data))
+        .then((data) => {
+          if (data.isSuccess) {
+            setApply(data.result[0]);
+          }
+        })
         .catch((error) => console.error(error));
     }
   }, [route]);
+
+  if (apply === undefined)
+    return (
+      <View style={defaultScreen}>
+        <Text>로딩중...</Text>
+      </View>
+    );
 
   return (
     <View style={defaultScreen}>

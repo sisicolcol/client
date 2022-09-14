@@ -103,7 +103,7 @@ const Chat = ({ navigation, route }) => {
             isBlue={true}
             isBold={false}
             onPress={() =>
-              navigation.navigate("ApplyList", { apply_id: apply_id })
+              navigation.navigate("ApplyDetail", { apply_id: apply_id })
             }
           />
         </View>
