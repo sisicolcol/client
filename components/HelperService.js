@@ -6,9 +6,12 @@ import MainButton from "./common/MainButton";
 const LocationText = ({ text }) => {
   return (
     <View style={{ width: "100%" }}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={{ fontSize: 18 }}>{text}</Text>
-      </View>
+      {/* <View style={{ flexDirection: "row", justifyContent: "space-between" }}> */}
+      {/* <Text style={{ fontSize: 18, color: colors.pageTextGray1 }}>
+          {title}
+        </Text> */}
+      <Text style={{ fontSize: 18, color: "black" }}>{text}</Text>
+      {/* </View> */}
       <View
         style={{
           height: 2,
@@ -42,7 +45,9 @@ const HelperService = ({
       >
         <Text style={{ fontSize: 22 }}>{`${name}님`}</Text>
         <Text style={{ fontSize: 18, color: colors.pageTextGray1 }}>
-          {`${time}시간 소요 예상`}
+          {`${time >= 60 ? Math.floor(time / 60) + "시간 " : ""} ${
+            time % 60 !== 0 ? (time % 60) + "분 " : ""
+          }소요 예상`}
         </Text>
       </View>
       <View style={{ width: "85%", alignItems: "center" }}>

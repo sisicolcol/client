@@ -1,14 +1,20 @@
 import { React, useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, SafeAreaView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import BottomButton from "../../../components/common/BottomButton";
 import PageInfo from "../../../components/common/PageInfo";
 import DefaultModal from "../../../components/common/DefaultModal";
 import { colors, shadowView, fontSizes } from "../../../theme";
 import MainButton from "../../../components/common/MainButton";
+import { postModifyResume } from "../../../api/api.helper";
 
-const IntroDetail = ({ navigation }) => {
-  const [currentTextLength, setCurrentTextLength] = useState(0);
+const IntroDetail = ({ navigation, route }) => {
+  const [resume, setResume] = useState(
+    route.params.data ? route.params.data : ""
+  );
+  const [currentTextLength, setCurrentTextLength] = useState(
+    route.params.data ? route.params.data.length : 0
+  );
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false); // 분량 부족/초과 경고 모달
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); // 저장 모달
   const maxCharacterLength = 600;
@@ -21,11 +27,21 @@ const IntroDetail = ({ navigation }) => {
     } else {
       setIsSuccessModalOpen(true);
     }
-    setIsSuccessModalOpen(true);
+  };
+
+  const saveDefaultResume = () => {
+    const data = {
+      is_exist: route.params.data ? 1 : 0,
+      hp_id: route.params.id,
+      content: resume,
+    };
+    postModifyResume(data)
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View
         style={{
           width: "100%",
@@ -34,13 +50,7 @@ const IntroDetail = ({ navigation }) => {
           marginBottom: 30,
         }}
       >
-        <PageInfo
-          isBold={false}
-          title="새로운 자기소개서"
-          desc={
-            "해당 자기소개서는 일회성으로 저장되지 않습니다.\n자기소개서 변경은 마이페이지에서 가능합니다."
-          }
-        />
+        <PageInfo isBold={false} title="기존 자기소개서 수정하기" />
       </View>
       <KeyboardAwareScrollView
         contentContainerStyle={{
@@ -52,15 +62,17 @@ const IntroDetail = ({ navigation }) => {
       >
         <View style={[shadowView, styles.introView]}>
           <View style={{ width: "100%", alignItems: "flex-start" }}>
-            <TextInput
+            {/* <TextInput
               style={styles.titleText}
               placeholder="제목을 입력해주세요."
-            />
+            /> */}
             <TextInput
               style={styles.descriptionText}
               placeholder="내용을 입력해주세요."
               multiline={true}
+              value={resume}
               onChangeText={(text) => {
+                setResume(text);
                 setCurrentTextLength(text.length);
               }}
             />
@@ -101,7 +113,11 @@ const IntroDetail = ({ navigation }) => {
           width={"100%"}
           isBlue={true}
           marginBottom={20}
-          onPress={() => setIsSuccessModalOpen(false)}
+          onPress={() => {
+            setIsSuccessModalOpen(false);
+            saveDefaultResume();
+            //여기서 자기소개서 저장
+          }}
         />
         <MainButton
           text={"취소"}
@@ -109,7 +125,7 @@ const IntroDetail = ({ navigation }) => {
           onPress={() => setIsSuccessModalOpen(false)}
         />
       </DefaultModal>
-    </View>
+    </SafeAreaView>
   );
 };
 

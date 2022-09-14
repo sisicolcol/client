@@ -3,12 +3,14 @@ import {
   Home,
   Apply,
   Chat,
+  ChatList,
   HelperList,
   ApplyList,
   ApplyDetail,
   ApplyHelper,
   CheckResume,
   Result,
+  AlertList,
 } from "../screens/blind/";
 import { Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
@@ -59,19 +61,12 @@ const BlindStack = () => {
         />
       </Stack.Group>
       <Stack.Group>
-        <Stack.Screen name="Chat" component={Chat} />
-      </Stack.Group>
-      <Stack.Group>
         <Stack.Screen
-          name="HelperList"
-          options={{ title: "지원한 활동지원사 확인하기" }}
-          component={HelperList}
+          name="ChatList"
+          component={ChatList}
+          options={{ title: "" }}
         />
-        <Stack.Screen
-          name="HelperCheckResume"
-          options={{ title: "지원한 활동지원사 확인하기" }}
-          component={CheckResume}
-        />
+        <Stack.Screen name="Chat" component={Chat} options={{ title: "" }} />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
@@ -98,6 +93,25 @@ const BlindStack = () => {
           name="Result"
           options={{ title: "", headerLeft: () => null }}
           component={Result}
+        />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen
+          name="HelperList"
+          options={{ title: "지원한 활동지원사 확인하기" }}
+          component={HelperList}
+        />
+        <Stack.Screen
+          name="HelperCheckResume"
+          options={{ title: "지원한 활동지원사 확인하기" }}
+          component={CheckResume}
+        />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen
+          name="AlertList"
+          options={{ title: "알림" }}
+          component={AlertList}
         />
       </Stack.Group>
     </Stack.Navigator>

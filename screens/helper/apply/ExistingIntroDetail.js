@@ -4,7 +4,8 @@ import BottomButton from "../../../components/common/BottomButton";
 import PageInfo from "../../../components/common/PageInfo";
 import { colors, shadowView } from "../../../theme";
 
-const ExistingIntroDetail = ({ navigation }) => {
+const ExistingIntroDetail = ({ navigation, route }) => {
+  const resume = route.params.data;
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -31,12 +32,16 @@ const ExistingIntroDetail = ({ navigation }) => {
         ]}
       >
         <View style={{ width: "100%", alignItems: "flex-start" }}>
-          <Text style={styles.titleText}>제목</Text>
-          <Text style={styles.descriptionText}>내용</Text>
+          {/* <Text style={styles.titleText}>제목</Text> */}
+          <Text style={styles.descriptionText}>{resume.content}</Text>
         </View>
         <View style={{ width: "100%", alignItems: "flex-end" }}>
-          <Text style={styles.characterCountText}>0/600</Text>
-          <Text>2022.10.28에 작성</Text>
+          <Text style={styles.characterCountText}>
+            {resume.content.length}/600
+          </Text>
+          <Text>
+            {resume.date !== undefined && resume.date.slice(0, 10)}에 작성
+          </Text>
         </View>
       </View>
       <BottomButton text={"확인"} onPress={() => navigation.goBack()} />

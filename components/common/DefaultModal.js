@@ -19,10 +19,17 @@ const DefaultModal = ({
       <View style={styles.centeredModalView}>
         <View style={styles.modalView}>
           <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel="창 닫기 버튼"
             style={styles.closeBtn}
             onPress={() => setShowModal(false)}
           >
-            <AntDesign name="close" size={13} color="black" />
+            <AntDesign
+              name="close"
+              size={13}
+              color="black"
+              accessibilityLabel="창 닫기 아이콘"
+            />
           </TouchableOpacity>
           {children}
         </View>
@@ -58,6 +65,7 @@ const styles = StyleSheet.create({
   },
   closeBtn: {
     marginLeft: "auto",
+    padding: 10,
   },
 });
 

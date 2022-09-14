@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { View, Text, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import BottomButton from "../../../components/common/BottomButton";
@@ -6,11 +6,21 @@ import PageInfo from "../../../components/common/PageInfo";
 import DefaultModal from "../../../components/common/DefaultModal";
 import { colors, shadowView, fontSizes } from "../../../theme";
 import MainButton from "../../../components/common/MainButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getNewResume } from "../../../components/Storage";
 
 const NewIntroDetail = ({ navigation }) => {
   const [currentTextLength, setCurrentTextLength] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newResume, setNewResume] = useState("");
   const maxCharacterLength = 600;
+
+  useEffect(() => {
+    getNewResume().then((data) => {
+      setNewResume(data);
+      setCurrentTextLength(data.length);
+    });
+  }, [navigation]);
 
   const checkTextLength = () => {
     if (currentTextLength < 200) {
@@ -19,12 +29,13 @@ const NewIntroDetail = ({ navigation }) => {
       setIsModalOpen(true);
     } else {
       // 저장 후 다음 화면으로
+      AsyncStorage.setItem("NEW_IDC", newResume);
       navigation.goBack();
     }
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View
         style={{
           width: "100%",
@@ -61,17 +72,20 @@ const NewIntroDetail = ({ navigation }) => {
           ]}
         >
           <View style={{ width: "100%", alignItems: "flex-start" }}>
-            <TextInput
+            {/* <TextInput
               style={styles.titleText}
               placeholder="제목을 입력해주세요."
-            />
+            /> */}
+
             <TextInput
-              style={styles.descriptionText}
               placeholder="내용을 입력해주세요."
-              multiline={true}
+              style={{ ...styles.descriptionText, width: "100%" }}
+              multiline
               onChangeText={(text) => {
                 setCurrentTextLength(text.length);
+                setNewResume(text);
               }}
+              value={newResume}
             />
           </View>
           <View style={{ width: "100%", alignItems: "flex-end" }}>
@@ -95,7 +109,7 @@ const NewIntroDetail = ({ navigation }) => {
           onPress={() => setIsModalOpen(false)}
         />
       </DefaultModal>
-    </View>
+    </SafeAreaView>
   );
 };
 

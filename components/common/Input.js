@@ -13,10 +13,11 @@ const Input = ({
   label,
   placeholder,
   clearInput,
+  value,
   sendValue,
   secureTextEntry,
 }) => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState(value);
   const [focus, setfocus] = useState(false);
 
   useEffect(() => {

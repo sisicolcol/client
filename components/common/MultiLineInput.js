@@ -6,8 +6,8 @@ const UselessTextInput = (props) => {
   return <TextInput {...props} editable maxLength={200} />;
 };
 
-const MultiLineinput = ({ setText, accessibility }) => {
-  const [value, setValue] = React.useState("");
+const MultiLineinput = ({ originValue, setText, accessibility }) => {
+  const [value, setValue] = React.useState(originValue);
 
   return (
     <View
@@ -29,7 +29,7 @@ const MultiLineinput = ({ setText, accessibility }) => {
           setValue(text);
         }}
         value={value}
-        style={{ padding: 10, width: "65%" }}
+        style={{ padding: 10, width: "100%" }}
       />
     </View>
   );

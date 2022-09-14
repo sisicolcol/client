@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Input from "../../../components/common/Input";
 import PageInfo from "../../../components/common/PageInfo";
 import BottomButton from "../../../components/common/BottomButton";
@@ -8,6 +9,12 @@ import SignUpButton from "../../../components/SignUpButton";
 const FirstSignUp = ({ navigation }) => {
   const [isMale, setIsMale] = useState(false);
   const [isFemale, setIsFemale] = useState(false);
+  const [name, setName] = useState("");
+  const [birth, setBirth] = useState("");
+  const [phone, setPhone] = useState("");
+  const [card, setCard] = useState("");
+  const [address, setAddress] = useState("");
+
   const setSexButtonState = (target) => {
     if (target === 0) {
       setIsMale(!isMale);
@@ -36,65 +43,88 @@ const FirstSignUp = ({ navigation }) => {
       >
         <PageInfo isBold={false} title="회원가입" />
       </View>
-      <View style={styles.inputView}>
-        <Input
-          label={"이름"}
-          placeholder={"이름"}
-          sendValue={(text) => console.log(text)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <View style={{ flex: 2 }}>
+      <KeyboardAwareScrollView
+        style={{ marginBottom: 120, width: "100%", marginLeft: 32 }}
+      >
+        <View style={styles.inputView}>
           <Input
-            label={"생년월일"}
-            placeholder={"생년월일"}
-            sendValue={(text) => console.log(text)}
+            label={"이름"}
+            placeholder={"이름"}
+            sendValue={(text) => setName(text)}
           />
         </View>
-        <View style={{ flex: 1, marginLeft: 10 }}>
-          <Text style={styles.label}>성별</Text>
-          <View style={{ flexDirection: "row", marginTop: 5 }}>
-            <SignUpButton
-              text={"남성"}
-              marginRight={8}
-              isSelected={isMale}
-              onPress={() => setSexButtonState(0)}
-            />
-            <SignUpButton
-              text={"여성"}
-              isSelected={isFemale}
-              onPress={() => setSexButtonState(1)}
+        <View style={styles.inputView}>
+          <View style={{ flex: 2 }}>
+            <Input
+              label={"생년월일"}
+              placeholder={"생년월일"}
+              sendValue={(text) => setBirth(text)}
             />
           </View>
+          <View style={{ flex: 1, marginLeft: 10 }}>
+            <Text style={styles.label}>성별</Text>
+            <View style={{ flexDirection: "row", marginTop: 5 }}>
+              <SignUpButton
+                text={"남성"}
+                marginRight={8}
+                isSelected={isMale}
+                onPress={() => setSexButtonState(0)}
+              />
+              <SignUpButton
+                text={"여성"}
+                isSelected={isFemale}
+                onPress={() => setSexButtonState(1)}
+              />
+            </View>
+          </View>
         </View>
-      </View>
-      <View style={styles.inputView}>
-        <View style={{ flex: 2, marginRight: 10 }}>
+        <View style={styles.inputView}>
+          <View style={{ flex: 2, marginRight: 10 }}>
+            <Input
+              label={"연락처"}
+              placeholder={"연락처"}
+              sendValue={(text) => setPhone(text)}
+            />
+          </View>
+          <View style={{ justifyContent: "flex-end", marginBottom: 10 }}>
+            <SignUpButton text={"인증받기"} />
+          </View>
+        </View>
+        <View style={styles.inputView}>
+          <View style={{ flex: 2, marginRight: 10 }}>
+            <Input
+              label={"복지카드 사진"}
+              placeholder={"복지카드 사진"}
+              sendValue={(text) => setCard(text)}
+            />
+          </View>
+          <View style={{ justifyContent: "flex-end", marginBottom: 10 }}>
+            <SignUpButton text={"업로드"} />
+          </View>
+        </View>
+        <View style={styles.inputView}>
           <Input
-            label={"연락처"}
-            placeholder={"연락처"}
-            sendValue={(text) => console.log(text)}
+            label={"주소"}
+            placeholder={"주소"}
+            sendValue={(text) => setAddress(text)}
           />
         </View>
-        <View style={{ justifyContent: "flex-end", marginBottom: 10 }}>
-          <SignUpButton text={"인증받기"} />
-        </View>
-      </View>
-      <View style={styles.inputView}>
-        <View style={{ flex: 2, marginRight: 10 }}>
-          <Input
-            label={"복지카드 사진"}
-            placeholder={"복지카드 사진"}
-            sendValue={(text) => console.log(text)}
-          />
-        </View>
-        <View style={{ justifyContent: "flex-end", marginBottom: 10 }}>
-          <SignUpButton text={"업로드"} />
-        </View>
-      </View>
+      </KeyboardAwareScrollView>
+
       <BottomButton
         text={"다음"}
-        onPress={() => navigation.navigate("SecondSignUp")}
+        onPress={() =>
+          navigation.navigate("SecondSignUp", {
+            firstData: {
+              name: name,
+              birth: birth,
+              phone: phone,
+              gender: isMale ? "M" : "F",
+              card: card,
+              address: address,
+            },
+          })
+        }
       />
     </SafeAreaView>
   );

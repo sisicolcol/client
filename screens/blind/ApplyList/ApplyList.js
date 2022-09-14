@@ -1,22 +1,62 @@
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import React, { useState, useEffect } from "react";
 import ApplyService from "./ApplyService";
 import BottomButton from "../../../components/common/BottomButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { colors, fontSizes } from "../../../theme";
+import {
+  getApplyList,
+  serviceFailed,
+  serviceSuccess,
+} from "../../../api/api.member";
+import { getUserId } from "../../../components/Storage";
 
 const ApplyList = ({ navigation }) => {
-  const [applyArr, setApplyArr] = useState(data.apply);
+  const [loading, setLoading] = useState(true);
+  const [applyArr, setApplyArr] = useState([]);
   const [sendData, setSendData] = useState({ endProcess: "" });
 
   useEffect(() => {
-    if (sendData.endProcess !== "") {
-      navigation.navigate("Result", { endData: sendData });
+    const fetchData = async () => {
+      const user = await getUserId();
+      await getData(user);
+    };
+
+    fetchData();
+  }, [navigation]);
+
+  useEffect(() => {
+    if (sendData.endProcess === "end") {
+      const data = { apply_id: sendData.id, overtime: sendData.text };
+      serviceSuccess(data).then((data) => {
+        navigation.navigate("Result", { endData: sendData });
+      });
+    } else if (sendData.endProcess === "cancel") {
+      const data = {
+        apply_id: sendData.id,
+        reason: sendData.text !== "" ? sendData.text : sendData.checkReason,
+      };
+      serviceFailed(data).then((data) => {
+        navigation.navigate("Result", { endData: sendData });
+      });
     }
   }, [sendData, navigation]);
 
+  const getData = async (user) => {
+    await getApplyList(user)
+      .then((data) => {
+        if (data.isSuccess) {
+          setApplyArr(data.result);
+        } else {
+          setApplyArr("error");
+        }
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: "white",
@@ -39,7 +79,7 @@ const ApplyList = ({ navigation }) => {
               textAlign: "center",
             }}
           >
-            아직 활동 지원을{"\n"}신청하지 않았어요!
+            {loading ? "로딩 중..." : `아직 활동 지원을\n신청하지 않았어요!`}
           </Text>
         </View>
       ) : (
@@ -53,7 +93,7 @@ const ApplyList = ({ navigation }) => {
         >
           {applyArr.map((applyArr) => (
             <ApplyService
-              key={applyArr.hp_name}
+              key={applyArr.apply_id}
               apply={applyArr}
               sendData={setSendData}
               navigate={(n) => {
@@ -66,60 +106,10 @@ const ApplyList = ({ navigation }) => {
 
       <BottomButton
         text="홈 화면으로 돌아가기"
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.popToTop()}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default ApplyList;
-
-const data = {
-  apply: [
-    {
-      apply_id: 1,
-      hp_id: 11,
-      hp_name: "김도움",
-      service_day: "3월 9일 (수)",
-      service_time: "14시 00분",
-      start_point: "자택",
-      end_point: "건국대학교 병원",
-      contents: "여성분 선호합니다",
-      details: "자택에서 출발해서 건국대학교 병원.....",
-      duration: 4,
-      way: true,
-      isMatching: true,
-      isComplete: true,
-    },
-    {
-      apply_id: 2,
-      hp_id: 12,
-      hp_name: "이지원",
-      service_day: "3월 9일 (수)",
-      service_time: "16시 00분",
-      start_point: "집",
-      end_point: "건국대학교 병원 정문",
-      contents: "여성분 선호합니다",
-      details: "자택에서 출발해서 건국대학교 병원ㄱㄱ.....d왔다갔다입력입력",
-      duration: 5,
-      way: false,
-      isMatching: true,
-      isComplete: false,
-    },
-    {
-      apply_id: 3,
-      hp_name: null,
-      hp_id: null,
-      service_day: "3월 9일 (수)",
-      service_time: "11시 20분",
-      start_point: "자택",
-      end_point: "건국대학교 병원 정문",
-      contents: "여성분 선호합니다",
-      details: "자택에서 출발해서 건국대학교 병원.....",
-      duration: 6,
-      way: true,
-      isMatching: false,
-      isComplete: false,
-    },
-  ],
-};

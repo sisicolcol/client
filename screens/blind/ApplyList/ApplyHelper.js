@@ -1,17 +1,30 @@
-import { Text, View, Image } from "react-native";
-import React from "react";
+import { Text, View, Image, SafeAreaView } from "react-native";
+import React, { useState, useEffect } from "react";
 import MainButton from "../../../components/common/MainButton";
 import BottomButton from "../../../components/common/BottomButton";
 import { colors, fontSizes, defaultScreen, shadowView } from "../../../theme";
 import NoHelper from "../../../assets/img/NoHelper.png";
+import { getMatchingHelperList } from "../../../api/api.member";
 
 const ApplyHelper = ({ navigation, route }) => {
   const apply = route.params.detailData;
-  console.log(apply);
+  const [helper, setHelper] = useState({ hp_id: "", hp_name: "" });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getMatchingHelperList(apply.apply_id).then((data) => {
+        if (data.isSuccess && data.result.length !== 0) {
+          setHelper(data.result[0]);
+        }
+      });
+    };
+
+    fetchData();
+  }, [navigation]);
 
   return (
-    <View style={defaultScreen}>
-      {apply.hp_name === null ? (
+    <SafeAreaView style={defaultScreen}>
+      {helper.hp_name === "" ? (
         <View
           style={{
             height: "100%",
@@ -50,7 +63,7 @@ const ApplyHelper = ({ navigation, route }) => {
           }}
         >
           <Text style={{ fontSize: fontSizes.bigText }}>
-            활동지원사 {apply.hp_name}님
+            활동지원사 {helper.hp_name}님
           </Text>
 
           <View style={{ paddingVertical: 16, width: "100%" }}>
@@ -63,10 +76,8 @@ const ApplyHelper = ({ navigation, route }) => {
               onPress={() =>
                 navigation.navigate("ApplyCheckResume", {
                   resume: {
-                    hp_id: apply.hp_id,
-                    hp_name: apply.hp_name,
-                    resume:
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also th",
+                    hp_id: helper.hp_id,
+                    hp_name: helper.hp_name,
                     isPressable: false,
                   },
                 })
@@ -86,9 +97,9 @@ const ApplyHelper = ({ navigation, route }) => {
 
       <BottomButton
         text="홈 화면으로 돌아가기"
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.popToTop()}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,15 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import MainButton from "../../../components/common/MainButton";
 import { shadowView, colors, modalButtonText } from "../../../theme";
 import DefaultModal from "../../../components/common/DefaultModal";
 import { AntDesign } from "@expo/vector-icons";
+import { postAcceptApply } from "../../../api/api.member";
 
 const HelperService = ({ helper, navigate }) => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <View
+    <SafeAreaView
       style={{
         ...shadowView,
         alignItems: "flex-start",
@@ -21,8 +22,7 @@ const HelperService = ({ helper, navigate }) => {
       <View style={styles.helperDetail}>
         <Text style={styles.detailLabel}>신청일시:</Text>
         <Text style={styles.detailContent}>
-          {helper.service_day}
-          {helper.service_time}
+          {helper.apply_date.slice(0, 10)}
         </Text>
       </View>
       <View style={styles.helperDetail}>
@@ -36,7 +36,7 @@ const HelperService = ({ helper, navigate }) => {
       <View style={styles.helperDetail}>
         <Text style={styles.detailLabel}>매칭여부:</Text>
         <Text style={styles.detailContent}>
-          {helper.isMatching ? "매칭 확정" : "매칭 안 됨"}
+          {helper.status > 0 ? "매칭 확정" : "매칭 안 됨"}
         </Text>
       </View>
 
@@ -50,23 +50,28 @@ const HelperService = ({ helper, navigate }) => {
           navigate({
             route: "HelperCheckResume",
             resume: {
+              pg_id: helper.pg_id,
               hp_id: helper.hp_id,
               hp_name: helper.hp_name,
-              resume: "adadfasdfadf",
-              isPressable: true,
+              isPressable: helper.status,
             },
           })
         }
       />
 
       <View style={{ height: 16 }} />
-      <MainButton
-        isBlue={true}
-        isBig={false}
-        width="100%"
-        text={"수락하기"}
-        onPress={() => setOpenModal("accept")}
-      />
+      {helper.status === 0 && (
+        <MainButton
+          isBlue={true}
+          isBig={false}
+          width="100%"
+          text={"수락하기"}
+          onPress={() => {
+            setOpenModal("accept");
+            postAcceptApply(1, helper.pg_id);
+          }}
+        />
+      )}
 
       {openModal !== false && (
         <DefaultModal showModal={true} setShowModal={setOpenModal}>
@@ -108,7 +113,7 @@ const HelperService = ({ helper, navigate }) => {
           </View>
         </DefaultModal>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

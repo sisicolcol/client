@@ -3,13 +3,26 @@ import { SafeAreaView, View, Text, StyleSheet } from "react-native";
 import PageInfo from "../../../components/common/PageInfo";
 import BottomButton from "../../../components/common/BottomButton";
 import RadioButton from "../../../components/common/RadioButton";
+import { signup } from "../../../api/api.main";
 
-const HelperSecondSignUp = () => {
+const HelperSecondSignUp = ({ navigation, route }) => {
+  const data = route.params.firstData;
+  const signupData = route.params.signupData;
+
   const selectList = [
     { id: 1, name: "문자 메시지 수신에 동의합니다." },
     { id: 2, name: "이메일 수신에 동의합니다." },
   ];
   const [selectedData, setSelectedData] = useState(0);
+
+  const onSignUp = () => {
+    if (!checkPassword) {
+      Alert.alert("알림!", "비밀번호를 다시 확인해 주세요.");
+    } else {
+      signup(signupData, data).then((data) => console.log(data));
+    }
+    navigation.navigate("Login");
+  };
 
   return (
     <SafeAreaView
@@ -47,7 +60,7 @@ const HelperSecondSignUp = () => {
           />
         ))}
       </View>
-      <BottomButton text={"가입하기"} />
+      <BottomButton text={"가입하기"} onPress={onSignUp} />
     </SafeAreaView>
   );
 };

@@ -1,14 +1,35 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import BottomButton from "../../../components/common/BottomButton";
-import Input from "../../../components/common/Input";
 import ApplyDetailText from "../../../components/ApplyDetailText";
-import { colors } from "../../../theme";
+import { returnServiceTime } from "../../../components/CommonFunc";
+import { getApplyDetail } from "../../../api/api.member";
 
-const ApplyDetail = ({ navigation }) => {
+const ApplyDetail = ({ navigation, route }) => {
+  const [payload, setPayload] = useState(route.params.detailData);
+
+  useEffect(() => {
+    if (route.params.detailData === undefined) {
+      getApplyDetail(route.params.apply_id)
+        .then((data) => {
+          if (data.isSuccess) {
+            setPayload(data.result[0]);
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [route]);
+
+  if (payload === undefined)
+    return (
+      <SafeAreaView>
+        <Text>로딩중...</Text>
+      </SafeAreaView>
+    );
+
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAwareScrollView
         contentContainerStyle={{
           paddingBottom: 120,
@@ -20,52 +41,51 @@ const ApplyDetail = ({ navigation }) => {
         <View style={styles.inputView}>
           <ApplyDetailText
             label={"서비스 제공 날짜"}
-            text={"서비스 제공 날짜"}
+            text={payload.service_date.slice(0, 10)}
           />
         </View>
         <View style={styles.inputView}>
           <ApplyDetailText
             label={"서비스 제공 시간"}
-            text={"서비스 제공 시간"}
+            text={returnServiceTime(payload.service_time, payload.duration)}
           />
         </View>
         <View style={styles.inputView}>
-          <ApplyDetailText label={"출발지"} text={"출발지"} />
+          <ApplyDetailText label={"출발지"} text={payload.start_point} />
         </View>
         <View style={styles.inputView}>
-          <ApplyDetailText label={"목적지"} text={"목적지"} />
+          <ApplyDetailText label={"목적지"} text={payload.end_point} />
         </View>
         <View style={styles.inputView}>
           <ApplyDetailText
             label={"왕복/편도 여부"}
-            text={"왕복/편도 여부"}
-            sendValue={(text) => console.log(text)}
+            text={payload.way ? "왕복" : "편도"}
           />
         </View>
         <View style={styles.inputView}>
           <ApplyDetailText
             label={"예상 소요 시간"}
-            text={"예상 소요 시간"}
-            sendValue={(text) => console.log(text)}
+            text={`${
+              payload.duration >= 60
+                ? Math.floor(payload.duration / 60) + "시간 "
+                : ""
+            } ${
+              payload.duration % 60 !== 0 ? (payload.duration % 60) + "분" : ""
+            }`}
           />
         </View>
         <View style={styles.inputView}>
           <ApplyDetailText
             label={"활동지원사에게 바라는 사항"}
-            text={"활동지원사에게 바라는 사항"}
-            sendValue={(text) => console.log(text)}
+            text={payload.contents}
           />
         </View>
         <View style={styles.inputView}>
-          <ApplyDetailText
-            label={"자세한 신청 내용"}
-            text={"자세한 신청 내용"}
-            sendValue={(text) => console.log(text)}
-          />
+          <ApplyDetailText label={"자세한 신청 내용"} text={payload.details} />
         </View>
       </KeyboardAwareScrollView>
       <BottomButton text={"확인"} onPress={() => navigation.goBack()} />
-    </View>
+    </SafeAreaView>
   );
 };
 

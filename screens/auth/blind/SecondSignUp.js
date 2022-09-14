@@ -1,10 +1,30 @@
-import React from "react";
-import { SafeAreaView, View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView, View, Text, StyleSheet, Alert } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import PageInfo from "../../../components/common/PageInfo";
 import Input from "../../../components/common/Input";
 import BottomButton from "../../../components/common/BottomButton";
+import { signup } from "../../../api/api.main";
 
-const SecondSignUp = () => {
+const SecondSignUp = ({ navigation, route }) => {
+  const data = route.params.firstData;
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState(false);
+
+  const onSignUp = () => {
+    if (!checkPassword) {
+      Alert.alert("알림!", "비밀번호를 다시 확인해 주세요.");
+    } else {
+      const signupData = {
+        id: id,
+        password: password,
+      };
+
+      signup(signupData, data).then((data) => console.log(data));
+    }
+    navigation.navigate("Login");
+  };
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -19,27 +39,38 @@ const SecondSignUp = () => {
       >
         <PageInfo isBold={false} title="회원가입" />
       </View>
-      <View style={styles.inputView}>
-        <Input
-          label={"아이디"}
-          placeholder={"아이디"}
-          sendValue={(text) => console.log(text)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <Input
-          label={"비밀번호"}
-          placeholder={"영문, 숫자, 특수문자 조합 8자리 이상"}
-          sendValue={(text) => console.log(text)}
-          secureTextEntry={true}
-        />
-        <Input
-          placeholder={"비밀번호 확인"}
-          sendValue={(text) => console.log(text)}
-          secureTextEntry={true}
-        />
-      </View>
-      <BottomButton text={"가입하기"} />
+      <KeyboardAwareScrollView
+        style={{ marginBottom: 120, width: "100%", marginLeft: 32 }}
+      >
+        <View style={styles.inputView}>
+          <Input
+            label={"아이디"}
+            placeholder={"아이디"}
+            sendValue={(text) => setId(text)}
+          />
+        </View>
+        <View style={styles.inputView}>
+          <Input
+            label={"비밀번호"}
+            placeholder={"영문, 숫자, 특수문자 조합 8자리 이상"}
+            sendValue={(text) => setPassword(text)}
+            secureTextEntry={true}
+          />
+          <Input
+            placeholder={"비밀번호 확인"}
+            sendValue={(text) => {
+              if (text === password) {
+                setCheckPassword(true);
+              } else {
+                setCheckPassword(false);
+              }
+            }}
+            secureTextEntry={true}
+          />
+        </View>
+      </KeyboardAwareScrollView>
+
+      <BottomButton text={"가입하기"} onPress={onSignUp} />
     </SafeAreaView>
   );
 };

@@ -48,7 +48,14 @@ const HelperTab = () => {
       />
       <Tab.Screen
         name="Chat"
-        options={{
+        options={({ route }) => ({
+          tabBarStyle: ((route) => {
+            const routeName = getFocusedRouteNameFromRoute(route);
+            if (routeName === "HelperChat" || routeName === "ChatLinkDetail") {
+              return { display: "none" };
+            }
+            return styles.tabBarStyle;
+          })(route),
           tabBarLabel: "채팅",
           tabBarIcon: ({ focused }) => {
             return (
@@ -59,7 +66,7 @@ const HelperTab = () => {
               />
             );
           },
-        }}
+        })}
         component={ChatStack}
       />
       <Tab.Screen
