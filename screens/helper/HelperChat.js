@@ -5,7 +5,7 @@ const HelperChat = ({ navigation }) => {
   return (
     <View>
       <Text>메인화면</Text>
-      <Button title="눌러" onPress={() => navigation.navigate("Home")} />
+      <Button title="눌러" onPress={() => navigation.popToTop()} />
     </View>
   );
 };

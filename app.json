@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sisicolcol-client",
-    "slug": "sisicolcol-client",
+    "name": "시시콜콜",
+    "slug": "sisi-callcall",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.kbsc.sisicallcall"
+      "package": "com.kbsc.sisicallcall",
+      "versionCode": 1.0
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -84,7 +84,7 @@ const HelperList = ({ navigation }) => {
 
       <BottomButton
         text="홈 화면으로 돌아가기"
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.popToTop()}
       />
     </View>
   );

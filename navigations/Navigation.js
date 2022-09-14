@@ -25,10 +25,6 @@ const Navigation = () => {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  getUserType().then((data) => {
-    setUserType(data);
-  });
-
   useEffect(() => {
     let deviceToken;
     let userId;

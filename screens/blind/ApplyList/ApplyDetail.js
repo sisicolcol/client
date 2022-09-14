@@ -10,7 +10,7 @@ const ApplyDetail = ({ navigation, route }) => {
 
   useEffect(() => {
     if (apply === undefined || apply === null) {
-      getApplyDetail(24)
+      getApplyDetail(route.params.apply_id)
         .then((data) => setApply(data))
         .catch((error) => console.error(error));
     }
@@ -89,7 +89,7 @@ const ApplyDetail = ({ navigation, route }) => {
       </View>
       <BottomButton
         text="홈 화면으로 돌아가기"
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.popToTop()}
       />
     </View>
   );

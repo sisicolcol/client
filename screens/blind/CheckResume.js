@@ -123,7 +123,7 @@ const CheckResume = ({ navigation, route }) => {
                 text={"홈 화면으로 돌아가기"}
                 onPress={() => {
                   setOpenModal(false);
-                  navigation.navigate("Home");
+                  navigation.popToTop();
                 }}
               />
             </View>
@@ -157,7 +157,7 @@ const CheckResume = ({ navigation, route }) => {
       )}
       <BottomButton
         text="홈 화면으로 돌아가기"
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.popToTop()}
       />
     </View>
   );
