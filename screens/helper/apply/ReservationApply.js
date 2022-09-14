@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import HelperService from "../../../components/HelperService";
 import { getPreServiceList } from "../../../api/api.helper";
 import { format, parseISO } from "date-fns";
-import { ko } from "date-fns/locale/ko";
+import ko from "date-fns/locale/ko";
 import { returnServiceTime } from "../../../components/CommonFunc";
 
 const ReservationApply = ({ navigation }) => {
