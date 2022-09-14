@@ -3,7 +3,7 @@ import request from "./core";
 //회원가입, 로그인 등 공통 로직 처리
 
 //로그인
-export const login = async (id, password) => {
+const login = async (id, password) => {
   return await request({
     method: "POST",
     url: "/auth/login",
@@ -15,7 +15,7 @@ export const login = async (id, password) => {
 };
 
 //회원가입
-export const signup = async (signupData, data) => {
+const signup = async (signupData, data) => {
   return await request({
     method: "POST",
     url: "/auth/signup",
@@ -33,7 +33,7 @@ export const signup = async (signupData, data) => {
 };
 
 //push 알림 토큰 저장
-export const postPushToken = async (token, mem_id) => {
+const postPushToken = async (token, mem_id) => {
   return await request({
     method: "POST",
     url: "/alert",
@@ -43,3 +43,43 @@ export const postPushToken = async (token, mem_id) => {
     },
   }).catch((error) => console.error(error));
 };
+
+//채팅 목록 불러오기
+const getChatList = async (mem_id) => {
+  return await request({
+    url: "/chat/list",
+    params: {
+      mem_id: "id3",
+    },
+  }).catch((error) => console.error(error));
+};
+
+//채팅 불러오기
+const getChat = async (data) => {
+  return await request({
+    url: "/chat",
+    params: {
+      mem_no: 7, //data.mem_no,
+      partner_mem_no: 8, //data.partner_mem_no,
+      apply_id: 24, //data.apply_id
+    },
+  }).catch((error) => console.error(error));
+};
+
+//채팅 보내기
+const postChat = async (me_mem_no, partner_mem_no, chat_room_no, message) => {
+  return await request({
+    method: "post",
+    url: "/chat",
+    params: {
+      me_mem_no: 7,
+      partner_mem_no: 8,
+      chat_room_no: 1,
+    },
+    data: {
+      content: message,
+    },
+  }).catch((error) => console.error(error));
+};
+
+export { login, signup, postPushToken, getChatList, getChat, postChat };

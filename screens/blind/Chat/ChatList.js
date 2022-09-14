@@ -4,30 +4,27 @@ import PageInfo from "../../../components/common/PageInfo";
 import { colors, fontSizes } from "../../../theme";
 import MainButton from "../../../components/common/MainButton";
 import BottomButton from "../../../components/common/BottomButton";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { getUserId } from "../../../components/Storage";
+import { getChatList } from "../../../api/api.main";
 
 const ChatList = ({ navigation }) => {
-  const [chatRoomList, setChatRoomList] = useState(data.result);
+  const [loading, setLoading] = useState(true);
+  const [chatRoomList, setChatRoomList] = useState([]);
 
-  //   const fetchHere = () => {
-  //     fetch("http://172.30.1.1:3000/api/hp/setprofile", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         hp_id: "hp4",
-  //         hp_name: "hpname4",
-  //         hp_idc_id: 5,
-  //         content: "수정된자기소개서내용",
-  //       }),
-  //     })
-  //       .then((response) => console.log(response))
-  //       .catch((error) => console.error(error));
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = await getUserId();
+      await getChatList(user).then((data) => {
+        if (data.isSuccess) {
+          setChatRoomList(data.result);
+          setLoading(false);
+        }
+      });
+    };
 
-  //   useEffect(() => {
-  //     fetchHere();
-  //   }, []);
+    fetchData();
+  }, [navigation]);
 
   return (
     <SafeAreaView
@@ -37,7 +34,9 @@ const ChatList = ({ navigation }) => {
         paddingTop: 8,
       }}
     >
-      <ScrollView style={{ paddingHorizontal: 16, marginBottom: 100 }}>
+      <KeyboardAwareScrollView
+        style={{ paddingHorizontal: 16, marginBottom: 100 }}
+      >
         <View style={{ marginLeft: 46 }}>
           <PageInfo
             colorTitle={"활동지원사"}
@@ -46,30 +45,52 @@ const ChatList = ({ navigation }) => {
             marginBottom={32}
           />
         </View>
-        {chatRoomList.map((room) => {
-          return (
-            <View key={room.chat_room_no} style={styles.chatRoom}>
-              <Text style={{ fontSize: fontSizes.bigText, marginBottom: 16 }}>
-                활동지원사 {room.other}님
-              </Text>
-              <MainButton
-                text="채팅방으로 이동하기"
-                isBlue={true}
-                isBig={false}
-                isBold={true}
-                width="100%"
-                marginBottom={0}
-                onPress={() => {
-                  navigation.navigate("Chat", { room: room });
-                }}
-              />
-            </View>
-          );
-        })}
-      </ScrollView>
+        {chatRoomList.length === 0 ? (
+          <View
+            style={{
+              height: "100%",
+              marginTop: -84,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                color: colors.pageTextGray1,
+                letterSpacing: -0.01,
+                fontSize: fontSizes.smallInfo,
+                textAlign: "center",
+              }}
+            >
+              {loading ? "로딩 중..." : `아직 활동지원사와\n매칭되지 않았어요!`}
+            </Text>
+          </View>
+        ) : (
+          chatRoomList.map((room) => {
+            return (
+              <View key={room.chat_room_no} style={styles.chatRoom}>
+                <Text style={{ fontSize: fontSizes.bigText, marginBottom: 16 }}>
+                  활동지원사 {room.parnter}님
+                </Text>
+                <MainButton
+                  text="채팅방으로 이동하기"
+                  isBlue={true}
+                  isBig={false}
+                  isBold={true}
+                  width="100%"
+                  marginBottom={0}
+                  onPress={() => {
+                    navigation.navigate("Chat", { room: room });
+                  }}
+                />
+              </View>
+            );
+          })
+        )}
+      </KeyboardAwareScrollView>
       <BottomButton
         text={"홈 화면으로 돌아가기"}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.popToTop()}
       />
     </SafeAreaView>
   );
@@ -88,46 +109,3 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
-
-const data = {
-  isSuccess: true,
-  code: 100,
-  message: "성공",
-  result: [
-    {
-      recent: "매칭 성공 테스트1",
-      other: "testname4",
-      partner_mem_no: 8,
-      chat_room_no: 1,
-      time: "3시간",
-    },
-    {
-      recent: "매칭 성공 테스트2",
-      other: "testname5",
-      partner_mem_no: 8,
-      chat_room_no: 2,
-      time: "1시간",
-    },
-    {
-      recent: "매칭 성공 테스트3",
-      other: "testname6",
-      partner_mem_no: 8,
-      chat_room_no: 3,
-      time: "2시간",
-    },
-    {
-      recent: "매칭 성공 테스트3",
-      other: "testname6",
-      partner_mem_no: 12,
-      chat_room_no: 6,
-      time: "5시간",
-    },
-    {
-      recent: "매칭 성공 테스트3",
-      other: "testname6",
-      partner_mem_no: 12,
-      chat_room_no: 23,
-      time: "5시간",
-    },
-  ],
-};
