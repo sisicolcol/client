@@ -69,10 +69,11 @@ const HelperList = ({ navigation }) => {
           }}
         >
           {helperArr
-            .filter((hp) => hp.is_success !== -1)
+            .filter((hp) => hp.status !== 2)
+            .reverse()
             .map((helper) => (
               <HelperService
-                key={helper.hp_id}
+                key={helper.hp_id + helper.apply_id}
                 helper={helper}
                 navigate={(n) =>
                   navigation.navigate(n.route, { resume: n.resume })

@@ -95,7 +95,7 @@ const HelperService = ({ helper, navigate }) => {
               text={"활동지원사와 채팅하기"}
               onPress={() => {
                 setOpenModal(false);
-                navigate({ route: "Chat" }); //수정 필요
+                navigate({ route: "ChatList" }); //수정 필요
               }}
             />
 

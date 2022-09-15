@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   View,
   Text,
-  Button,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
@@ -14,6 +13,7 @@ import { getUserId } from "../../../components/Storage";
 import { getDefaultResume, getMyInfo } from "../../../api/api.helper";
 import { reloadAsync } from "expo-updates";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 
 const Category = ({ title, onPress }) => {
   return (
@@ -41,6 +41,7 @@ const MyPage = ({ navigation }) => {
   const [id, setId] = useState("");
   const [info, setInfo] = useState({});
   const [resume, setResume] = useState({ content: "", date: "" });
+  const isFocused = useIsFocused();
   useEffect(() => {
     const fetchData = async () => {
       const resultId = await getUserId().then((data) => {
@@ -57,7 +58,7 @@ const MyPage = ({ navigation }) => {
     };
 
     fetchData();
-  }, []);
+  }, [isFocused]);
 
   if (loading)
     return (
@@ -137,7 +138,7 @@ const MyPage = ({ navigation }) => {
           <View style={{ width: "100%", alignItems: "center" }}>
             {/* <Text style={styles.titleText}>제목</Text> */}
             <Text style={styles.descriptionText}>
-              {resume.content !== undefined && resume.content.slice(0, 40)}...
+              {resume.content !== undefined && resume.content.slice(0, 29)}...
             </Text>
           </View>
           <View style={{ width: "100%", alignItems: "flex-end" }}>

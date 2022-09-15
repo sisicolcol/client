@@ -1,9 +1,10 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getAlertList } from "../../api/api.member";
-import { colors, fontSizes } from "../../theme";
+import { colors, fontSizes, shadowView } from "../../theme";
 import BottomButton from "../../components/common/BottomButton";
 import { getUserId } from "../../components/Storage";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const AlertList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -62,8 +63,15 @@ const AlertList = ({ navigation }) => {
         >
           {alertArr.map((alert) => {
             return (
-              <View style={{ ...shadowView, marginBottom: 8 }}>
-                {alert.message}
+              <View
+                style={{
+                  ...shadowView,
+                  marginBottom: 8,
+                  paddingHorizontal: 24,
+                  paddingVertical: 20,
+                }}
+              >
+                <Text>{alert.message}</Text>
               </View>
             );
           })}

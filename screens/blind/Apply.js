@@ -141,7 +141,7 @@ const Apply = ({ navigation }) => {
                 way ? styles.selectedButton : styles.defaultButton,
               ]}
               accessibilityRole="button"
-              accessibilityLabel={way ? `왕복 선택됨` : `왕복 선택 해제됨`}
+              accessibilityLabel={"왕복 선택하기 버튼"}
               onPress={() => setWay(true)}
             >
               <Text style={way ? styles.selectedText : styles.defaultText}>
@@ -154,7 +154,7 @@ const Apply = ({ navigation }) => {
                 !way ? styles.selectedButton : styles.defaultButton,
               ]}
               accessibilityRole="button"
-              accessibilityLabel={!way ? `편도 선택됨` : `편도 선택 해제됨`}
+              accessibilityLabel={"편도 선택하기 버튼"}
               onPress={() => setWay(false)}
             >
               <Text style={!way ? styles.selectedText : styles.defaultText}>
@@ -196,8 +196,9 @@ const Apply = ({ navigation }) => {
             sendValue={(text) => setDetail(text)}
           />
         </View>
+        <BottomButton text={"신청하기"} onPress={applyHandler} />
       </KeyboardAwareScrollView>
-      <BottomButton text={"신청하기"} onPress={applyHandler} />
+
       <DefaultModal showModal={isModalOpened}>
         <Text
           style={{

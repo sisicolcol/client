@@ -14,7 +14,8 @@ const ApplyHelper = ({ navigation, route }) => {
     const fetchData = async () => {
       await getMatchingHelperList(apply.apply_id).then((data) => {
         if (data.isSuccess && data.result.length !== 0) {
-          setHelper(data.result[0]);
+          let tmpArr = data.result.find((data) => data.status === 1);
+          if (tmpArr !== undefined) setHelper(data.result[0]);
         }
       });
     };

@@ -72,7 +72,7 @@ const ChatList = ({ navigation }) => {
             return (
               <View key={room.chat_room_no} style={styles.chatRoom}>
                 <Text style={{ fontSize: fontSizes.bigText, marginBottom: 16 }}>
-                  활동지원사 {room.partner}님
+                  활동지원사 {room.blind_user_name}님
                 </Text>
                 <MainButton
                   text="채팅방으로 이동하기"

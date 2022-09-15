@@ -19,7 +19,7 @@ const HelperSecondSignUp = ({ navigation, route }) => {
     if (!checkPassword) {
       Alert.alert("알림!", "비밀번호를 다시 확인해 주세요.");
     } else {
-      signup(signupData, data).then((data) => console.log(data));
+      signup(signupData, data);
     }
     navigation.navigate("Login");
   };

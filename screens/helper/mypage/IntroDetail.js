@@ -35,9 +35,7 @@ const IntroDetail = ({ navigation, route }) => {
       hp_id: route.params.id,
       content: resume,
     };
-    postModifyResume(data)
-      .then((data) => console.log(data))
-      .catch((err) => console.error(err));
+    postModifyResume(data).catch((err) => console.error(err));
   };
 
   return (

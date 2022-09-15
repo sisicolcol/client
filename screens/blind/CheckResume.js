@@ -11,6 +11,7 @@ import {
   modalButtonText,
 } from "../../theme";
 import { getMatchingHelperResume, postAcceptApply } from "../../api/api.member";
+import { getUserToken } from "../../components/Storage";
 
 const CheckResume = ({ navigation, route }) => {
   const { pg_id, hp_id, hp_name, isPressable } = route.params.resume;
@@ -30,8 +31,11 @@ const CheckResume = ({ navigation, route }) => {
       .catch((error) => console.error(error));
   }, [navigation]);
 
-  const postAccept = (status) => {
-    postAcceptApply(status, pg_id).catch((error) => console.error(error));
+  const postAccept = async (status) => {
+    const userToken = await getUserToken();
+    postAcceptApply(status, pg_id, userToken)
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -111,7 +115,7 @@ const CheckResume = ({ navigation, route }) => {
                 text={"활동지원사와 채팅하기"}
                 onPress={() => {
                   setOpenModal(false);
-                  navigation.navigate("Chat"); //수정 필요
+                  navigation.navigate("ChatList"); //수정 필요
                 }}
               />
 

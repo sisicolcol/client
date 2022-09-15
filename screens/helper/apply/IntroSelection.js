@@ -115,7 +115,7 @@ const IntroSelection = ({ route, navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAwareScrollView
         contentContainerStyle={{
           paddingTop: 20,
@@ -137,7 +137,7 @@ const IntroSelection = ({ route, navigation }) => {
           <View style={{ marginBottom: 30 }}>
             <SelfIntro
               title={
-                loading ? "로딩중..." : resume.content.slice(0, 40) + "..."
+                loading ? "로딩중..." : resume.content.slice(0, 29) + "..."
               }
               date={resume.date !== undefined && resume.date.slice(0, 10)}
               onPress={() =>
@@ -167,7 +167,7 @@ const IntroSelection = ({ route, navigation }) => {
         </View>
       </KeyboardAwareScrollView>
       <BottomButton text={"지원하기"} onPress={applyFunc} />
-    </View>
+    </SafeAreaView>
   );
 };
 

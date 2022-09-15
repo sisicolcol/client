@@ -24,6 +24,7 @@ const BlindStack = () => {
         headerTintColor: "black",
         headerStyle: { backgroundColor: "white", shadowColor: "transparent" },
         title: "",
+        headerBackAccessibilityLabel: "뒤로가기 버튼",
         headerBackTitleVisible: false,
         headerBackImage: () => {
           const style = {

@@ -11,7 +11,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Message from "../../../components/Message";
 
 const Chat = ({ navigation, route }) => {
-  const { blind_user_no, chat_room_no, apply_id, partner } = route.params.room;
+  const { blind_user_no, chat_room_no, apply_id, blind_user_name } =
+    route.params.room;
   const mem_no = route.params.mem_no;
   const [chatList, setChatList] = useState([]);
   const [payload, setPayload] = useState({});
@@ -50,8 +51,7 @@ const Chat = ({ navigation, route }) => {
     };
 
     postChat(mem_no, blind_user_no, chat_room_no, message)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         setChatList((chatList) => [...chatList, newData]);
         setMessage("");
       })
@@ -75,7 +75,7 @@ const Chat = ({ navigation, route }) => {
     >
       <View style={{ marginLeft: 46 }}>
         <PageInfo
-          title={`활동지원사\n${partner}과의 채팅방`}
+          title={`활동지원사\n${blind_user_name}과의 채팅방`}
           isBold={false}
           marginBottom={32}
         />

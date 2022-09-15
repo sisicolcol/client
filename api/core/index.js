@@ -8,9 +8,11 @@ getUserToken().then((data) => {
 
 const request = axios.create({
   baseURL: `http://api.sscallcall.co.kr:3000/api`,
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
+  // headers: {
+  //   Authorization: getUserToken().then((data) => {
+  //     return `Bearer ${data}`;
+  //   }),
+  // },
 });
 
 request.defaults.timeout = 2500;

@@ -41,7 +41,7 @@ const Navigation = () => {
       ) {
         registerForPushNotificationsAsync().then((token) => {
           // 서버로 토큰 보내주기
-          // postPushToken(token, userId);
+          postPushToken(token, userId);
 
           AsyncStorage.setItem("DEVICE_TOKEN", "true");
           deviceToken = true;

@@ -54,12 +54,7 @@ const ReservationApply = ({ navigation }) => {
             <Ionicons name="options-outline" size={24} color="black" />
           </TouchableOpacity>
         </View>
-        {applyArr.map((apply) => {
-          let hr =
-            parseInt(apply.service_time.slice(0, 2)) +
-            Math.floor(apply.duration / 60);
-          let mn =
-            parseInt(apply.service_time.slice(3, 5)) + (apply.duration % 60);
+        {applyArr.reverse().map((apply) => {
           return (
             <View
               key={apply.apply_id}

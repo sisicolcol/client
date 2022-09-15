@@ -12,7 +12,9 @@ const Message = ({ message, sender_no, my_no, send_time }) => {
       )}
       <View
         accessibilityLabel={
-          my_no === sender_no ? "나의 메세지" : "상대방의 메세지"
+          my_no === sender_no
+            ? `나의 메세지 : ${message}`
+            : `상대방의 메세지 : ${message}`
         }
         style={[
           chatStyles.chatBox,

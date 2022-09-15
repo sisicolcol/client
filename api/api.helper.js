@@ -61,7 +61,6 @@ const postModifyMemo = async (data) => {
 
 //마이페이지) 기존자기소개서 가져오기
 const getDefaultResume = async (hp_id) => {
-  console.log(hp_id);
   return await request({ url: `/hp/preidc/${hp_id}` }).catch((error) =>
     console.error(error)
   );

@@ -15,7 +15,7 @@ import Message from "../../../components/Message";
 import MainButton from "../../../components/common/MainButton";
 
 const Chat = ({ navigation, route }) => {
-  const { helper_no, chat_room_no, apply_id } = route.params.room;
+  const { helper_no, chat_room_no, apply_id, helper_name } = route.params.room;
   const mem_no = route.params.mem_no;
   const [chatList, setChatList] = useState([]);
   const [payload, setPayload] = useState({});
@@ -99,7 +99,7 @@ const Chat = ({ navigation, route }) => {
           </Text>
           <Text
             style={{ fontSize: fontSizes.smallInfo, paddingVertical: 16 }}
-          >{`${payload.partner_no} 님께서 활동지원사님의\n지원서비스를 승낙하셨습니다.\n\n아래 버튼을 눌러서\n자세한 내용을 확인해보세요.`}</Text>
+          >{`${helper_name} 님께서 활동지원사님의\n지원서비스를 승낙하셨습니다.\n\n아래 버튼을 눌러서\n자세한 내용을 확인해보세요.`}</Text>
           <MainButton
             text="신청 서비스 내용 확인하기"
             isBig={false}

@@ -1,21 +1,17 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView, Text, View, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import PageInfo from "../../../components/common/PageInfo";
 import { colors, fontSizes, shadowView } from "../../../theme";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { getUserId } from "../../../components/Storage";
 import { getChatList } from "../../../api/api.main";
+import { useIsFocused } from "@react-navigation/native";
 
 const ChatList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [chatRoomList, setChatRoomList] = useState([]);
   const [memNo, setMemNo] = useState(0);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +25,7 @@ const ChatList = ({ navigation }) => {
       });
     };
     fetchData();
-  }, [navigation]);
+  }, [navigation, isFocused]);
 
   return (
     <SafeAreaView
@@ -104,7 +100,7 @@ const ChatList = ({ navigation }) => {
                   <Text
                     style={{ fontSize: fontSizes.bigText, marginBottom: 16 }}
                   >
-                    {room.partner}님
+                    {room.helper_name}님
                   </Text>
                   <Text
                     style={{

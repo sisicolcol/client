@@ -93,10 +93,13 @@ const getApplyHelperList = async (mem_id) => {
 };
 
 // 지원한 헬퍼 수락/거절하기
-const postAcceptApply = async (is_success, pg_id) => {
+const postAcceptApply = async (is_success, pg_id, token) => {
   return await request({
     method: "post",
     url: `/user/helper/accept`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     data: {
       is_success: is_success, //수락 여부 1, 0, -1
       pg_id: pg_id, //지원서 id
