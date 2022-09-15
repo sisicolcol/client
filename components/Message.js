@@ -8,7 +8,12 @@ const Message = ({ message, sender_no, my_no, send_time }) => {
       style={{ flexDirection: "row", alignItems: "flex-end", marginBottom: 12 }}
     >
       {my_no === sender_no && (
-        <Text style={[chatStyles.time, chatStyles.myTime]}>{send_time}</Text>
+        <Text
+          style={[chatStyles.time, chatStyles.myTime]}
+          accessibilityLabel={`보낸 시간 : ${send_time}`}
+        >
+          {send_time}
+        </Text>
       )}
       <View
         accessibilityLabel={
@@ -24,7 +29,10 @@ const Message = ({ message, sender_no, my_no, send_time }) => {
         <Text>{message}</Text>
       </View>
       {my_no !== sender_no && (
-        <Text style={[chatStyles.time, chatStyles.partnerTime]}>
+        <Text
+          style={[chatStyles.time, chatStyles.partnerTime]}
+          accessibilityLabel={`보낸 시간 : ${send_time}`}
+        >
           {send_time}
         </Text>
       )}

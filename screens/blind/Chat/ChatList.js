@@ -68,7 +68,7 @@ const ChatList = ({ navigation }) => {
             </Text>
           </View>
         ) : (
-          chatRoomList.map((room) => {
+          chatRoomList.reverse().map((room) => {
             return (
               <View key={room.chat_room_no} style={styles.chatRoom}>
                 <Text style={{ fontSize: fontSizes.bigText, marginBottom: 16 }}>
@@ -82,7 +82,10 @@ const ChatList = ({ navigation }) => {
                   width="100%"
                   marginBottom={0}
                   onPress={() => {
-                    navigation.navigate("Chat", { room: room, mem_no: memNo });
+                    navigation.navigate("Chat", {
+                      room: room,
+                      mem_no: memNo,
+                    });
                   }}
                 />
               </View>

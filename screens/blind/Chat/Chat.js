@@ -17,6 +17,7 @@ const Chat = ({ navigation, route }) => {
   const [chatList, setChatList] = useState([]);
   const [payload, setPayload] = useState({});
   const [message, setMessage] = useState("");
+  const [onFocus, setOnFocus] = useState(false);
   const scrollViewRef = useRef();
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const Chat = ({ navigation, route }) => {
 
     const newData = {
       메시지: message,
-      전송시각: time,
+      전송시각: "14:30",
       sender_no: mem_no,
     };
 
@@ -90,7 +91,13 @@ const Chat = ({ navigation, route }) => {
           paddingHorizontal: 16,
         }}
       >
-        <View style={[chatStyles.chatBox, chatStyles.partnerChat]}>
+        <View
+          style={[
+            chatStyles.chatBox,
+            chatStyles.partnerChat,
+            { marginBottom: 12 },
+          ]}
+        >
           <Text style={{ paddingBottom: 16 }}>
             {payload.introduce !== undefined &&
               payload.introduce.split("다. ").map((data, idx) => {
@@ -125,12 +132,13 @@ const Chat = ({ navigation, route }) => {
           position: "relative",
           paddingHorizontal: 16,
           flexDirection: "row",
+          paddingTop: 12,
         }}
       >
         <TextInput
           style={{
             width: "100%",
-            marginBottom: 126,
+            marginBottom: onFocus ? 16 : 126,
             borderWidth: 1,
             borderRadius: 50,
             borderColor: colors.stroke,
@@ -138,6 +146,8 @@ const Chat = ({ navigation, route }) => {
             paddingRight: 60,
             paddingVertical: 10,
           }}
+          onFocus={() => setOnFocus(true)}
+          onEndEditing={() => setOnFocus(false)}
           placeholder="활동지원사에게 보낼 메세지를 입력하세요."
           value={message}
           onChangeText={(text) => setMessage(text)}
@@ -146,7 +156,7 @@ const Chat = ({ navigation, route }) => {
           style={{
             position: "absolute",
             right: 26,
-            bottom: 137,
+            bottom: onFocus ? 27 : 137,
           }}
           accessibilityRole="button"
           accessibilityLabel="메세지 전송하기"
@@ -156,10 +166,12 @@ const Chat = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
 
-      <BottomButton
-        text={"홈 화면으로 돌아가기"}
-        onPress={() => navigation.popToTop()}
-      />
+      {!onFocus && (
+        <BottomButton
+          text={"홈 화면으로 돌아가기"}
+          onPress={() => navigation.popToTop()}
+        />
+      )}
     </SafeAreaView>
   );
 };
