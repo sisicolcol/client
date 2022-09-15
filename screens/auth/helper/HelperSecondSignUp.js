@@ -16,9 +16,7 @@ const HelperSecondSignUp = ({ navigation, route }) => {
   const [selectedData, setSelectedData] = useState(0);
 
   const onSignUp = () => {
-    if (!checkPassword) {
-      Alert.alert("알림!", "비밀번호를 다시 확인해 주세요.");
-    } else {
+    if (selectedData !== 0) {
       signup(signupData, data);
     }
     navigation.navigate("Login");

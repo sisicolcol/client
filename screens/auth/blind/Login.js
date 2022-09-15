@@ -12,6 +12,7 @@ import { colors } from "../../../theme";
 import { login } from "../../../api/api.main";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { reloadAsync } from "expo-updates";
+import MainButton from "../../../components/common/MainButton";
 
 const LoginButton = ({ text, onPress }) => {
   return (
@@ -86,18 +87,25 @@ const Login = ({ navigation }) => {
           <Text style={{ fontSize: 16, marginLeft: 8 }}>자동 로그인</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={loginFunc}>
-        <Text>로그인하기</Text>
-      </TouchableOpacity>
+
       <View
         style={{
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
           marginBottom: 20,
+          width: "100%",
         }}
       >
-        <View
+        <MainButton
+          onPress={loginFunc}
+          text="로그인"
+          isBig={false}
+          isBlue={true}
+          width="90%"
+          marginBottom={16}
+        />
+        {/* <View
           style={{
             alignItems: "center",
             flexDirection: "row",
@@ -107,10 +115,10 @@ const Login = ({ navigation }) => {
           <LoginButton text="카카오톡" onPress={() => console.log("로그인")} />
           <LoginButton text="네이버" onPress={() => console.log("로그인")} />
           <LoginButton text="구글" onPress={() => console.log("로그인")} />
-        </View>
+        </View> */}
         <TouchableOpacity onPress={() => navigation.navigate("FirstSignUp")}>
           <Text
-            style={{ fontSize: 20, fontWeight: "500", color: colors.mainBlue }}
+            style={{ fontSize: 16, fontWeight: "500", color: colors.mainBlue }}
           >
             회원가입
           </Text>

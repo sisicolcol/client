@@ -135,21 +135,23 @@ const HelperFirstSignUp = ({ navigation }) => {
       </KeyboardAwareScrollView>
       <BottomButton
         text={"다음"}
-        onPress={() =>
-          navigation.navigate("HelperSecondSignUp", {
-            firstData: {
-              name: name,
-              birth: birth,
-              phone: phone,
-              gender: isMale ? "M" : "F",
-              cert: cert,
-            },
-            signupData: {
-              id: id,
-              password: password,
-            },
-          })
-        }
+        onPress={() => {
+          if (checkPassword) {
+            navigation.navigate("HelperSecondSignUp", {
+              firstData: {
+                name: name,
+                birth: birth,
+                phone: phone,
+                gender: isMale ? "M" : "F",
+                cert: cert,
+              },
+              signupData: {
+                id: id,
+                password: password,
+              },
+            });
+          }
+        }}
       />
     </View>
   );
