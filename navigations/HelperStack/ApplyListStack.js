@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { HelperApplyList } from "../../screens/helper/index";
+import { HelperApplyList, ApplyDetail } from "../../screens/helper/index";
 import { Feather } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
@@ -28,6 +28,7 @@ const ApplyListStack = () => {
       }}
     >
       <Stack.Screen name="HelperApplyList" component={HelperApplyList} />
+      <Stack.Screen name="ApplyLinkDetail" component={ApplyDetail} />
     </Stack.Navigator>
   );
 };
